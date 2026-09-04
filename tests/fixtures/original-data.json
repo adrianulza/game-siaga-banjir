@@ -1,0 +1,813 @@
+{
+  "P1": [
+    {
+      "id": "radio",
+      "name": "HP & Radio",
+      "hx": 800,
+      "hy": 500,
+      "cam": [
+        820,
+        1.6,
+        540
+      ],
+      "prompt": "Ponsel bergetar: ada notifikasi peringatan dini cuaca. Ibu bertanya, “Itu dari mana, Nak?”",
+      "opts": [
+        {
+          "t": "Buka aplikasi/website BMKG, catat status peringatan dan perkiraan hujan lebat 3 hari ke depan.",
+          "h": 1,
+          "prep": 15,
+          "fb": "Tepat! Peringatan dini resmi datang dari BMKG untuk cuaca dan BNPB/BPBD untuk bencana. Info dari sumber resmi mencegah panik karena hoaks."
+        },
+        {
+          "t": "Percaya pesan berantai di grup WA yang bilang “bendungan jebol malam ini”.",
+          "h": 1,
+          "prep": 3,
+          "fb": "Pesan berantai sering tidak benar. Selalu cek ulang ke sumber resmi sebelum percaya, apalagi menyebarkan."
+        },
+        {
+          "t": "Abaikan, lanjut main game.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Peringatan dini itu waktu berharga. Mengabaikannya berarti kehilangan kesempatan bersiap."
+        }
+      ]
+    },
+    {
+      "id": "dapur",
+      "name": "Dapur · Tas Siaga",
+      "hx": 900,
+      "hy": 588,
+      "cam": [
+        880,
+        1.65,
+        570
+      ],
+      "prompt": "Ibu mengeluarkan ransel kosong. “Kalau kita harus mengungsi malam ini, apa yang perlu dibawa?”",
+      "opts": [
+        {
+          "t": "Isi: air minum, makanan tahan lama, senter & baterai, obat-obatan, dokumen penting dibungkus plastik, powerbank, pakaian ganti.",
+          "h": 2,
+          "prep": 20,
+          "fb": "Itulah isi Tas Siaga Bencana yang ideal — cukup untuk 3 hari dan diletakkan di tempat yang mudah dijangkau."
+        },
+        {
+          "t": "Masukkan camilan, mainan, dan charger saja.",
+          "h": 1,
+          "prep": 6,
+          "fb": "Camilan boleh, tapi air minum, obat, senter, dan dokumen jauh lebih penting saat mengungsi."
+        },
+        {
+          "t": "Nanti saja kalau air sudah mulai naik.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Saat air naik, tidak ada waktu berkemas. Tas siaga harus siap sebelum bencana datang."
+        }
+      ]
+    },
+    {
+      "id": "atap",
+      "name": "Atap & Selokan",
+      "hx": 690,
+      "hy": 648,
+      "cam": [
+        720,
+        1.55,
+        610
+      ],
+      "prompt": "Ayah memanggil dari halaman. Talang penuh daun dan selokan depan rumah tersumbat sampah.",
+      "opts": [
+        {
+          "t": "Bantu Ayah membersihkan talang dan selokan, lalu angkat barang elektronik ke tempat tinggi.",
+          "h": 2,
+          "prep": 15,
+          "fb": "Selokan yang lancar mengurangi genangan, dan barang di tempat tinggi aman dari air. Kerja tim!"
+        },
+        {
+          "t": "Lihat sebentar dari bawah, lalu masuk lagi.",
+          "h": 1,
+          "prep": 4,
+          "fb": "Melihat saja tidak mengubah apa pun. Selokan tersumbat memperparah banjir di depan rumah."
+        },
+        {
+          "t": "Biar Ayah saja yang mengerjakan.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Kesiapsiagaan adalah kerja tim keluarga. Bantuanmu mempercepat semuanya."
+        }
+      ]
+    },
+    {
+      "id": "sungai",
+      "name": "Tepi Sungai · Tanggul",
+      "hx": 2080,
+      "hy": 500,
+      "cam": [
+        2160,
+        1.22,
+        566
+      ],
+      "prompt": "Warga berkumpul di tanggul. Papan ukur ketinggian air sudah menyentuh garis kuning: status Waspada.",
+      "opts": [
+        {
+          "t": "Bantu menyusun karung pasir dan catat ketinggian air tiap jam untuk dilaporkan ke Pak RT.",
+          "h": 3,
+          "prep": 18,
+          "fb": "Memantau ketinggian air dan memperkuat tanggul adalah langkah nyata mengurangi risiko banjir."
+        },
+        {
+          "t": "Berfoto di tepi sungai untuk story.",
+          "h": 1,
+          "prep": 2,
+          "safety": -5,
+          "fb": "Tepi sungai saat air naik itu berbahaya — arus bisa tiba-tiba deras. Jaga jarak dari bibir sungai!"
+        },
+        {
+          "t": "Lewati, pulang saja.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Tanggul yang kuat melindungi seluruh kampung, bukan hanya rumahmu."
+        }
+      ]
+    },
+    {
+      "id": "balai",
+      "name": "Balai Warga",
+      "hx": 1660,
+      "hy": 470,
+      "cam": [
+        1660,
+        1.35,
+        500
+      ],
+      "prompt": "Pak RT mengadakan rapat siaga. Ada peta jalur evakuasi dan pembagian tugas warga.",
+      "opts": [
+        {
+          "t": "Ikut rapat: catat jalur evakuasi, titik kumpul, dan arti bunyi kentongan atau sirene.",
+          "h": 2,
+          "prep": 18,
+          "fb": "Mengetahui jalur dan titik kumpul menghemat waktu berharga saat evakuasi. Kentongan bertalu-talu artinya bahaya!"
+        },
+        {
+          "t": "Tanya Pak RT sebentar di pintu, lalu pulang.",
+          "h": 1,
+          "prep": 8,
+          "fb": "Lumayan, tapi detail penting seperti tanda bahaya dan titik kumpul bisa terlewat."
+        },
+        {
+          "t": "Lewati, rapat itu urusan orang dewasa.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Remaja juga bagian dari tim siaga kampung. Suaramu dan tenagamu dibutuhkan."
+        }
+      ]
+    },
+    {
+      "id": "nenek",
+      "name": "Rumah Nenek & Oyen",
+      "hx": 470,
+      "hy": 520,
+      "cam": [
+        470,
+        1.45,
+        530
+      ],
+      "prompt": "Nenek tinggal di rumah kecil dekat lereng bukit. Kucing Oyen tidur di kandang bambu di terasnya.",
+      "opts": [
+        {
+          "t": "Siapkan obat rutin Nenek, pindahkan barang berharga ke rak atas, siapkan kandang angkut dan makanan Oyen.",
+          "h": 2,
+          "prep": 16,
+          "fb": "Lansia, anak kecil, dan hewan peliharaan butuh persiapan khusus — kamu sudah memikirkannya!"
+        },
+        {
+          "t": "Pindahkan TV Nenek ke atas lemari saja.",
+          "h": 1,
+          "prep": 5,
+          "fb": "Obat Nenek lebih penting daripada TV. Prioritaskan yang menyelamatkan nyawa."
+        },
+        {
+          "t": "Lewati, Nenek pasti sudah tahu.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Rumah di dekat lereng paling rawan longsor. Nenek sangat perlu bantuanmu."
+        }
+      ]
+    }
+  ],
+  "P2": [
+    {
+      "title": "Kentongan bertalu-talu",
+      "text": "Pukul 01.00. Hujan deras sudah 5 jam tanpa henti, listrik padam. Dari balai warga terdengar kentongan bertalu-talu.",
+      "tout": 2,
+      "cam": [
+        1240,
+        0.88,
+        470
+      ],
+      "opts": [
+        {
+          "t": "Nyalakan senter, bangunkan seluruh keluarga, cek info resmi dari HP.",
+          "safety": 15,
+          "fb": "Kentongan bertalu-talu adalah tanda bahaya. Kamu bergerak cepat dan tenang — itu kunci."
+        },
+        {
+          "t": "Keluar sendirian melihat sungai dalam gelap.",
+          "safety": -10,
+          "fam": {
+            "adik": "cemas"
+          },
+          "fb": "Keluar sendiri dalam gelap dan hujan deras sangat berisiko. Adik Dito panik mencarimu."
+        },
+        {
+          "t": "Lanjut tidur, mungkin hanya latihan.",
+          "safety": -15,
+          "fb": "Mengabaikan tanda bahaya membuat keluarga kehilangan waktu berharga untuk bersiap."
+        }
+      ]
+    },
+    {
+      "title": "Air masuk rumah",
+      "text": "Air keruh menerobos pintu, setinggi mata kaki dan terus naik. Ibu bertanya harus bagaimana.",
+      "tout": 2,
+      "cam": [
+        860,
+        1.5,
+        570
+      ],
+      "opts": [
+        {
+          "t": "Matikan listrik dari MCB, ambil tas siaga, naik ke tempat yang lebih tinggi bersama keluarga.",
+          "safety": 15,
+          "fb": "Listrik dan air adalah kombinasi mematikan. Mematikan MCB lalu naik ke tempat tinggi adalah urutan yang tepat."
+        },
+        {
+          "t": "Selamatkan TV dan laptop dulu.",
+          "safety": -10,
+          "fb": "Barang bisa diganti, nyawa tidak. Dan menyentuh elektronik di air yang mengalir bisa menyetrum."
+        },
+        {
+          "t": "Menerjang air keluar rumah tanpa rencana.",
+          "safety": -8,
+          "fb": "Air setinggi 30 cm yang mengalir sudah bisa menyeret orang. Jangan menerjang arus."
+        }
+      ]
+    },
+    {
+      "title": "Nenek sulit berjalan",
+      "text": "Kalian harus naik ke loteng. Nenek kesulitan berjalan di air, Adik Dito menangis ketakutan.",
+      "tout": 1,
+      "cam": [
+        830,
+        1.45,
+        510
+      ],
+      "opts": [
+        {
+          "t": "Tenangkan Dito, gandeng Nenek bersama Ayah, bergerak pelan-pelan bersama.",
+          "safety": 15,
+          "fb": "Bergerak bersama sebagai satu tim memastikan tidak ada yang tertinggal atau terjatuh."
+        },
+        {
+          "t": "Tinggalkan Nenek dulu, cari bantuan ke luar.",
+          "safety": -12,
+          "fam": {
+            "nenek": "terluka"
+          },
+          "fb": "Nenek terpeleset saat ditinggal. Kelompok rentan tidak boleh ditinggal sendirian."
+        },
+        {
+          "t": "Gendong Dito dan lari duluan ke atas.",
+          "safety": -8,
+          "fam": {
+            "nenek": "cemas"
+          },
+          "fb": "Dito aman, tapi Nenek tertinggal dalam gelap. Utamakan yang paling rentan."
+        }
+      ]
+    },
+    {
+      "title": "Oyen hilang!",
+      "text": "Dari jendela loteng kamu melihat Oyen terjebak di pagar halaman, air deras mengalir di sekitarnya.",
+      "tout": 2,
+      "cam": [
+        1000,
+        1.8,
+        560
+      ],
+      "opts": [
+        {
+          "t": "Panggil Oyen dari tempat aman, ulurkan galah/keranjang, jangan masuk ke arus.",
+          "safety": 10,
+          "fb": "Oyen berhasil melompat ke keranjang! Menolong hewan boleh, tapi tanpa membahayakan diri sendiri."
+        },
+        {
+          "t": "Terjun ke arus mengejar Oyen.",
+          "safety": -20,
+          "fam": {
+            "oyen": "aman",
+            "adik": "cemas"
+          },
+          "fb": "Kamu terseret dan terbentur pagar. Oyen selamat sendiri, tapi kamu cedera. Arus deras tidak bisa dilawan."
+        },
+        {
+          "t": "Biarkan saja, tidak ada waktu.",
+          "safety": -3,
+          "fam": {
+            "oyen": "cemas"
+          },
+          "fb": "Oyen akhirnya naik ke pohon sendiri, basah dan ketakutan. Hewan peliharaan juga bagian dari rencana siaga."
+        }
+      ]
+    },
+    {
+      "title": "Pak Darto menolak mengungsi",
+      "text": "Tetangga sebelah, Pak Darto, berteriak dari jendela: “Banjir tiap tahun juga begini, nggak perlu ngungsi!”",
+      "tout": 1,
+      "cam": [
+        1230,
+        1.5,
+        540
+      ],
+      "opts": [
+        {
+          "t": "Sampaikan status Awas dari BMKG dan ajak ikut tim RT yang datang menjemput.",
+          "safety": 12,
+          "fb": "Informasi resmi yang disampaikan tenang lebih meyakinkan daripada berdebat. Pak Darto ikut mengungsi."
+        },
+        {
+          "t": "Biarkan, urus keluarga sendiri saja.",
+          "safety": -5,
+          "fam": {
+            "tetangga": "terlambat"
+          },
+          "fb": "Pak Darto baru dievakuasi tim SAR dini hari saat air sudah sedada. Tetangga adalah keluarga terdekat kita."
+        },
+        {
+          "t": "Berdebat lama sampai Pak Darto marah.",
+          "safety": -8,
+          "fam": {
+            "tetangga": "cemas"
+          },
+          "fb": "Waktu terbuang dan Pak Darto makin keras kepala. Sampaikan fakta, bukan emosi."
+        }
+      ]
+    },
+    {
+      "title": "Jalur evakuasi",
+      "text": "Perahu karet tim RT merapat ke atap. Ada dua jalur ke titik kumpul: memutar lewat jalan atas tanggul di kanan, atau memotong lereng bukit di kiri yang tanahnya retak-retak.",
+      "tout": 2,
+      "cam": [
+        900,
+        1.28,
+        480
+      ],
+      "opts": [
+        {
+          "t": "Lewat jalan atas tanggul ke titik kumpul resmi, meski memutar.",
+          "safety": 15,
+          "fb": "Jalur resmi sudah dipetakan aman. Lereng yang retak setelah hujan lebat adalah tanda longsor."
+        },
+        {
+          "t": "Memotong lereng bukit, lebih cepat.",
+          "safety": -15,
+          "fam": {
+            "ayah": "cemas"
+          },
+          "fb": "Retakan tanah, pohon miring, dan air keruh dari lereng adalah tanda longsor. Kalian nyaris terjebak!"
+        },
+        {
+          "t": "Tetap menunggu di loteng rumah.",
+          "safety": -10,
+          "fb": "Air masih naik dan bantuan sudah datang — menunda evakuasi hanya menambah bahaya."
+        }
+      ]
+    },
+    {
+      "title": "TANAH LONGSOR!",
+      "text": "Terdengar gemuruh dari lereng bukit di belakang rumah Nenek. Tanah bergetar, pohon-pohon miring!",
+      "tout": 2,
+      "cam": [
+        520,
+        0.85,
+        470
+      ],
+      "opts": [
+        {
+          "t": "Menjauh dari lereng ke arah tegak lurus jalur longsor, ke tanah tinggi yang terbuka.",
+          "safety": 15,
+          "fb": "Benar! Menjauh menyamping dari jalur longsoran, bukan berlari ke bawah searah material yang jatuh."
+        },
+        {
+          "t": "Berlindung di bawah pohon besar di kaki lereng.",
+          "safety": -15,
+          "fam": {
+            "ayah": "terluka"
+          },
+          "fb": "Pohon di lereng bisa ikut tumbang. Ayah tertimpa dahan saat melindungi kalian."
+        },
+        {
+          "t": "Berbalik kembali ke rumah Nenek mengambil barang.",
+          "safety": -12,
+          "fam": {
+            "nenek": "cemas"
+          },
+          "fb": "Rumah Nenek tertimbun sebagian. Jangan pernah kembali ke zona longsor."
+        }
+      ]
+    },
+    {
+      "title": "Di posko pengungsian",
+      "text": "Kalian tiba di posko di tanah tinggi. Dari sini terlihat air terus meninggi hampir menyentuh atap rumah. Petugas BPBD membuka meja pendataan.",
+      "tout": 2,
+      "cam": [
+        1900,
+        0.6,
+        430
+      ],
+      "opts": [
+        {
+          "t": "Lapor data keluarga ke petugas, minta pemeriksaan kesehatan untuk Nenek dan Dito.",
+          "safety": 10,
+          "fb": "Pendataan membantu petugas menyalurkan bantuan dan memastikan tidak ada yang hilang."
+        },
+        {
+          "t": "Langsung pulang mengecek rumah.",
+          "safety": -10,
+          "fb": "Air belum surut, listrik bisa tersambung lagi tiba-tiba, dan longsor susulan mungkin terjadi. Tunggu pernyataan aman."
+        },
+        {
+          "t": "Duduk diam di pojok, tidak lapor.",
+          "safety": -2,
+          "fb": "Kalian aman tapi tidak tercatat — bantuan makanan dan obat jadi terlambat sampai."
+        }
+      ]
+    }
+  ],
+  "P3": [
+    {
+      "id": "rumah",
+      "name": "Rumah · Bersih-bersih",
+      "hx": 880,
+      "hy": 584,
+      "cam": [
+        850,
+        1.5,
+        550
+      ],
+      "prompt": "Air surut menyisakan lumpur setebal 20 cm di rumah. Ayah mulai menyapu.",
+      "opts": [
+        {
+          "t": "Pakai sepatu bot, sarung tangan, dan masker; buang sampah basah, keringkan dan jemur barang.",
+          "h": 2,
+          "prep": 12,
+          "safety": 8,
+          "fb": "Lumpur banjir membawa kuman leptospirosis dan tetanus. Alat pelindung diri itu wajib."
+        },
+        {
+          "t": "Langsung bersihkan tanpa alas kaki, biar cepat.",
+          "h": 1,
+          "prep": 6,
+          "safety": -8,
+          "fb": "Kaki lecet terkena lumpur banjir bisa berujung leptospirosis. Pakai pelindung!"
+        },
+        {
+          "t": "Lewati.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Rumah yang lembap berhari-hari memicu jamur dan penyakit pernapasan."
+        }
+      ]
+    },
+    {
+      "id": "air",
+      "name": "Sumur & Air Bersih",
+      "hx": 670,
+      "hy": 596,
+      "cam": [
+        690,
+        1.65,
+        590
+      ],
+      "prompt": "Sumur keluarga terendam banjir. Dito haus dan ingin minum air keran.",
+      "opts": [
+        {
+          "t": "Gunakan air bersih dari posko atau rebus air sampai mendidih sebelum diminum.",
+          "h": 1,
+          "prep": 8,
+          "safety": 12,
+          "fb": "Sumur yang terendam tercemar. Diare adalah penyakit paling umum pasca banjir — air matang menyelamatkan."
+        },
+        {
+          "t": "Biarkan Dito minum air sumur, kelihatannya bening.",
+          "h": 0,
+          "prep": 0,
+          "safety": -12,
+          "fam": {
+            "adik": "cemas"
+          },
+          "fb": "Air yang tampak bening bisa penuh bakteri. Dito sakit perut malamnya."
+        },
+        {
+          "t": "Lewati.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Air bersih adalah kebutuhan nomor satu setelah bencana."
+        }
+      ]
+    },
+    {
+      "id": "posko",
+      "name": "Posko Kesehatan",
+      "hx": 1660,
+      "hy": 470,
+      "cam": [
+        1660,
+        1.35,
+        500
+      ],
+      "prompt": "Posko kesehatan dibuka di balai warga. Antrean cukup panjang.",
+      "opts": [
+        {
+          "t": "Antar Nenek dan Dito periksa; tanya gejala yang harus diwaspadai: demam, diare, sesak.",
+          "h": 1,
+          "prep": 6,
+          "safety": 12,
+          "fb": "Pemeriksaan dini mencegah penyakit pasca banjir menjadi berat. Nenek mendapat obat rutinnya lagi."
+        },
+        {
+          "t": "Ambil vitamin saja tanpa diperiksa.",
+          "h": 1,
+          "prep": 2,
+          "safety": 3,
+          "fb": "Vitamin membantu, tapi pemeriksaan lebih penting untuk lansia dan anak-anak."
+        },
+        {
+          "t": "Lewati, semua terlihat sehat.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Gejala penyakit pasca banjir sering muncul 3–7 hari kemudian."
+        }
+      ]
+    },
+    {
+      "id": "rapat",
+      "name": "Rapat Keluarga",
+      "hx": 770,
+      "hy": 466,
+      "cam": [
+        880,
+        1.6,
+        520
+      ],
+      "prompt": "Malam harinya keluarga berkumpul dengan lilin. Ibu mengusulkan membicarakan apa yang bisa diperbaiki.",
+      "opts": [
+        {
+          "t": "Buat rencana keluarga: titik kumpul, nomor darurat (112, BPBD), tugas tiap orang, isi ulang tas siaga.",
+          "h": 1,
+          "prep": 18,
+          "fb": "Rencana keluarga tertulis membuat semua orang tahu tugasnya. Bencana berikutnya, kalian lebih siap."
+        },
+        {
+          "t": "Cerita seru saja, tidak perlu rencana.",
+          "h": 1,
+          "prep": 4,
+          "fb": "Berbagi cerita menyembuhkan trauma, tapi rencana konkret melindungi masa depan."
+        },
+        {
+          "t": "Lewati, sudah lelah.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Pemulihan bukan hanya fisik — merencanakan ulang adalah bagian dari mitigasi."
+        }
+      ]
+    },
+    {
+      "id": "lereng",
+      "name": "Lereng & Sungai",
+      "hx": 330,
+      "hy": 400,
+      "cam": [
+        380,
+        1.3,
+        420
+      ],
+      "prompt": "Pak RT mengajak kerja bakti: sungai penuh sampah dan lereng bukit gundul setelah longsor.",
+      "opts": [
+        {
+          "t": "Ikut kerja bakti: bersihkan sungai, tanam vetiver dan pohon di lereng, pasang papan tanda rawan longsor.",
+          "h": 3,
+          "prep": 18,
+          "fb": "Akar tanaman mengikat tanah dan sungai bersih mengurangi luapan. Ini mitigasi jangka panjang yang nyata."
+        },
+        {
+          "t": "Ikut sebentar, lalu pulang.",
+          "h": 1,
+          "prep": 6,
+          "fb": "Setiap tenaga membantu, tapi mitigasi butuh komitmen bersama."
+        },
+        {
+          "t": "Lewati.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Tanpa perbaikan lingkungan, banjir dan longsor akan kembali setiap musim hujan."
+        }
+      ]
+    },
+    {
+      "id": "darto",
+      "name": "Rumah Pak Darto",
+      "hx": 1265,
+      "hy": 520,
+      "cam": [
+        1250,
+        1.5,
+        530
+      ],
+      "prompt": "Rumah Pak Darto paling parah terendam. Beliau duduk termenung di teras.",
+      "opts": [
+        {
+          "t": "Bantu membersihkan rumahnya dan ajak bicara — ajak ikut rapat siaga RT berikutnya.",
+          "h": 2,
+          "prep": 10,
+          "safety": 6,
+          "fam": {
+            "tetangga": "aman"
+          },
+          "fb": "Gotong royong mempercepat pemulihan dan mengubah sikap Pak Darto tentang peringatan dini."
+        },
+        {
+          "t": "Sapa sebentar dari jalan.",
+          "h": 0,
+          "prep": 2,
+          "fb": "Sapaan menghangatkan, tapi tangan yang membantu lebih berarti."
+        },
+        {
+          "t": "Lewati.",
+          "h": 0,
+          "prep": 0,
+          "fb": "Komunitas yang saling bantu pulih lebih cepat daripada yang bergerak sendiri-sendiri."
+        }
+      ]
+    }
+  ],
+  "FAM0": {
+    "ibu": "aman",
+    "ayah": "aman",
+    "adik": "aman",
+    "nenek": "aman",
+    "oyen": "aman",
+    "tetangga": "aman"
+  },
+  "FAMNAME": {
+    "ibu": "Ibu",
+    "ayah": "Ayah",
+    "adik": "Dito",
+    "nenek": "Nenek",
+    "oyen": "Oyen",
+    "tetangga": "Pak Darto"
+  },
+  "SKYA": [
+    "var(--color-accent-200)",
+    "var(--color-neutral-300)",
+    "var(--color-neutral-600)",
+    "var(--color-neutral-900)"
+  ],
+  "SKYB": [
+    "var(--color-accent-300)",
+    "var(--color-neutral-500)",
+    "var(--color-neutral-800)",
+    "var(--color-accent-900)"
+  ],
+  "CLOUD": [
+    "var(--color-neutral-100)",
+    "var(--color-neutral-200)",
+    "var(--color-neutral-700)",
+    "var(--color-neutral-800)"
+  ],
+  "G": 620,
+  "FLOOD": [
+    0,
+    8,
+    28,
+    54,
+    78,
+    100,
+    124,
+    152
+  ],
+  "RIVERFILL": [
+    0.52,
+    0.74,
+    0.9,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "CAST": {
+    "p": {
+      "s": 1.12,
+      "tipe": "remaja",
+      "shirt": "var(--color-process-yellow)",
+      "hair": "var(--color-neutral-900)",
+      "pants": "var(--color-accent-800)",
+      "rambut": "pendek"
+    },
+    "ibu": {
+      "s": 1.2,
+      "tipe": "wanita",
+      "shirt": "var(--color-accent-2-600)",
+      "hair": "var(--color-neutral-900)",
+      "rambut": "sanggul",
+      "rok": 1,
+      "skirtCol": "var(--color-accent-2-800)"
+    },
+    "ayah": {
+      "s": 1.34,
+      "tipe": "pria",
+      "shirt": "var(--color-accent-700)",
+      "hair": "var(--color-neutral-900)",
+      "pants": "var(--color-neutral-800)",
+      "rambut": "pendek"
+    },
+    "adik": {
+      "s": 0.84,
+      "tipe": "anak",
+      "shirt": "var(--color-accent-400)",
+      "hair": "var(--color-neutral-900)",
+      "pants": "var(--color-accent-800)",
+      "rambut": "pendek"
+    },
+    "nenek": {
+      "s": 0.98,
+      "tipe": "nenek",
+      "shirt": "var(--color-neutral-500)",
+      "hair": "var(--color-neutral-300)",
+      "rambut": "sanggul",
+      "rok": 1,
+      "skirtCol": "var(--color-neutral-700)",
+      "kacamata": 1,
+      "kerut": 1
+    },
+    "darto": {
+      "s": 1.28,
+      "tipe": "pria",
+      "shirt": "var(--color-neutral-700)",
+      "hair": "var(--color-neutral-400)",
+      "pants": "var(--color-neutral-800)",
+      "rambut": "pendek",
+      "kumis": 1
+    },
+    "rt": {
+      "s": 1.3,
+      "tipe": "pria",
+      "shirt": "var(--color-neutral-800)",
+      "hair": "var(--color-neutral-900)",
+      "pants": "var(--color-neutral-900)",
+      "rambut": "peci",
+      "kumis": 1
+    },
+    "warga": {
+      "s": 1.18,
+      "tipe": "wanita",
+      "shirt": "var(--color-neutral-500)",
+      "hair": "var(--color-neutral-900)",
+      "rambut": "panjang",
+      "rok": 1,
+      "skirtCol": "var(--color-neutral-700)"
+    }
+  },
+  "PROP": {
+    "pria": {
+      "hw": 19,
+      "tw": 27,
+      "th": 27,
+      "legH": 20
+    },
+    "wanita": {
+      "hw": 18,
+      "tw": 24,
+      "th": 26,
+      "legH": 22
+    },
+    "remaja": {
+      "hw": 19,
+      "tw": 24,
+      "th": 25,
+      "legH": 22
+    },
+    "anak": {
+      "hw": 22,
+      "tw": 22,
+      "th": 22,
+      "legH": 22
+    },
+    "nenek": {
+      "hw": 18,
+      "tw": 23,
+      "th": 25,
+      "legH": 23
+    }
+  }
+}
