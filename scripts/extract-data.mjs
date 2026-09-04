@@ -170,4 +170,7 @@ console.log('  phase1 spots :', d.P1.length)
 console.log('  phase2 cards :', d.P2.length)
 console.log('  phase3 spots :', d.P3.length)
 console.log('  cast entries :', Object.keys(d.CAST).length)
-console.log('  options total:', [...d.P1, ...d.P2, ...d.P3].reduce((n, x) => n + x.opts.length, 0))
+console.log(
+  '  options total:',
+  [...d.P1, ...d.P2, ...d.P3].reduce((n, x) => n + x.opts.length, 0),
+)

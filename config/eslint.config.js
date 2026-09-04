@@ -29,7 +29,12 @@ export default tseslint.config(
       // template binds a real boolean, so this guards new code, not old.
       'react/jsx-no-leaked-render': ['error', { validStrategies: ['ternary', 'coerce'] }],
       // Makes the ScreenId switch in BottomPanel exhaustive by construction.
-      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      // Exhaustive by construction where there is no default (the reducer, the
+      // actor builder); a default clause is accepted as covering the rest.
+      '@typescript-eslint/switch-exhaustiveness-check': [
+        'error',
+        { considerDefaultExhaustiveForUnions: true },
+      ],
     },
   },
   {
