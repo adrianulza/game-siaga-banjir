@@ -52,6 +52,21 @@ lapisan presentasi, sehingga keduanya dapat diuji di Node tanpa browser.
 
 Berkas `data/` sengaja dipisah agar isi skenario dapat disunting tanpa membaca kode React.
 
+## Pengujian
+
+117 pengujian, dijalankan dengan `npm test`:
+
+| Berkas                  | Cakupan                                                                                                                                                          |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tests/data.test.ts`    | Mengubah data skenario kembali ke bentuk aslinya dan membandingkannya dengan cuplikan dari berkas sumber — membuktikan penggantian nama kunci tidak mengubah isi |
+| `tests/engine.test.ts`  | Aturan permainan: perpindahan fase, skor, batas waktu, kondisi kalah, dan ketiga jalur ulangi                                                                    |
+| `tests/scene.test.ts`   | Kamera, cuaca, dan ketinggian air untuk setiap layar                                                                                                             |
+| `tests/actors.test.ts`  | Membandingkan 211 tokoh pada 32 keadaan dengan hasil implementasi asli, bidang demi bidang                                                                       |
+| `tests/render.test.tsx` | Memainkan permainan sungguhan di jsdom — satu putaran penuh tiga fase sampai skor akhir, dan satu putaran pilihan buruk sampai layar kalah                       |
+
+Cuplikan pembanding dihasilkan ulang dengan `node scripts/extract-data.mjs` dan
+`node scripts/dump-actors.mjs`.
+
 ## Asal-usul
 
 Permainan ini semula berupa satu berkas `.dc.html` yang dibuat di kanvas Claude Design. Berkas asli
