@@ -1,0 +1,51 @@
+{
+  "name": "game-siaga-banjir",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Siaga Bencana Banjir — game edukasi mitigasi bencana banjir dan longsor.",
+  "license": "MIT",
+  "author": "Adrian Ulza",
+  "//": "Scripts pass explicit -c/--b flags so config files can live in config/ instead of root.",
+  "scripts": {
+    "dev": "vite -c config/vite.config.ts",
+    "build": "tsc -b config/tsconfig.json && vite -c config/vite.config.ts build",
+    "preview": "vite -c config/vite.config.ts preview",
+    "typecheck": "tsc -b config/tsconfig.json",
+    "lint": "eslint -c config/eslint.config.js .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run -c config/vitest.config.ts --passWithNoTests",
+    "test:watch": "vitest -c config/vitest.config.ts"
+  },
+  "dependencies": {
+    "@fontsource/source-serif-4": "^5.3.0",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9",
+    "@types/node": "^26.4.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9",
+    "eslint-config-prettier": "^10",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5",
+    "globals": "^15",
+    "prettier": "^3",
+    "typescript": "~5.7.3",
+    "typescript-eslint": "^8",
+    "vite": "^6",
+    "vitest": "^2"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100,
+    "tabWidth": 2,
+    "endOfLine": "lf"
+  }
+}

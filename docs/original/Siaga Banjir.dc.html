@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/broadsheet-5b35173d-af60-48ca-91c6-ab2d1d315137/styles.css">
+<script src="_ds/broadsheet-5b35173d-af60-48ca-91c6-ab2d1d315137/_ds_bundle.js"></script>
+<style>
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);overflow:hidden}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-600)}
+button{font-family:var(--font-body)}
+button:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+@keyframes drift{from{transform:translateX(-400px)}to{transform:translateX(2700px)}}
+@keyframes rainfall{from{background-position:0 0}to{background-position:-70px 280px}}
+@keyframes flash{0%,86%,100%{opacity:0}87%{opacity:.9}89%{opacity:.05}91%{opacity:.7}94%{opacity:0}}
+@keyframes shake{0%,100%{transform:translate(0,0)}10%{transform:translate(-11px,5px)}22%{transform:translate(10px,-6px)}34%{transform:translate(-9px,4px)}46%{transform:translate(8px,-4px)}58%{transform:translate(-6px,3px)}70%{transform:translate(5px,-2px)}85%{transform:translate(-3px,1px)}}
+@keyframes waveslide{from{background-position:0 0}to{background-position:48px 0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes bobbig{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes panik{0%,100%{transform:translate(0,0) rotate(-2deg)}25%{transform:translate(-2px,-2px) rotate(2deg)}50%{transform:translate(2px,0) rotate(-1deg)}75%{transform:translate(-1px,-1px) rotate(2deg)}}
+@keyframes lambat{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-5deg) translateY(-2px)}}
+@keyframes gestur{0%,100%{transform:rotate(14deg)}40%{transform:rotate(-48deg)}70%{transform:rotate(-22deg)}}
+@keyframes wave{0%,100%{transform:rotate(-24deg)}50%{transform:rotate(34deg)}}
+@keyframes sway1{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes sway2{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(7deg)}}
+@keyframes sway3{0%,100%{transform:rotate(-13deg)}50%{transform:rotate(15deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--color-accent) 60%,transparent)}70%{box-shadow:0 0 0 15px transparent}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.38)}100%{transform:scale(1)}}
+@keyframes tick{from{opacity:1;transform:scale(1)}to{opacity:.4;transform:scale(.92)}}
+@keyframes spill{from{background-position:0 0}to{background-position:0 90px}}
+@keyframes ring{0%{transform:scale(.3);opacity:.75}100%{transform:scale(3.4);opacity:0}}
+@keyframes lantern{0%,100%{opacity:.85}45%{opacity:1}70%{opacity:.7}}
+@keyframes debris{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(-260px,6px) rotate(-24deg)}}
+@keyframes catshiver{0%,100%{transform:translate(0,0)}50%{transform:translate(1px,-2px)}}
+@keyframes boat{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-5px) rotate(1.5deg)}}
+@keyframes smoke{0%{transform:translate(0,0) scale(.6);opacity:.5}100%{transform:translate(-26px,-52px) scale(1.7);opacity:0}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes tenggelam{0%,100%{transform:translateY(3px)}22%{transform:translateY(-5px)}48%{transform:translateY(6px)}72%{transform:translateY(-3px)}}
+@keyframes meronta{0%,100%{transform:rotate(-30deg) translateY(1px)}22%{transform:rotate(10deg) translateY(-5px)}48%{transform:rotate(-16deg) translateY(0)}74%{transform:rotate(22deg) translateY(-6px)}}
+@keyframes meronta2{0%,100%{transform:rotate(28deg) translateY(-4px)}26%{transform:rotate(-14deg) translateY(1px)}54%{transform:rotate(34deg) translateY(-7px)}78%{transform:rotate(4deg) translateY(-2px)}}
+@keyframes ripple2{0%{transform:scale(.45);opacity:.85}100%{transform:scale(2);opacity:0}}
+@keyframes kedip{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.12)}}
+@keyframes bicara{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1.05)}}
+@keyframes napas{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes splash{0%{transform:translate(0,0) scale(1);opacity:.9}100%{transform:translate(-6px,-18px) scale(.35);opacity:0}}
+</style>
+</helmet>
+<div style="position:fixed;inset:0;background:var(--color-bg);color:var(--color-text);overflow:hidden" data-screen-label="Warta Siaga v2">
+<div style="position:absolute;left:calc(50% - 640px);top:calc(50% - 400px);width:1280px;height:800px;transform:scale({{ scale }});transform-origin:center;display:flex;flex-direction:column">
+
+<!-- ============ MASTHEAD ============ -->
+<div style="margin:12px 36px 0;border-top:4px solid var(--color-text);display:flex;flex-direction:column">
+  <div style="display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:28px;padding:8px 0 7px">
+    <div>
+      <div style="font:italic 600 29px/1 var(--font-heading);letter-spacing:-.01em">Warta Siaga</div>
+      <div style="font-size:11.5px;color:var(--color-neutral-700);margin-top:3px;letter-spacing:.02em">Kampung Tepi Sungai · Simulasi Mitigasi Bencana Hidrometeorologi</div>
+    </div>
+    <div style="display:flex;gap:22px;justify-content:center;padding-bottom:2px">
+      <sc-for list="{{ phases }}" as="ph" hint-placeholder-count="3">
+        <div style="font-size:13px;padding:4px 0;color:{{ ph.color }};border-bottom:2px solid {{ ph.line }};font-weight:{{ ph.weight }};white-space:nowrap">{{ ph.label }}</div>
+      </sc-for>
+    </div>
+    <div style="display:flex;gap:22px;align-items:flex-end">
+      <div style="text-align:right"><div style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-700)">Keselamatan</div><div style="font:600 25px/1.05 var(--font-heading);color:var(--color-accent-2-700);animation:{{ popSafety }}">{{ safety }}</div></div>
+      <div style="text-align:right"><div style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-700)">Persiapan</div><div style="font:600 25px/1.05 var(--font-heading);color:var(--color-accent-700);animation:{{ popPrep }}">{{ prep }}</div></div>
+      <div style="text-align:right"><div style="font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--color-neutral-700)">Waktu</div><div style="font:600 25px/1.05 var(--font-heading);animation:{{ popWaktu }}">{{ waktu }}</div></div>
+      <button onClick="{{ toggleMute }}" style="background:none;border:0;padding:4px 2px;cursor:pointer;color:var(--color-neutral-700);font-size:12px;letter-spacing:.05em;text-transform:uppercase;align-self:flex-end" style-hover="color:var(--color-accent-700)">{{ muteLabel }}</button>
+    </div>
+  </div>
+  <div style="height:1px;background:var(--color-text)"></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0 6px;font-size:11.5px;color:var(--color-neutral-700)">
+    <div style="letter-spacing:.06em;text-transform:uppercase">{{ dateline }}</div>
+    <div style="display:flex;gap:14px;opacity:{{ famOpacity }};transition:opacity .5s">
+      <sc-for list="{{ famList }}" as="f" hint-placeholder-count="6">
+        <div style="display:flex;align-items:center;gap:5px;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:{{ f.dot }};transition:background .6s"></span>{{ f.name }}<span style="color:var(--color-neutral-500)">{{ f.tail }}</span></div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="height:1px;background:var(--color-divider)"></div>
+</div>
+
+<!-- ============ SCENE ============ -->
+<div style="position:relative;height:{{ sceneH }}px;margin:10px 36px 0;overflow:hidden;background:{{ skyA }};transition:height .8s cubic-bezier(.4,0,.2,1),background 2.6s;animation:{{ shakeAnim }}">
+
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,{{ skyB }},transparent 62%);opacity:{{ skyBOn }};transition:opacity 2.6s"></div>
+  <div style="position:absolute;right:74px;top:26px;width:78px;height:78px;border-radius:50%;background:var(--color-process-yellow);opacity:{{ sunOpacity }};transition:opacity 2.4s"></div>
+  <div style="position:absolute;right:96px;top:22px;width:44px;height:44px;border-radius:50%;background:var(--color-neutral-200);opacity:{{ moonOpacity }};transition:opacity 2.4s"></div>
+
+  <!-- clouds (own slow parallax) -->
+  <div style="position:absolute;left:0;top:0;width:100%;height:100%;transform:translateX({{ cloudX }}px);transition:transform 1.2s cubic-bezier(.4,0,.2,1);color:{{ cloudColor }}">
+    <div style="position:absolute;top:18px;left:0;animation:drift 60s linear infinite;opacity:.95"><div style="position:absolute;width:150px;height:46px;border-radius:40px;background:currentColor"></div><div style="position:absolute;left:36px;top:-30px;width:82px;height:82px;border-radius:50%;background:currentColor"></div><div style="position:absolute;left:96px;top:-14px;width:54px;height:54px;border-radius:50%;background:currentColor"></div></div>
+    <div style="position:absolute;top:64px;left:0;animation:drift 86s linear infinite -34s;opacity:.9"><div style="position:absolute;width:210px;height:56px;border-radius:44px;background:currentColor"></div><div style="position:absolute;left:48px;top:-38px;width:104px;height:104px;border-radius:50%;background:currentColor"></div></div>
+    <div style="position:absolute;top:6px;left:0;animation:drift 104s linear infinite -70s;opacity:.8"><div style="position:absolute;width:120px;height:38px;border-radius:40px;background:currentColor"></div><div style="position:absolute;left:28px;top:-24px;width:62px;height:62px;border-radius:50%;background:currentColor"></div></div>
+  </div>
+
+  <!-- ===== FAR LAYER: distant ridge ===== -->
+  <div style="position:absolute;left:0;top:0;width:2700px;height:900px;transform-origin:0 0;transform:{{ farT }};transition:transform 1.15s cubic-bezier(.4,0,.2,1)">
+    <div style="position:absolute;left:-160px;top:330px;width:1200px;height:640px;border-radius:60% 40% 0 0/94% 78% 0 0;background:var(--color-neutral-400);opacity:.5"></div>
+    <div style="position:absolute;left:760px;top:392px;width:1500px;height:560px;border-radius:44% 56% 0 0/88% 74% 0 0;background:var(--color-neutral-400);opacity:.38"></div>
+    <div style="position:absolute;left:2000px;top:366px;width:1000px;height:580px;border-radius:52% 48% 0 0/90% 80% 0 0;background:var(--color-neutral-400);opacity:.44"></div>
+  </div>
+
+  <!-- ===== FOREGROUND LAYER: the village world ===== -->
+  <div style="position:absolute;left:0;top:0;width:2700px;height:900px;transform-origin:0 0;transform:{{ fgT }};transition:transform 1.15s cubic-bezier(.4,0,.2,1)">
+
+    <!-- LEFT: the slope -->
+    <div style="position:absolute;left:-40px;top:150px;width:700px;height:520px;clip-path:polygon(0 0,100% 88%,100% 100%,0 100%);background:var(--color-neutral-500)"></div>
+    <div style="position:absolute;left:-40px;top:150px;width:700px;height:520px;clip-path:polygon(0 0,100% 88%,100% 92%,0 6%);background:var(--color-neutral-600)"></div>
+    <div style="position:absolute;left:-40px;top:150px;width:700px;height:520px;clip-path:polygon(30% 26%,62% 46%,62% 54%,30% 34%);background:var(--color-neutral-400);opacity:.8"></div>
+    <div style="position:absolute;left:56px;top:330px;width:170px;height:52px;border-radius:50%;background:var(--color-neutral-400);opacity:.55"></div>
+    <div style="position:absolute;left:238px;top:452px;width:200px;height:58px;border-radius:50%;background:var(--color-neutral-400);opacity:.45"></div>
+    <div style="position:absolute;left:96px;top:288px;transform-origin:bottom center;transform:{{ slopeTree }};transition:transform 1.6s cubic-bezier(.6,0,.9,.4)"><div style="position:absolute;left:-4px;bottom:0;width:9px;height:86px;background:var(--color-neutral-900)"></div><div style="position:absolute;left:-28px;bottom:70px;width:56px;height:56px;border-radius:50%;background:var(--color-neutral-700)"></div></div>
+    <div style="position:absolute;left:232px;top:380px;transform-origin:bottom center;transform:{{ slopeTree }};transition:transform 1.9s cubic-bezier(.6,0,.9,.4)"><div style="position:absolute;left:-5px;bottom:0;width:10px;height:96px;background:var(--color-neutral-900)"></div><div style="position:absolute;left:-32px;bottom:78px;width:64px;height:64px;border-radius:50%;background:var(--color-neutral-700)"></div></div>
+    <div style="position:absolute;left:344px;top:446px;transform-origin:bottom center;transform:{{ slopeTree }};transition:transform 2.2s cubic-bezier(.6,0,.9,.4)"><div style="position:absolute;left:-4px;bottom:0;width:9px;height:80px;background:var(--color-neutral-900)"></div><div style="position:absolute;left:-26px;bottom:64px;width:52px;height:52px;border-radius:50%;background:var(--color-neutral-700)"></div></div>
+    <!-- shortcut trail across the slope (jalan pintas) -->
+    <div style="position:absolute;left:80px;top:322px;width:430px;height:170px;border-top:3px dashed var(--color-neutral-300);transform:rotate(17deg);transform-origin:0 0;opacity:.85"></div>
+    <!-- cracks appear before the slide -->
+    <div style="position:absolute;left:150px;top:270px;width:200px;height:120px;opacity:{{ crackOpacity }};transition:opacity 1.4s">
+      <div style="position:absolute;left:0;top:0;width:3px;height:82px;background:var(--color-neutral-900);transform:rotate(24deg);transform-origin:top center;animation:grow .9s ease-out"></div>
+      <div style="position:absolute;left:54px;top:22px;width:3px;height:64px;background:var(--color-neutral-900);transform:rotate(-14deg);transform-origin:top center;animation:grow 1.1s ease-out"></div>
+      <div style="position:absolute;left:104px;top:6px;width:3px;height:96px;background:var(--color-neutral-900);transform:rotate(31deg);transform-origin:top center;animation:grow 1.3s ease-out"></div>
+    </div>
+    <!-- landslide mass -->
+    <div style="position:absolute;left:120px;top:250px;width:330px;height:230px;clip-path:polygon(28% 0,100% 46%,100% 100%,6% 100%);background:var(--color-neutral-800);transform:{{ slideTransform }};opacity:{{ slideOpacity }};transition:transform 2.1s cubic-bezier(.55,0,.9,.45),opacity .5s"></div>
+    <div style="position:absolute;left:120px;top:250px;width:330px;height:230px;clip-path:polygon(28% 0,100% 46%,100% 54%,20% 12%);background:var(--color-neutral-900);transform:{{ slideTransform }};opacity:{{ slideOpacity }};transition:transform 2.1s cubic-bezier(.55,0,.9,.45),opacity .5s"></div>
+    <div style="position:absolute;left:300px;top:540px;width:340px;height:120px;clip-path:polygon(0 100%,26% 22%,64% 6%,100% 62%,100% 100%);background:var(--color-neutral-800);opacity:{{ slideOpacity }};transition:opacity 1.6s"></div>
+    <!-- replanted slope (phase 3 mark) -->
+    <sc-if value="{{ markPlant }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:130px;top:330px;width:380px;height:180px;animation:fadeIn .8s ease">
+        <div style="position:absolute;left:20px;top:36px;width:8px;height:34px;background:var(--color-accent-700);transform:rotate(12deg)"></div>
+        <div style="position:absolute;left:96px;top:76px;width:8px;height:34px;background:var(--color-accent-700);transform:rotate(12deg)"></div>
+        <div style="position:absolute;left:176px;top:112px;width:8px;height:34px;background:var(--color-accent-700);transform:rotate(12deg)"></div>
+        <div style="position:absolute;left:252px;top:146px;width:8px;height:34px;background:var(--color-accent-700);transform:rotate(12deg)"></div>
+        <div style="position:absolute;left:296px;top:60px;width:6px;height:60px;background:var(--color-neutral-800)"></div>
+        <div style="position:absolute;left:274px;top:44px;width:52px;height:20px;background:var(--color-accent-2-600)"></div>
+      </div>
+    </sc-if>
+
+    <!-- Nenek's house at the foot of the slope -->
+    <div style="position:absolute;left:400px;top:472px;width:150px;height:148px">
+      <div style="position:absolute;left:-14px;top:0;width:178px;height:52px;clip-path:polygon(0 100%,50% 0,100% 100%);background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:0;top:52px;width:150px;height:96px;background:var(--color-neutral-100)"></div>
+      <div style="position:absolute;left:58px;top:96px;width:30px;height:52px;background:var(--color-accent-700)"></div>
+      <div style="position:absolute;left:14px;top:70px;width:26px;height:24px;background:{{ windowColor }};transition:background 2s"></div>
+      <div style="position:absolute;left:108px;top:70px;width:26px;height:24px;background:{{ windowColor }};transition:background 2s"></div>
+      <sc-if value="{{ markKandang }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:104px;top:120px;width:36px;height:28px;background:var(--color-neutral-300);border:2px solid var(--color-neutral-700);animation:fadeIn .6s ease"></div>
+      </sc-if>
+    </div>
+
+    <!-- village ground -->
+    <div style="position:absolute;left:-500px;top:620px;width:1040px;height:280px;background:var(--color-neutral-300)"></div>
+    <div style="position:absolute;left:-500px;top:620px;width:1040px;height:4px;background:var(--color-neutral-500)"></div>
+    <div style="position:absolute;left:-500px;top:672px;width:1040px;height:26px;background:var(--color-neutral-400);opacity:.8"></div>
+    <div style="position:absolute;left:520px;top:620px;width:1420px;height:280px;background:var(--color-neutral-300)"></div>
+    <div style="position:absolute;left:520px;top:620px;width:1420px;height:4px;background:var(--color-neutral-500)"></div>
+    <div style="position:absolute;left:520px;top:672px;width:1420px;height:26px;background:var(--color-neutral-400);opacity:.8"></div>
+    <!-- selokan (drainage ditch): clogged by default, clear after the phase-1 action -->
+    <div style="position:absolute;left:640px;top:640px;width:700px;height:22px;background:var(--color-neutral-500)"></div>
+    <div style="position:absolute;left:640px;top:640px;width:700px;height:22px;background:{{ ditchFill }};transition:background 1s"></div>
+
+    <!-- player house: one storey + loft -->
+    <div style="position:absolute;left:740px;top:440px;width:210px;height:180px">
+      <div style="position:absolute;left:-22px;top:0;width:254px;height:64px;clip-path:polygon(0 100%,50% 0,100% 100%);background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:88px;top:22px;width:34px;height:42px;background:var(--color-neutral-900)"></div>
+      <div style="position:absolute;left:92px;top:26px;width:26px;height:34px;background:{{ windowColor }};transition:background 2s"></div>
+      <div style="position:absolute;left:0;top:64px;width:210px;height:116px;background:var(--color-neutral-100)"></div>
+      <div style="position:absolute;left:0;top:64px;width:210px;height:3px;background:var(--color-neutral-400)"></div>
+      <div style="position:absolute;left:86px;top:118px;width:38px;height:62px;background:var(--color-accent-700)"></div>
+      <div style="position:absolute;left:18px;top:86px;width:34px;height:30px;background:{{ windowColor }};transition:background 2s"></div>
+      <div style="position:absolute;left:158px;top:86px;width:34px;height:30px;background:{{ windowColor }};transition:background 2s"></div>
+      <sc-if value="{{ markBag }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:132px;top:126px;width:22px;height:28px;border-radius:4px 4px 6px 6px;background:var(--color-accent-2-600);animation:fadeIn .6s ease"><div style="position:absolute;left:4px;top:-5px;width:14px;height:8px;border:2px solid var(--color-accent-2-600);border-bottom:0;border-radius:6px 6px 0 0"></div></div>
+      </sc-if>
+      <sc-if value="{{ loftFolk }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:93px;top:30px;width:26px;height:30px;animation:fadeIn .7s ease">
+          <div style="position:absolute;left:0;top:9px;width:11px;height:11px;border-radius:50%;background:var(--color-neutral-900)"></div>
+          <div style="position:absolute;left:9px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--color-neutral-900)"></div>
+          <div style="position:absolute;left:17px;top:13px;width:9px;height:9px;border-radius:50%;background:var(--color-neutral-900);animation:panik 1.2s ease-in-out infinite"></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ markElec }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:140px;top:30px;width:44px;height:18px;background:var(--color-neutral-700);animation:fadeIn .6s ease"></div>
+      </sc-if>
+      <sc-if value="{{ markLaundry }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:216px;top:96px;width:130px;height:40px;animation:fadeIn .8s ease">
+          <div style="position:absolute;left:0;top:0;width:130px;height:2px;background:var(--color-neutral-600)"></div>
+          <div style="position:absolute;left:12px;top:2px;width:24px;height:30px;background:var(--color-accent-300);transform-origin:top center;animation:sway2 3s ease-in-out infinite"></div>
+          <div style="position:absolute;left:52px;top:2px;width:20px;height:26px;background:var(--color-accent-2-300);transform-origin:top center;animation:sway2 3.6s ease-in-out infinite -1s"></div>
+          <div style="position:absolute;left:88px;top:2px;width:26px;height:32px;background:var(--color-neutral-200);transform-origin:top center;animation:sway2 4.2s ease-in-out infinite -2s"></div>
+        </div>
+      </sc-if>
+    </div>
+    <!-- well -->
+    <div style="position:absolute;left:640px;top:576px;width:64px;height:44px">
+      <div style="position:absolute;left:0;top:12px;width:64px;height:32px;border-radius:6px;background:var(--color-neutral-500)"></div>
+      <div style="position:absolute;left:6px;top:6px;width:52px;height:12px;border-radius:6px;background:var(--color-neutral-700)"></div>
+      <sc-if value="{{ markWell }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:-4px;top:-2px;width:72px;height:12px;border-radius:4px;background:var(--color-accent-700);animation:fadeIn .6s ease"></div>
+      </sc-if>
+    </div>
+    <!-- fence where Oyen gets stuck -->
+    <div style="position:absolute;left:970px;top:556px;width:150px;height:64px">
+      <div style="position:absolute;left:0;top:14px;width:150px;height:5px;background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:0;top:34px;width:150px;height:5px;background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:4px;top:0;width:7px;height:64px;background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:70px;top:0;width:7px;height:64px;background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:138px;top:0;width:7px;height:64px;background:var(--color-neutral-800)"></div>
+    </div>
+
+    <!-- Pak Darto's house -->
+    <div style="position:absolute;left:1180px;top:470px;width:170px;height:150px">
+      <div style="position:absolute;left:-18px;top:0;width:206px;height:56px;clip-path:polygon(0 100%,50% 0,100% 100%);background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:0;top:56px;width:170px;height:94px;background:var(--color-neutral-200)"></div>
+      <div style="position:absolute;left:66px;top:98px;width:34px;height:52px;background:var(--color-accent-2-700)"></div>
+      <div style="position:absolute;left:16px;top:74px;width:30px;height:26px;background:{{ windowColor }};transition:background 2s"></div>
+      <div style="position:absolute;left:124px;top:74px;width:30px;height:26px;background:{{ windowColor }};transition:background 2s"></div>
+      <sc-if value="{{ markDarto }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:-6px;top:-30px;width:40px;height:30px;animation:smoke 4s ease-out infinite;background:var(--color-neutral-400);border-radius:50%;opacity:.5"></div>
+      </sc-if>
+    </div>
+
+    <!-- balai warga + kentongan post -->
+    <div style="position:absolute;left:1520px;top:430px;width:290px;height:190px">
+      <div style="position:absolute;left:-24px;top:0;width:338px;height:58px;clip-path:polygon(0 100%,50% 0,100% 100%);background:var(--color-accent-700)"></div>
+      <div style="position:absolute;left:0;top:58px;width:290px;height:132px;background:var(--color-neutral-100)"></div>
+      <div style="position:absolute;left:118px;top:126px;width:54px;height:64px;background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:26px;top:82px;width:36px;height:30px;background:{{ windowColor }};transition:background 2s"></div>
+      <div style="position:absolute;left:228px;top:82px;width:36px;height:30px;background:{{ windowColor }};transition:background 2s"></div>
+      <sc-if value="{{ markMap }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:186px;top:80px;width:56px;height:38px;background:var(--color-neutral-200);border:2px solid var(--color-accent-700);animation:fadeIn .6s ease"><div style="position:absolute;left:6px;top:14px;width:40px;height:2px;background:var(--color-accent-2-600)"></div><div style="position:absolute;left:34px;top:6px;width:2px;height:22px;background:var(--color-accent-700)"></div></div>
+      </sc-if>
+      <!-- flag -->
+      <div style="position:absolute;left:8px;top:-92px;width:5px;height:92px;background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:13px;top:-88px;width:44px;height:28px;background:var(--color-accent-2);transform-origin:left center;animation:{{ flagAnim }}"></div>
+    </div>
+    <!-- kentongan -->
+    <div style="position:absolute;left:1466px;top:520px;width:40px;height:100px">
+      <div style="position:absolute;left:16px;top:34px;width:6px;height:66px;background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:2px;top:6px;width:34px;height:34px;border-radius:5px;background:var(--color-neutral-700);animation:{{ kentongAnim }}"></div>
+      <div style="position:absolute;left:-42px;top:-16px;width:120px;height:120px;border-radius:50%;border:3px solid var(--color-accent-2);opacity:0;animation:{{ ringAnim1 }}"></div>
+      <div style="position:absolute;left:-42px;top:-16px;width:120px;height:120px;border-radius:50%;border:3px solid var(--color-accent-2);opacity:0;animation:{{ ringAnim2 }}"></div>
+    </div>
+
+    <!-- trees -->
+    <div style="position:absolute;left:588px;top:620px;transform-origin:bottom center;animation:{{ treeAnim1 }}"><div style="position:absolute;left:-5px;bottom:0;width:11px;height:120px;background:var(--color-neutral-800)"></div><div style="position:absolute;left:-38px;bottom:96px;width:76px;height:76px;border-radius:50%;background:var(--color-neutral-600)"></div></div>
+    <div style="position:absolute;left:1094px;top:620px;transform-origin:bottom center;animation:{{ treeAnim2 }}"><div style="position:absolute;left:-6px;bottom:0;width:12px;height:130px;background:var(--color-neutral-800)"></div><div style="position:absolute;left:-44px;bottom:104px;width:88px;height:88px;border-radius:50%;background:var(--color-neutral-600)"></div></div>
+    <div style="position:absolute;left:1416px;top:620px;transform-origin:bottom center;animation:{{ treeAnim1 }}"><div style="position:absolute;left:-5px;bottom:0;width:10px;height:112px;background:var(--color-neutral-800)"></div><div style="position:absolute;left:-34px;bottom:90px;width:68px;height:68px;border-radius:50%;background:var(--color-neutral-600)"></div></div>
+    <div style="position:absolute;left:1880px;top:618px;transform-origin:bottom center;animation:{{ treeAnim2 }}"><div style="position:absolute;left:-5px;bottom:0;width:11px;height:124px;background:var(--color-neutral-800)"></div><div style="position:absolute;left:-36px;bottom:98px;width:72px;height:72px;border-radius:50%;background:var(--color-neutral-600)"></div></div>
+
+    <!-- RIGHT: the river as a trapezoidal channel cut below the village, levee on the crest -->
+    <div style="position:absolute;left:1900px;top:460px;width:800px;height:440px;clip-path:polygon(0% 36.36%,11.25% 12.73%,30% 12.73%,43.75% 59.09%,56.25% 59.09%,68.75% 6.82%,100% 6.82%,100% 100%,0% 100%);background:var(--color-neutral-500)"></div>
+    <!-- wetted perimeter: bank faces and bed -->
+    <div style="position:absolute;left:1900px;top:460px;width:800px;height:440px;clip-path:polygon(30% 12.73%,43.75% 59.09%,56.25% 59.09%,68.75% 6.82%,67.5% 6.82%,55.625% 57.05%,44.375% 57.05%,31.375% 12.73%);background:var(--color-neutral-600)"></div>
+    <!-- the water body — clipped to the trapezoid, so its surface widens as the level rises -->
+    <div style="position:absolute;left:2140px;top:510px;width:310px;height:215px;clip-path:polygon(0 0,97.2% 0,67.74% 97.67%,35.48% 97.67%)">
+      <div style="position:absolute;left:0;right:0;bottom:0;top:{{ waterTop }}px;background:linear-gradient(to bottom,var(--color-accent-500),var(--color-accent-600));transition:top 2.2s cubic-bezier(.4,0,.2,1)">
+        <div style="position:absolute;left:0;right:0;top:-6px;height:12px;background:radial-gradient(circle at 12px 10px,var(--color-accent-400) 9px,transparent 10px);background-size:24px 12px;animation:waveslide 1.1s linear infinite"></div>
+        <div style="position:absolute;left:36px;top:16px;width:96px;height:3px;border-radius:2px;background:var(--color-accent-200);opacity:.6;animation:debris 9s linear infinite"></div>
+        <div style="position:absolute;left:158px;top:34px;width:64px;height:3px;border-radius:2px;background:var(--color-accent-200);opacity:.55;animation:debris 12s linear infinite -5s"></div>
+      </div>
+    </div>
+    <!-- crest road on the tanggul -->
+    <div style="position:absolute;left:1990px;top:514px;width:150px;height:10px;background:var(--color-neutral-700)"></div>
+    <!-- papan duga air, planted on the inner bank -->
+    <div style="position:absolute;left:2258px;top:514px;width:15px;height:206px;background:var(--color-neutral-100);border:2px solid var(--color-neutral-800)">
+      <div style="position:absolute;left:0;right:0;top:12px;height:4px;background:var(--color-accent-2-600)"></div>
+      <div style="position:absolute;left:0;right:0;top:82px;height:4px;background:var(--color-process-yellow)"></div>
+      <div style="position:absolute;left:0;top:32px;width:6px;height:3px;background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:0;top:52px;width:6px;height:3px;background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:0;top:112px;width:6px;height:3px;background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:0;top:142px;width:6px;height:3px;background:var(--color-neutral-700)"></div>
+      <div style="position:absolute;left:0;top:172px;width:6px;height:3px;background:var(--color-neutral-700)"></div>
+    </div>
+    <sc-if value="{{ markSandbag }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;left:1994px;top:490px;width:145px;height:26px;animation:fadeIn .7s ease">
+        <div style="position:absolute;left:0;top:12px;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-600)"></div>
+        <div style="position:absolute;left:37px;top:12px;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-600)"></div>
+        <div style="position:absolute;left:74px;top:12px;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-600)"></div>
+        <div style="position:absolute;left:111px;top:12px;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-600)"></div>
+        <div style="position:absolute;left:18px;top:0;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-700)"></div>
+        <div style="position:absolute;left:55px;top:0;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-700)"></div>
+        <div style="position:absolute;left:92px;top:0;width:34px;height:14px;border-radius:7px;background:var(--color-neutral-700)"></div>
+      </div>
+    </sc-if>
+    <!-- water topping the levee and sheeting down the village side -->
+    <div style="position:absolute;left:1900px;top:514px;width:240px;height:106px;clip-path:polygon(37.5% 0,100% 0,100% 100%,0 100%);opacity:{{ spillOpacity }};transition:opacity 1.4s">
+      <div style="position:absolute;left:0;right:0;top:0;height:{{ spillH }}px;background:linear-gradient(to bottom,var(--color-accent-400),var(--color-accent-500));background-size:100% 90px;animation:spill .6s linear infinite;transition:height 2s"></div>
+    </div>
+
+    <!-- across the channel: high ground, the assembly point -->
+    <div style="position:absolute;left:2450px;top:490px;width:250px;height:4px;background:var(--color-neutral-600)"></div>
+    <div style="position:absolute;left:2500px;top:392px;width:200px;height:70px">
+      <div style="position:absolute;left:0;top:0;width:112px;height:64px;clip-path:polygon(50% 0,100% 100%,0 100%);background:var(--color-accent-700)"></div>
+      <div style="position:absolute;left:104px;top:16px;width:96px;height:48px;clip-path:polygon(50% 0,100% 100%,0 100%);background:var(--color-accent-2-700)"></div>
+    </div>
+    <div style="position:absolute;left:2484px;top:380px;width:5px;height:110px;background:var(--color-neutral-800)"></div>
+    <div style="position:absolute;left:2470px;top:356px;width:112px;height:24px;background:var(--color-neutral-100);border:2px solid var(--color-accent-2-700);font:600 12px/20px var(--font-heading);color:var(--color-accent-2-700);text-align:center;letter-spacing:.04em">TITIK KUMPUL</div>
+
+    <!-- flood water spreading across the village -->
+    <div style="position:absolute;left:180px;width:1780px;top:{{ floodTop }}px;height:420px;background:linear-gradient(to bottom,color-mix(in srgb,var(--color-accent-500) 86%,var(--color-neutral-700)),var(--color-accent-700));opacity:{{ floodOpacity }};transition:top 2.4s cubic-bezier(.4,0,.2,1),opacity 1.2s">
+      <div style="position:absolute;left:0;right:0;top:-7px;height:14px;background:radial-gradient(circle at 12px 11px,var(--color-accent-400) 10px,transparent 11px);background-size:24px 14px;animation:waveslide .9s linear infinite"></div>
+      <div style="position:absolute;left:120px;top:18px;width:120px;height:10px;border-radius:4px;background:var(--color-neutral-700);opacity:.6;animation:debris 11s linear infinite"></div>
+      <div style="position:absolute;left:760px;top:40px;width:70px;height:8px;border-radius:4px;background:var(--color-neutral-800);opacity:.55;animation:debris 15s linear infinite -6s"></div>
+    </div>
+
+    <!-- rubber boat -->
+    <div style="position:absolute;left:{{ boatX }}px;top:{{ boatY }}px;width:190px;height:52px;opacity:{{ boatOpacity }};transition:left 1.6s cubic-bezier(.4,0,.2,1),top 2.2s,opacity .8s;animation:boat 3s ease-in-out infinite">
+      <div style="position:absolute;left:0;top:18px;width:190px;height:26px;border-radius:14px;background:var(--color-neutral-800)"></div>
+      <div style="position:absolute;left:14px;top:12px;width:162px;height:14px;border-radius:8px;background:var(--color-neutral-600)"></div>
+      <div style="position:absolute;left:150px;top:-24px;width:5px;height:44px;background:var(--color-neutral-700);transform:rotate(24deg)"></div>
+    </div>
+
+    <!-- Oyen the cat -->
+    <div style="position:absolute;left:{{ oyenX }}px;top:{{ oyenY }}px;width:34px;height:24px;opacity:{{ oyenOpacity }};transition:left 1.4s,top 1.4s;animation:{{ oyenAnim }}">
+      <div style="position:absolute;left:2px;top:8px;width:26px;height:14px;border-radius:8px;background:color-mix(in oklch,var(--color-process-yellow) 68%,var(--color-accent-2-600))"></div>
+      <div style="position:absolute;left:20px;top:0;width:14px;height:14px;border-radius:50%;background:color-mix(in oklch,var(--color-process-yellow) 68%,var(--color-accent-2-600))"></div>
+      <div style="position:absolute;left:21px;top:-4px;width:5px;height:6px;clip-path:polygon(50% 0,100% 100%,0 100%);background:color-mix(in oklch,var(--color-process-yellow) 68%,var(--color-accent-2-600))"></div>
+      <div style="position:absolute;left:29px;top:-4px;width:5px;height:6px;clip-path:polygon(50% 0,100% 100%,0 100%);background:color-mix(in oklch,var(--color-process-yellow) 68%,var(--color-accent-2-600))"></div>
+      <div style="position:absolute;left:-6px;top:2px;width:12px;height:4px;border-radius:3px;background:color-mix(in oklch,var(--color-process-yellow) 68%,var(--color-accent-2-600));transform-origin:right center;animation:sway3 1.4s ease-in-out infinite"></div>
+    </div>
+
+    <!-- the cast -->
+    <sc-for list="{{ actors }}" as="a" hint-placeholder-count="0">
+      <div style="position:absolute;left:{{ a.x }}px;top:{{ a.y }}px;width:0;height:0;transform:scale({{ a.s }});transform-origin:bottom center;transition:left 1.4s cubic-bezier(.4,0,.2,1),top 1.4s cubic-bezier(.4,0,.2,1),opacity .6s;opacity:{{ a.o }};z-index:{{ a.z }}">
+        <sc-if value="{{ a.calm }}" hint-placeholder-val="{{ true }}">
+          <div style="position:absolute;left:-15px;bottom:0;width:30px;height:66px;transform-origin:bottom center;animation:{{ a.anim }}">
+            <div style="position:absolute;left:{{ a.legLx }}px;top:{{ a.legTop }}px;width:{{ a.legW }}px;height:{{ a.legH }}px;background:{{ a.pants }}"></div>
+            <div style="position:absolute;left:{{ a.legRx }}px;top:{{ a.legTop }}px;width:{{ a.legW }}px;height:{{ a.legH }}px;background:{{ a.pants }}"></div>
+            <div style="position:absolute;left:{{ a.legLx }}px;top:62px;width:{{ a.legW }}px;height:4px;border-radius:2px 2px 1px 1px;background:var(--color-neutral-900)"></div>
+            <div style="position:absolute;left:{{ a.legRx }}px;top:62px;width:{{ a.legW }}px;height:4px;border-radius:2px 2px 1px 1px;background:var(--color-neutral-900)"></div>
+            <sc-if value="{{ a.skirt }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;left:{{ a.skirtX }}px;top:{{ a.skirtTop }}px;width:{{ a.skirtW }}px;height:{{ a.skirtH }}px;background:{{ a.skirtCol }};clip-path:polygon(16% 0,84% 0,100% 100%,0 100%)"></div>
+            </sc-if>
+            <div style="position:absolute;left:{{ a.tx }}px;top:{{ a.ty }}px;width:{{ a.tw }}px;height:{{ a.th }}px;border-radius:5px 5px 3px 3px;background:{{ a.shirt }}"></div>
+            <div style="position:absolute;left:{{ a.armLx }}px;top:{{ a.armTop }}px;width:{{ a.armW }}px;height:{{ a.armH }}px;border-radius:4px;background:{{ a.shirt }};transform-origin:top center;animation:{{ a.arm }}"></div>
+            <div style="position:absolute;left:{{ a.armRx }}px;top:{{ a.armTop }}px;width:{{ a.armW }}px;height:{{ a.armH }}px;border-radius:4px;background:{{ a.shirt }};transform-origin:top center"></div>
+            <div style="position:absolute;left:{{ a.hx }}px;top:0;width:{{ a.hw }}px;height:{{ a.hw }}px;border-radius:50%;background:{{ a.skin }};border:2.5px solid var(--color-text)">
+              <sc-if value="{{ a.rPendek }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;left:-9%;top:-17%;width:118%;height:50%;border-radius:52% 52% 8% 8%;background:{{ a.hair }}"></div>
+              </sc-if>
+              <sc-if value="{{ a.rSanggul }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:-9%;top:-17%;width:118%;height:46%;border-radius:54% 54% 10% 10%;background:{{ a.hair }}"></div>
+                <div style="position:absolute;right:-20%;top:-2%;width:42%;height:42%;border-radius:50%;background:{{ a.hair }}"></div>
+              </sc-if>
+              <sc-if value="{{ a.rPanjang }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:-9%;top:-17%;width:118%;height:46%;border-radius:54% 54% 10% 10%;background:{{ a.hair }}"></div>
+                <div style="position:absolute;left:-13%;top:10%;width:24%;height:92%;border-radius:3px;background:{{ a.hair }}"></div>
+                <div style="position:absolute;right:-13%;top:10%;width:24%;height:92%;border-radius:3px;background:{{ a.hair }}"></div>
+              </sc-if>
+              <sc-if value="{{ a.rPeci }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:-11%;top:4%;width:122%;height:14%;background:{{ a.hair }}"></div>
+                <div style="position:absolute;left:-11%;top:-30%;width:122%;height:42%;border-radius:4px 4px 2px 2px;background:var(--color-neutral-900)"></div>
+              </sc-if>
+              <div style="position:absolute;left:20%;top:44%;width:19%;height:22%;border-radius:50%;background:var(--color-text)"></div>
+              <div style="position:absolute;right:20%;top:44%;width:19%;height:22%;border-radius:50%;background:var(--color-text)"></div>
+              <sc-if value="{{ a.mTenang }}" hint-placeholder-val="{{ true }}">
+                <div style="position:absolute;left:31%;top:68%;width:38%;height:15%;border-bottom:1.5px solid var(--color-text);border-radius:0 0 80% 80%"></div>
+              </sc-if>
+              <sc-if value="{{ a.mCemas }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:33%;top:72%;width:34%;height:12%;border-top:1.5px solid var(--color-text);border-radius:80% 80% 0 0"></div>
+                <div style="position:absolute;left:13%;top:33%;width:27%;height:8%;border-radius:2px;background:var(--color-text);transform:rotate(17deg)"></div>
+                <div style="position:absolute;right:13%;top:33%;width:27%;height:8%;border-radius:2px;background:var(--color-text);transform:rotate(-17deg)"></div>
+              </sc-if>
+              <sc-if value="{{ a.mLuka }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:36%;top:66%;width:28%;height:19%;border-radius:45%;background:var(--color-text)"></div>
+                <div style="position:absolute;left:6%;top:14%;width:38%;height:11%;border-radius:2px;background:var(--color-accent-2-600);transform:rotate(-19deg)"></div>
+              </sc-if>
+              <sc-if value="{{ a.kumis }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:30%;top:62%;width:40%;height:9%;border-radius:2px;background:{{ a.hair }}"></div>
+              </sc-if>
+              <sc-if value="{{ a.kacamata }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:11%;top:38%;width:33%;height:33%;border:1.5px solid var(--color-text);border-radius:50%"></div>
+                <div style="position:absolute;right:11%;top:38%;width:33%;height:33%;border:1.5px solid var(--color-text);border-radius:50%"></div>
+                <div style="position:absolute;left:43%;top:52%;width:14%;height:1.5px;background:var(--color-text)"></div>
+              </sc-if>
+              <sc-if value="{{ a.kerut }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:15%;top:80%;width:20%;height:1.5px;background:color-mix(in srgb,var(--color-text) 42%,transparent)"></div>
+                <div style="position:absolute;right:15%;top:80%;width:20%;height:1.5px;background:color-mix(in srgb,var(--color-text) 42%,transparent)"></div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ a.drown }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;left:-34px;bottom:-2px;width:68px;height:80px;animation:tenggelam 2.4s ease-in-out infinite">
+            <div style="position:absolute;left:6px;bottom:-6px;width:56px;height:16px;border-radius:50%;border:2px solid var(--color-accent-300);animation:ripple2 2.1s ease-out infinite"></div>
+            <div style="position:absolute;left:6px;bottom:-6px;width:56px;height:16px;border-radius:50%;border:2px solid var(--color-accent-200);animation:ripple2 2.1s ease-out infinite -1.05s"></div>
+            <div style="position:absolute;left:22px;bottom:1px;width:24px;height:17px;border-radius:7px 7px 2px 2px;background:{{ a.shirt }}"></div>
+            <div style="position:absolute;left:16px;bottom:8px;width:7px;height:31px;border-radius:4px;background:{{ a.shirt }};transform-origin:bottom center;animation:meronta .82s ease-in-out infinite"></div>
+            <div style="position:absolute;left:45px;bottom:8px;width:7px;height:31px;border-radius:4px;background:{{ a.shirt }};transform-origin:bottom center;animation:meronta2 .7s ease-in-out infinite -.3s"></div>
+            <div style="position:absolute;left:24px;bottom:13px;width:20px;height:20px;border-radius:50%;background:var(--color-neutral-200);border:2.5px solid var(--color-text)">
+              <div style="position:absolute;left:18%;top:38%;width:20%;height:24%;border-radius:50%;background:var(--color-text)"></div>
+              <div style="position:absolute;right:18%;top:38%;width:20%;height:24%;border-radius:50%;background:var(--color-text)"></div>
+              <div style="position:absolute;left:36%;top:66%;width:28%;height:22%;border-radius:45%;background:var(--color-text)"></div>
+            </div>
+            <div style="position:absolute;left:23px;bottom:26px;width:22px;height:10px;border-radius:11px 11px 0 0;background:{{ a.hair }}"></div>
+            <div style="position:absolute;left:11px;bottom:6px;width:5px;height:5px;border-radius:50%;background:var(--color-accent-200);animation:splash 1.1s ease-out infinite"></div>
+            <div style="position:absolute;left:53px;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--color-accent-200);animation:splash 1.35s ease-out infinite -.55s"></div>
+            <div style="position:absolute;left:2px;bottom:-4px;width:64px;height:9px;border-radius:50%;background:var(--color-accent-400);opacity:.55"></div>
+          </div>
+        </sc-if>
+        <div style="position:absolute;left:-40px;bottom:78px;width:80px;text-align:center;font-size:12px;color:var(--color-text);background:var(--color-bg);padding:1px 0;opacity:{{ a.lo }};transition:opacity .5s">{{ a.name }}</div>
+      </div>
+    </sc-for>
+
+    <!-- phase-1 / phase-3 hotspots live in the world so they pan with it -->
+    <sc-for list="{{ spots }}" as="s" hint-placeholder-count="0">
+      <button onClick="{{ s.pick }}" disabled="{{ s.disabled }}" style="position:absolute;left:{{ s.hx }}px;top:{{ s.hy }}px;transform:translate(-50%,-50%) scale({{ s.iz }});display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:0;cursor:pointer;padding:0;opacity:{{ s.opacity }};transition:opacity .5s,transform .9s cubic-bezier(.4,0,.2,1)">
+        <span style="width:38px;height:38px;border-radius:50%;background:{{ s.bg }};color:var(--color-neutral-100);display:grid;place-items:center;font:600 17px var(--font-heading);box-shadow:var(--shadow-md);animation:{{ s.anim }}">{{ s.mark }}</span>
+        <span style="background:var(--color-bg);padding:3px 10px;font-size:13px;box-shadow:var(--shadow-sm);white-space:nowrap">{{ s.name }}</span>
+      </button>
+    </sc-for>
+  </div>
+
+  <!-- weather overlays (viewport-fixed) -->
+  <div style="position:absolute;inset:-60px;pointer-events:none;background:repeating-linear-gradient(100deg,transparent 0 10px,color-mix(in srgb,var(--color-text) 34%,transparent) 10px 11px,transparent 11px 26px);background-size:70px 280px;animation:rainfall .95s linear infinite;opacity:{{ rain1 }};transition:opacity 2s"></div>
+  <div style="position:absolute;inset:-60px;pointer-events:none;background:repeating-linear-gradient(110deg,transparent 0 8px,color-mix(in srgb,var(--color-text) 42%,transparent) 8px 10px,transparent 10px 22px);background-size:70px 280px;animation:rainfall .58s linear infinite;opacity:{{ rain2 }};transition:opacity 2s"></div>
+  <div style="position:absolute;inset:-60px;pointer-events:none;background:repeating-linear-gradient(122deg,transparent 0 6px,color-mix(in srgb,var(--color-neutral-100) 60%,transparent) 6px 9px,transparent 9px 18px);background-size:70px 280px;animation:rainfall .34s linear infinite;opacity:{{ rain3 }};transition:opacity 2s"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:var(--color-neutral-100);opacity:0;animation:{{ lightningAnim }}"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(color-mix(in srgb,var(--color-text) 62%,transparent) .6px,transparent .85px);background-size:4px 4px;opacity:.15;mix-blend-mode:multiply"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 120px 20px color-mix(in srgb,var(--color-text) 28%,transparent);opacity:{{ vignette }};transition:opacity 2s"></div>
+
+  <!-- phase-2 timer -->
+  <sc-if value="{{ isP2 }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:0;right:0;top:0;height:7px;background:color-mix(in srgb,var(--color-text) 22%,transparent)"><div style="height:100%;width:{{ timerPct }}%;background:{{ timerColor }};transition:width .1s linear"></div></div>
+    <div style="position:absolute;right:16px;top:16px;font:600 44px/1 var(--font-heading);color:var(--color-neutral-100);text-shadow:0 2px 8px rgba(0,0,0,.55);animation:{{ timerAnim }}">{{ timerSec }}</div>
+  </sc-if>
+
+  <!-- ===== GAME OVER: the sheet goes to press with a mourning rule ===== -->
+  <sc-if value="{{ isOver }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,color-mix(in srgb,var(--color-text) 55%,transparent),color-mix(in srgb,var(--color-text) 22%,transparent) 46%,color-mix(in srgb,var(--color-text) 62%,transparent));animation:fadeIn 1.2s ease"></div>
+    <div style="position:absolute;left:0;right:0;top:0;height:11px;background:var(--color-text)"></div>
+    <div style="position:absolute;left:0;right:0;top:15px;height:2px;background:var(--color-text)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:11px;background:var(--color-text)"></div>
+    <div style="position:absolute;right:36px;top:44px;text-align:right;animation:fadeUp 1s ease;pointer-events:none">
+      <div style="position:relative;height:118px">
+        <div style="position:absolute;right:5px;top:-4px;font:600 128px/1 var(--font-heading);color:var(--color-accent);opacity:.75">0</div>
+        <div style="position:absolute;right:-4px;top:3px;font:600 128px/1 var(--font-heading);color:var(--color-accent-2);opacity:.7">0</div>
+        <div style="position:absolute;right:0;top:0;font:600 128px/1 var(--font-heading);color:var(--color-neutral-100)">0</div>
+      </div>
+      <div style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--color-neutral-100);opacity:.9;margin-top:6px">Keselamatan habis</div>
+    </div>
+    <div style="position:absolute;left:34px;top:44px;animation:fadeUp 1.2s ease">
+      <div style="font:italic 600 46px/1 var(--font-heading);color:var(--color-neutral-100)">Permainan Berakhir</div>
+      <div style="width:290px;height:2px;background:var(--color-neutral-100);opacity:.7;margin-top:10px"></div>
+    </div>
+  </sc-if>
+
+  <!-- ===== REFLECTION SCENE: a two-shot, Ayah speaking to Dito ===== -->
+  <sc-if value="{{ isRecap }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;background:{{ recapBg }};animation:fadeIn .7s ease;overflow:hidden">
+      <!-- tarpaulin roof at the posko -->
+      <sc-if value="{{ atPosko }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:-40px;top:-10px;width:1400px;height:120px;background:var(--color-accent-800);clip-path:polygon(0 0,100% 0,100% 52%,86% 68%,72% 50%,56% 70%,40% 48%,24% 66%,10% 46%,0 60%)"></div>
+        <div style="position:absolute;left:-40px;top:-10px;width:1400px;height:120px;background:repeating-linear-gradient(90deg,transparent 0 46px,color-mix(in srgb,var(--color-neutral-100) 12%,transparent) 46px 50px);clip-path:polygon(0 0,100% 0,100% 52%,86% 68%,72% 50%,56% 70%,40% 48%,24% 66%,10% 46%,0 60%)"></div>
+        <div style="position:absolute;right:0;top:60px;width:190px;height:300px;background:repeating-linear-gradient(108deg,transparent 0 8px,color-mix(in srgb,var(--color-neutral-100) 26%,transparent) 8px 10px,transparent 10px 22px);background-size:60px 240px;animation:rainfall .5s linear infinite;opacity:.5"></div>
+        <div style="position:absolute;left:150px;bottom:78px;width:74px;height:44px;border-radius:6px;background:var(--color-neutral-800)"></div>
+        <div style="position:absolute;left:236px;bottom:78px;width:52px;height:32px;border-radius:5px;background:var(--color-neutral-600)"></div>
+        <div style="position:absolute;right:230px;bottom:78px;width:88px;height:38px;border-radius:6px;background:var(--color-neutral-800)"></div>
+        <div style="position:absolute;left:120px;top:104px;width:9px;height:200px;background:var(--color-neutral-800);opacity:.55"></div>
+        <div style="position:absolute;left:1120px;top:104px;width:9px;height:220px;background:var(--color-neutral-800);opacity:.55"></div>
+        <div style="position:absolute;left:170px;top:150px;display:flex;gap:56px;opacity:.28">
+          <div style="width:56px;height:120px;border-radius:28px 28px 0 0;background:var(--color-neutral-900)"></div>
+          <div style="width:48px;height:104px;border-radius:24px 24px 0 0;background:var(--color-neutral-900)"></div>
+          <div style="width:60px;height:128px;border-radius:30px 30px 0 0;background:var(--color-neutral-900)"></div>
+        </div>
+        <div style="position:absolute;right:120px;top:168px;display:flex;gap:44px;opacity:.24">
+          <div style="width:52px;height:112px;border-radius:26px 26px 0 0;background:var(--color-neutral-900)"></div>
+          <div style="width:44px;height:96px;border-radius:22px 22px 0 0;background:var(--color-neutral-900)"></div>
+        </div>
+      </sc-if>
+      <!-- home interior at night -->
+      <sc-if value="{{ atHome }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;top:0;width:1280px;height:340px;background:var(--color-neutral-800);opacity:.35"></div>
+        <div style="position:absolute;left:920px;top:70px;width:200px;height:150px;background:var(--color-neutral-900);border:8px solid var(--color-neutral-700)">
+          <div style="position:absolute;inset:0;background:repeating-linear-gradient(112deg,transparent 0 7px,color-mix(in srgb,var(--color-neutral-100) 45%,transparent) 7px 9px,transparent 9px 20px);background-size:60px 240px;animation:rainfall .5s linear infinite"></div>
+        </div>
+      </sc-if>
+      <!-- floor / mat -->
+      <div style="position:absolute;left:0;bottom:0;width:1280px;height:150px;background:{{ recapFloor }}"></div>
+      <div style="position:absolute;left:0;bottom:148px;width:1280px;height:3px;background:var(--color-neutral-600)"></div>
+      <div style="position:absolute;left:300px;bottom:60px;width:680px;height:22px;border-radius:4px;background:var(--color-process-yellow);opacity:.75"></div>
+      <!-- lantern -->
+      <div style="position:absolute;left:{{ lanternX }}px;bottom:82px;width:44px;height:60px">
+        <div style="position:absolute;left:6px;top:10px;width:32px;height:44px;border-radius:6px;background:var(--color-process-yellow);animation:lantern 2.6s ease-in-out infinite"></div>
+        <div style="position:absolute;left:14px;top:0;width:16px;height:12px;border:3px solid var(--color-neutral-800);border-bottom:0;border-radius:8px 8px 0 0"></div>
+        <div style="position:absolute;left:-90px;top:-50px;width:224px;height:224px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--color-process-yellow) 45%,transparent),transparent 70%);animation:lantern 2.6s ease-in-out infinite"></div>
+      </div>
+      <!-- the speaker, large -->
+      <div style="position:absolute;left:420px;bottom:74px;width:0;height:0;transform:scale(3.1) {{ spTransform }};transform-origin:bottom center">
+        <div style="position:absolute;left:-15px;bottom:0;width:30px;height:66px;animation:bob 3.4s ease-in-out infinite">
+          <div style="position:absolute;left:6px;top:47px;width:7px;height:19px;background:{{ spPants }}"></div>
+          <div style="position:absolute;left:17px;top:47px;width:7px;height:19px;background:{{ spPants }}"></div>
+          <div style="position:absolute;left:5px;top:64px;width:9px;height:3px;border-radius:2px;background:var(--color-neutral-900)"></div>
+          <div style="position:absolute;left:16px;top:64px;width:9px;height:3px;border-radius:2px;background:var(--color-neutral-900)"></div>
+          <sc-if value="{{ spSkirt }}" hint-placeholder-val="{{ true }}">
+            <div style="position:absolute;left:0;top:45px;width:30px;height:17px;background:{{ spSkirtCol }};clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)"></div>
+          </sc-if>
+          <div style="position:absolute;left:2px;top:20px;width:26px;height:28px;border-radius:5px 5px 3px 3px;background:{{ speakerShirt }}"></div>
+          <div style="position:absolute;left:25px;top:23px;width:7px;height:24px;border-radius:4px;background:{{ speakerShirt }};transform-origin:top center;animation:gestur 2.8s ease-in-out infinite"></div>
+          <div style="position:absolute;left:-3px;top:23px;width:7px;height:24px;border-radius:4px;background:{{ speakerShirt }};transform-origin:top center"></div>
+          <div style="position:absolute;left:5px;top:0;width:20px;height:20px;border-radius:50%;background:var(--color-neutral-200);border:2.5px solid var(--color-text)">
+            <sc-if value="{{ spAyah }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;left:-9%;top:-17%;width:118%;height:50%;border-radius:52% 52% 8% 8%;background:{{ speakerHair }}"></div>
+              <div style="position:absolute;left:30%;top:60%;width:40%;height:8%;border-radius:2px;background:{{ speakerHair }}"></div>
+            </sc-if>
+            <sc-if value="{{ spIbu }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;left:-9%;top:-17%;width:118%;height:46%;border-radius:54% 54% 10% 10%;background:{{ speakerHair }}"></div>
+              <div style="position:absolute;right:-20%;top:-4%;width:44%;height:44%;border-radius:50%;background:{{ speakerHair }}"></div>
+            </sc-if>
+            <sc-if value="{{ spNenek }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute;left:-9%;top:-17%;width:118%;height:44%;border-radius:54% 54% 10% 10%;background:{{ speakerHair }}"></div>
+              <div style="position:absolute;right:-18%;top:-2%;width:40%;height:40%;border-radius:50%;background:{{ speakerHair }}"></div>
+              <div style="position:absolute;left:9%;top:36%;width:34%;height:34%;border:1.2px solid var(--color-text);border-radius:50%"></div>
+              <div style="position:absolute;right:9%;top:36%;width:34%;height:34%;border:1.2px solid var(--color-text);border-radius:50%"></div>
+              <div style="position:absolute;left:43%;top:51%;width:14%;height:1.2px;background:var(--color-text)"></div>
+              <div style="position:absolute;left:13%;top:82%;width:20%;height:1.2px;background:color-mix(in srgb,var(--color-text) 45%,transparent)"></div>
+              <div style="position:absolute;right:13%;top:82%;width:20%;height:1.2px;background:color-mix(in srgb,var(--color-text) 45%,transparent)"></div>
+            </sc-if>
+            <div style="position:absolute;left:19%;top:30%;width:24%;height:5%;border-radius:2px;background:var(--color-text);opacity:.7"></div>
+            <div style="position:absolute;right:19%;top:30%;width:24%;height:5%;border-radius:2px;background:var(--color-text);opacity:.7"></div>
+            <div style="position:absolute;left:19%;top:42%;width:20%;height:22%;border-radius:50%;background:var(--color-neutral-100);border:1.2px solid var(--color-text);overflow:hidden;animation:kedip 5.4s ease-in-out infinite">
+              <div style="position:absolute;left:26%;top:30%;width:52%;height:52%;border-radius:50%;background:var(--color-text)"></div>
+            </div>
+            <div style="position:absolute;right:19%;top:42%;width:20%;height:22%;border-radius:50%;background:var(--color-neutral-100);border:1.2px solid var(--color-text);overflow:hidden;animation:kedip 5.4s ease-in-out infinite">
+              <div style="position:absolute;left:22%;top:30%;width:52%;height:52%;border-radius:50%;background:var(--color-text)"></div>
+            </div>
+            <div style="position:absolute;left:47%;top:56%;width:7%;height:12%;border-radius:1px;background:color-mix(in srgb,var(--color-text) 40%,transparent)"></div>
+            <div style="position:absolute;left:38%;top:72%;width:24%;height:12%;border-radius:40%;background:var(--color-text);transform-origin:center top;animation:bicara .62s ease-in-out infinite"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Dito, listening -->
+      <div style="position:absolute;left:760px;bottom:74px;width:0;height:0;transform:scale(2.4);transform-origin:bottom center">
+        <div style="position:absolute;left:-15px;bottom:0;width:30px;height:66px;animation:bob 4.2s ease-in-out infinite -1s">
+          <div style="position:absolute;left:2px;top:20px;width:26px;height:28px;border-radius:5px 5px 3px 3px;background:var(--color-accent-400)"></div>
+          <div style="position:absolute;left:5px;top:0;width:20px;height:20px;border-radius:50%;background:var(--color-neutral-200);border:2.5px solid var(--color-text);transform:rotate(-8deg)">
+            <div style="position:absolute;left:-9%;top:-17%;width:118%;height:48%;border-radius:52% 52% 8% 8%;background:var(--color-neutral-900)"></div>
+            <div style="position:absolute;left:20%;top:31%;width:23%;height:5%;border-radius:2px;background:var(--color-text);opacity:.7"></div>
+            <div style="position:absolute;right:20%;top:31%;width:23%;height:5%;border-radius:2px;background:var(--color-text);opacity:.7"></div>
+            <div style="position:absolute;left:20%;top:43%;width:19%;height:21%;border-radius:50%;background:var(--color-neutral-100);border:1.2px solid var(--color-text);overflow:hidden;animation:kedip 4.1s ease-in-out infinite">
+              <div style="position:absolute;left:18%;top:28%;width:54%;height:54%;border-radius:50%;background:var(--color-text)"></div>
+            </div>
+            <div style="position:absolute;right:20%;top:43%;width:19%;height:21%;border-radius:50%;background:var(--color-neutral-100);border:1.2px solid var(--color-text);overflow:hidden;animation:kedip 4.1s ease-in-out infinite">
+              <div style="position:absolute;left:14%;top:28%;width:54%;height:54%;border-radius:50%;background:var(--color-text)"></div>
+            </div>
+            <div style="position:absolute;left:47%;top:57%;width:7%;height:11%;border-radius:1px;background:color-mix(in srgb,var(--color-text) 40%,transparent)"></div>
+            <div style="position:absolute;left:34%;top:74%;width:32%;height:11%;border-bottom:1.4px solid var(--color-text);border-radius:0 0 80% 80%"></div>
+          </div>
+          <div style="position:absolute;left:25px;top:24px;width:7px;height:22px;border-radius:4px;background:var(--color-accent-400);transform:rotate(-16deg);transform-origin:top center"></div>
+          <div style="position:absolute;left:-3px;top:24px;width:7px;height:22px;border-radius:4px;background:var(--color-accent-400);transform:rotate(14deg);transform-origin:top center"></div>
+          <div style="position:absolute;left:5px;top:47px;width:8px;height:19px;background:var(--color-neutral-900)"></div>
+          <div style="position:absolute;left:17px;top:47px;width:8px;height:19px;background:var(--color-neutral-900)"></div>
+        </div>
+      </div>
+      <div style="position:absolute;left:36px;top:22px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-100);opacity:.85">{{ recapKicker }} · {{ speaker }} berbicara pada Dito</div>
+      <div style="position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(color-mix(in srgb,var(--color-text) 55%,transparent) .6px,transparent .85px);background-size:4px 4px;opacity:.13;mix-blend-mode:multiply"></div>
+    </div>
+  </sc-if>
+</div>
+
+<!-- ============ BOTTOM PANEL ============ -->
+<div style="flex:1;margin:0 36px;position:relative">
+
+  <sc-if value="{{ isIntro }}" hint-placeholder-val="{{ true }}">
+    <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:40px;padding-top:18px;animation:fadeUp .6s ease">
+      <div>
+        <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700);margin-bottom:6px">Edisi Musim Hujan · Peringatan Dini BMKG</div>
+        <h1 style="font:600 42px/1.05 var(--font-heading);margin:0 0 10px;text-wrap:pretty">Hujan Tak Kunjung Reda di Kampung Tepi Sungai</h1>
+        <p style="margin:0;font-size:16.5px;line-height:1.45;max-width:640px;text-wrap:pretty">Kamu remaja 14 tahun yang tinggal bersama Ibu, Ayah, Adik Dito, dan Nenek — plus kucing Oyen. BMKG memperkirakan hujan sangat lebat tiga hari ke depan. Keputusanmu menentukan keselamatan keluarga dan tetangga.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:12px">
+        <div style="font-size:14.5px;line-height:1.5;color:var(--color-neutral-800)"><b>Fase 1 · Kesiapsiagaan</b> — jelajahi peta, waktumu terbatas.<br><b>Fase 2 · Respons</b> — putuskan cepat sebelum waktu habis.<br><b>Fase 3 · Pemulihan</b> — bangun kembali dengan lebih aman.</div>
+        <button onClick="{{ start }}" style="align-self:flex-start;background:var(--color-accent);color:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:13px 30px;font:600 19px var(--font-heading);cursor:pointer;box-shadow:var(--shadow-sm)" style-hover="background:var(--color-accent-600)">Mulai Bermain</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ noSpotOpen }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start;padding-top:16px;animation:fadeUp .4s ease">
+        <div>
+          <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:5px">{{ mapKicker }}</div>
+          <h2 style="font:600 29px/1.1 var(--font-heading);margin:0 0 8px">{{ mapTitle }}</h2>
+          <p style="margin:0;font-size:15.5px;line-height:1.45;max-width:700px;text-wrap:pretty">{{ mapNote }}</p>
+        </div>
+        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:9px">
+          <div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">Sisa waktu</div><div style="font:600 36px/1 var(--font-heading);color:{{ hoursColor }}">{{ hoursLabel }}</div></div>
+          <div style="font-size:12.5px;color:var(--color-neutral-700)">{{ doneLabel }}</div>
+          <button onClick="{{ finishMap }}" style="background:var(--color-accent);color:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:11px 24px;font:600 16.5px var(--font-heading);cursor:pointer" style-hover="background:var(--color-accent-600)">{{ finishLabel }}</button>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ spotOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="padding-top:14px;animation:fadeUp .35s ease">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px">
+          <div><span style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700)">{{ openName }}</span><p style="margin:3px 0 10px;font-size:16.5px;line-height:1.4;max-width:900px;text-wrap:pretty">{{ openPrompt }}</p></div>
+          <button onClick="{{ closeSpot }}" style="background:none;border:0;color:var(--color-accent-700);font-size:14.5px;cursor:pointer;text-decoration:underline;white-space:nowrap" style-hover="color:var(--color-accent-600)">Kembali ke peta</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+          <sc-for list="{{ options }}" as="o" hint-placeholder-count="3">
+            <button onClick="{{ o.pick }}" disabled="{{ o.disabled }}" style="text-align:left;background:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:13px 15px;cursor:pointer;display:flex;flex-direction:column;gap:8px;min-height:112px;box-shadow:var(--shadow-sm);opacity:{{ o.opacity }}" style-hover="background:var(--color-accent-100)">
+              <span style="font-size:14.5px;line-height:1.4;text-wrap:pretty">{{ o.t }}</span>
+              <span style="margin-top:auto;font-size:12px;color:var(--color-accent-700);font-weight:600">{{ o.meta }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ isP2 }}" hint-placeholder-val="{{ false }}">
+    <sc-if value="{{ noFb }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:1fr 1.15fr;gap:34px;padding-top:14px;animation:fadeUp .35s ease">
+        <div>
+          <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700);margin-bottom:5px">Fase 2 · Respons · Situasi {{ cardNo }}</div>
+          <h2 style="font:600 27px/1.1 var(--font-heading);margin:0 0 8px">{{ cardTitle }}</h2>
+          <p style="margin:0;font-size:15.5px;line-height:1.45;text-wrap:pretty">{{ cardText }}</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;padding-top:2px">
+          <sc-for list="{{ options }}" as="o" hint-placeholder-count="3">
+            <button onClick="{{ o.pick }}" style="text-align:left;background:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:11px 15px;cursor:pointer;font-size:14.5px;line-height:1.35;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:center" style-hover="background:var(--color-accent-2-100)"><span style="font:600 16px var(--font-heading);color:var(--color-accent-2-700)">{{ o.letter }}</span><span>{{ o.t }}</span></button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ hasFb }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center;padding-top:20px;animation:fadeUp .35s ease">
+        <div style="display:flex;gap:18px;align-items:flex-start">
+          <div style="width:60px;height:60px;border-radius:50%;background:{{ fbBg }};color:var(--color-neutral-100);display:grid;place-items:center;font:600 22px var(--font-heading);flex:none;animation:pop .5s ease">{{ fbDelta }}</div>
+          <div><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-neutral-700);margin-bottom:3px">Akibat keputusanmu</div><p style="margin:0;font-size:17px;line-height:1.45;max-width:820px;text-wrap:pretty">{{ fbText }}</p></div>
+        </div>
+        <button onClick="{{ nextCard }}" style="background:{{ nextBg }};color:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:13px 28px;font:600 17.5px var(--font-heading);cursor:pointer" style-hover="background:var(--color-accent-600)">{{ nextLabel }}</button>
+      </div>
+    </sc-if>
+  </sc-if>
+
+  <sc-if value="{{ isRecap }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;padding-top:14px;animation:fadeUp .4s ease">
+      <p style="margin:0;font:italic 400 19px/1.4 var(--font-body);max-width:900px;text-wrap:pretty">“{{ recapText }}”</p>
+      <div style="text-align:right;display:flex;align-items:center;gap:16px">
+        <span style="font-size:12.5px;color:var(--color-neutral-700);white-space:nowrap">{{ recapCount }}</span>
+        <button onClick="{{ recapNext }}" style="background:var(--color-accent);color:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:12px 26px;font:600 17px var(--font-heading);cursor:pointer;white-space:nowrap" style-hover="background:var(--color-accent-600)">{{ recapBtn }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isEnd }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:40px;padding-top:14px;animation:fadeUp .6s ease">
+      <div>
+        <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-2-700);margin-bottom:5px">Edisi Khusus · Setelah Bencana</div>
+        <h1 style="font:600 38px/1.05 var(--font-heading);margin:0 0 8px;text-wrap:pretty">{{ endTitle }}</h1>
+        <p style="margin:0;font-size:15.5px;line-height:1.45;max-width:640px;text-wrap:pretty">{{ endText }}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:12px">
+        <div style="display:flex;gap:28px"><div><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700)">Total skor</div><div class="cmyk-num" style="font:600 46px/1 var(--font-heading)">{{ total }}</div></div><div style="font-size:13.5px;line-height:1.5;color:var(--color-neutral-800);align-self:center">Keluarga &amp; tetangga selamat tanpa cedera: <b>{{ safeCount }}/6</b><br>Keputusan tepat waktu: <b>{{ onTime }}/8</b></div></div>
+        <button onClick="{{ restart }}" style="align-self:flex-start;background:var(--color-accent);color:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:13px 30px;font:600 18px var(--font-heading);cursor:pointer" style-hover="background:var(--color-accent-600)">Main Lagi</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isOver }}" hint-placeholder-val="{{ false }}">
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:44px;padding-top:12px;animation:fadeUp .7s ease">
+      <div style="border-top:9px solid var(--color-text);padding-top:9px">
+        <div style="height:2px;background:var(--color-text);margin-bottom:10px"></div>
+        <div style="font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--color-accent-2-700);margin-bottom:5px">Edisi Duka · {{ overKicker }}</div>
+        <h1 style="font:italic 600 37px/1.04 var(--font-heading);margin:0 0 8px;text-wrap:pretty">{{ overTitle }}</h1>
+        <p style="margin:0;font-size:15.5px;line-height:1.45;max-width:660px;text-wrap:pretty">{{ overText }}</p>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:11px">
+        <p style="margin:0;font-size:14px;line-height:1.5;color:var(--color-neutral-800);text-wrap:pretty"><b>Titik gagal:</b> {{ overCause }}</p>
+        <p style="margin:0;font-size:14px;line-height:1.5;color:var(--color-accent-700);text-wrap:pretty">{{ overLesson }}</p>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:2px">
+          <button onClick="{{ retryPhase }}" style="background:var(--color-accent);color:var(--color-neutral-100);border:0;border-radius:var(--radius-md);padding:12px 26px;font:600 17px var(--font-heading);cursor:pointer;box-shadow:var(--shadow-sm)" style-hover="background:var(--color-accent-600)">{{ retryLabel }}</button>
+          <button onClick="{{ restart }}" style="background:none;border:0;color:var(--color-accent-700);font-size:14.5px;cursor:pointer;text-decoration:underline;padding:6px 2px" style-hover="color:var(--color-accent-600)">Mulai dari awal</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;decisionSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:15,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:5,&quot;max&quot;:40,&quot;unit&quot;:&quot;detik&quot;,&quot;section&quot;:&quot;Aturan main&quot;},&quot;prepHours&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;min&quot;:4,&quot;max&quot;:16,&quot;unit&quot;:&quot;jam&quot;,&quot;section&quot;:&quot;Aturan main&quot;},&quot;dramatic&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Animasi&quot;}}">
+const P1 = [
+ {id:'radio',name:'HP & Radio',hx:800,hy:500,cam:[820,1.6,540],prompt:'Ponsel bergetar: ada notifikasi peringatan dini cuaca. Ibu bertanya, “Itu dari mana, Nak?”',opts:[
+  {t:'Buka aplikasi/website BMKG, catat status peringatan dan perkiraan hujan lebat 3 hari ke depan.',h:1,prep:15,fb:'Tepat! Peringatan dini resmi datang dari BMKG untuk cuaca dan BNPB/BPBD untuk bencana. Info dari sumber resmi mencegah panik karena hoaks.'},
+  {t:'Percaya pesan berantai di grup WA yang bilang “bendungan jebol malam ini”.',h:1,prep:3,fb:'Pesan berantai sering tidak benar. Selalu cek ulang ke sumber resmi sebelum percaya, apalagi menyebarkan.'},
+  {t:'Abaikan, lanjut main game.',h:0,prep:0,fb:'Peringatan dini itu waktu berharga. Mengabaikannya berarti kehilangan kesempatan bersiap.'}]},
+ {id:'dapur',name:'Dapur · Tas Siaga',hx:900,hy:588,cam:[880,1.65,570],prompt:'Ibu mengeluarkan ransel kosong. “Kalau kita harus mengungsi malam ini, apa yang perlu dibawa?”',opts:[
+  {t:'Isi: air minum, makanan tahan lama, senter & baterai, obat-obatan, dokumen penting dibungkus plastik, powerbank, pakaian ganti.',h:2,prep:20,fb:'Itulah isi Tas Siaga Bencana yang ideal — cukup untuk 3 hari dan diletakkan di tempat yang mudah dijangkau.'},
+  {t:'Masukkan camilan, mainan, dan charger saja.',h:1,prep:6,fb:'Camilan boleh, tapi air minum, obat, senter, dan dokumen jauh lebih penting saat mengungsi.'},
+  {t:'Nanti saja kalau air sudah mulai naik.',h:0,prep:0,fb:'Saat air naik, tidak ada waktu berkemas. Tas siaga harus siap sebelum bencana datang.'}]},
+ {id:'atap',name:'Atap & Selokan',hx:690,hy:648,cam:[720,1.55,610],prompt:'Ayah memanggil dari halaman. Talang penuh daun dan selokan depan rumah tersumbat sampah.',opts:[
+  {t:'Bantu Ayah membersihkan talang dan selokan, lalu angkat barang elektronik ke tempat tinggi.',h:2,prep:15,fb:'Selokan yang lancar mengurangi genangan, dan barang di tempat tinggi aman dari air. Kerja tim!'},
+  {t:'Lihat sebentar dari bawah, lalu masuk lagi.',h:1,prep:4,fb:'Melihat saja tidak mengubah apa pun. Selokan tersumbat memperparah banjir di depan rumah.'},
+  {t:'Biar Ayah saja yang mengerjakan.',h:0,prep:0,fb:'Kesiapsiagaan adalah kerja tim keluarga. Bantuanmu mempercepat semuanya.'}]},
+ {id:'sungai',name:'Tepi Sungai · Tanggul',hx:2080,hy:500,cam:[2160,1.22,566],prompt:'Warga berkumpul di tanggul. Papan ukur ketinggian air sudah menyentuh garis kuning: status Waspada.',opts:[
+  {t:'Bantu menyusun karung pasir dan catat ketinggian air tiap jam untuk dilaporkan ke Pak RT.',h:3,prep:18,fb:'Memantau ketinggian air dan memperkuat tanggul adalah langkah nyata mengurangi risiko banjir.'},
+  {t:'Berfoto di tepi sungai untuk story.',h:1,prep:2,safety:-5,fb:'Tepi sungai saat air naik itu berbahaya — arus bisa tiba-tiba deras. Jaga jarak dari bibir sungai!'},
+  {t:'Lewati, pulang saja.',h:0,prep:0,fb:'Tanggul yang kuat melindungi seluruh kampung, bukan hanya rumahmu.'}]},
+ {id:'balai',name:'Balai Warga',hx:1660,hy:470,cam:[1660,1.35,500],prompt:'Pak RT mengadakan rapat siaga. Ada peta jalur evakuasi dan pembagian tugas warga.',opts:[
+  {t:'Ikut rapat: catat jalur evakuasi, titik kumpul, dan arti bunyi kentongan atau sirene.',h:2,prep:18,fb:'Mengetahui jalur dan titik kumpul menghemat waktu berharga saat evakuasi. Kentongan bertalu-talu artinya bahaya!'},
+  {t:'Tanya Pak RT sebentar di pintu, lalu pulang.',h:1,prep:8,fb:'Lumayan, tapi detail penting seperti tanda bahaya dan titik kumpul bisa terlewat.'},
+  {t:'Lewati, rapat itu urusan orang dewasa.',h:0,prep:0,fb:'Remaja juga bagian dari tim siaga kampung. Suaramu dan tenagamu dibutuhkan.'}]},
+ {id:'nenek',name:'Rumah Nenek & Oyen',hx:470,hy:520,cam:[470,1.45,530],prompt:'Nenek tinggal di rumah kecil dekat lereng bukit. Kucing Oyen tidur di kandang bambu di terasnya.',opts:[
+  {t:'Siapkan obat rutin Nenek, pindahkan barang berharga ke rak atas, siapkan kandang angkut dan makanan Oyen.',h:2,prep:16,fb:'Lansia, anak kecil, dan hewan peliharaan butuh persiapan khusus — kamu sudah memikirkannya!'},
+  {t:'Pindahkan TV Nenek ke atas lemari saja.',h:1,prep:5,fb:'Obat Nenek lebih penting daripada TV. Prioritaskan yang menyelamatkan nyawa.'},
+  {t:'Lewati, Nenek pasti sudah tahu.',h:0,prep:0,fb:'Rumah di dekat lereng paling rawan longsor. Nenek sangat perlu bantuanmu.'}]}
+];
+const P2 = [
+ {title:'Kentongan bertalu-talu',text:'Pukul 01.00. Hujan deras sudah 5 jam tanpa henti, listrik padam. Dari balai warga terdengar kentongan bertalu-talu.',tout:2,cam:[1240,.88,470],opts:[
+  {t:'Nyalakan senter, bangunkan seluruh keluarga, cek info resmi dari HP.',safety:15,fb:'Kentongan bertalu-talu adalah tanda bahaya. Kamu bergerak cepat dan tenang — itu kunci.'},
+  {t:'Keluar sendirian melihat sungai dalam gelap.',safety:-10,fam:{adik:'cemas'},fb:'Keluar sendiri dalam gelap dan hujan deras sangat berisiko. Adik Dito panik mencarimu.'},
+  {t:'Lanjut tidur, mungkin hanya latihan.',safety:-15,fb:'Mengabaikan tanda bahaya membuat keluarga kehilangan waktu berharga untuk bersiap.'}]},
+ {title:'Air masuk rumah',text:'Air keruh menerobos pintu, setinggi mata kaki dan terus naik. Ibu bertanya harus bagaimana.',tout:2,cam:[860,1.5,570],opts:[
+  {t:'Matikan listrik dari MCB, ambil tas siaga, naik ke tempat yang lebih tinggi bersama keluarga.',safety:15,fb:'Listrik dan air adalah kombinasi mematikan. Mematikan MCB lalu naik ke tempat tinggi adalah urutan yang tepat.'},
+  {t:'Selamatkan TV dan laptop dulu.',safety:-10,fb:'Barang bisa diganti, nyawa tidak. Dan menyentuh elektronik di air yang mengalir bisa menyetrum.'},
+  {t:'Menerjang air keluar rumah tanpa rencana.',safety:-8,fb:'Air setinggi 30 cm yang mengalir sudah bisa menyeret orang. Jangan menerjang arus.'}]},
+ {title:'Nenek sulit berjalan',text:'Kalian harus naik ke loteng. Nenek kesulitan berjalan di air, Adik Dito menangis ketakutan.',tout:1,cam:[830,1.45,510],opts:[
+  {t:'Tenangkan Dito, gandeng Nenek bersama Ayah, bergerak pelan-pelan bersama.',safety:15,fb:'Bergerak bersama sebagai satu tim memastikan tidak ada yang tertinggal atau terjatuh.'},
+  {t:'Tinggalkan Nenek dulu, cari bantuan ke luar.',safety:-12,fam:{nenek:'terluka'},fb:'Nenek terpeleset saat ditinggal. Kelompok rentan tidak boleh ditinggal sendirian.'},
+  {t:'Gendong Dito dan lari duluan ke atas.',safety:-8,fam:{nenek:'cemas'},fb:'Dito aman, tapi Nenek tertinggal dalam gelap. Utamakan yang paling rentan.'}]},
+ {title:'Oyen hilang!',text:'Dari jendela loteng kamu melihat Oyen terjebak di pagar halaman, air deras mengalir di sekitarnya.',tout:2,cam:[1000,1.8,560],opts:[
+  {t:'Panggil Oyen dari tempat aman, ulurkan galah/keranjang, jangan masuk ke arus.',safety:10,fb:'Oyen berhasil melompat ke keranjang! Menolong hewan boleh, tapi tanpa membahayakan diri sendiri.'},
+  {t:'Terjun ke arus mengejar Oyen.',safety:-20,fam:{oyen:'aman',adik:'cemas'},fb:'Kamu terseret dan terbentur pagar. Oyen selamat sendiri, tapi kamu cedera. Arus deras tidak bisa dilawan.'},
+  {t:'Biarkan saja, tidak ada waktu.',safety:-3,fam:{oyen:'cemas'},fb:'Oyen akhirnya naik ke pohon sendiri, basah dan ketakutan. Hewan peliharaan juga bagian dari rencana siaga.'}]},
+ {title:'Pak Darto menolak mengungsi',text:'Tetangga sebelah, Pak Darto, berteriak dari jendela: “Banjir tiap tahun juga begini, nggak perlu ngungsi!”',tout:1,cam:[1230,1.5,540],opts:[
+  {t:'Sampaikan status Awas dari BMKG dan ajak ikut tim RT yang datang menjemput.',safety:12,fb:'Informasi resmi yang disampaikan tenang lebih meyakinkan daripada berdebat. Pak Darto ikut mengungsi.'},
+  {t:'Biarkan, urus keluarga sendiri saja.',safety:-5,fam:{tetangga:'terlambat'},fb:'Pak Darto baru dievakuasi tim SAR dini hari saat air sudah sedada. Tetangga adalah keluarga terdekat kita.'},
+  {t:'Berdebat lama sampai Pak Darto marah.',safety:-8,fam:{tetangga:'cemas'},fb:'Waktu terbuang dan Pak Darto makin keras kepala. Sampaikan fakta, bukan emosi.'}]},
+ {title:'Jalur evakuasi',text:'Perahu karet tim RT merapat ke atap. Ada dua jalur ke titik kumpul: memutar lewat jalan atas tanggul di kanan, atau memotong lereng bukit di kiri yang tanahnya retak-retak.',tout:2,cam:[900,1.28,480],opts:[
+  {t:'Lewat jalan atas tanggul ke titik kumpul resmi, meski memutar.',safety:15,fb:'Jalur resmi sudah dipetakan aman. Lereng yang retak setelah hujan lebat adalah tanda longsor.'},
+  {t:'Memotong lereng bukit, lebih cepat.',safety:-15,fam:{ayah:'cemas'},fb:'Retakan tanah, pohon miring, dan air keruh dari lereng adalah tanda longsor. Kalian nyaris terjebak!'},
+  {t:'Tetap menunggu di loteng rumah.',safety:-10,fb:'Air masih naik dan bantuan sudah datang — menunda evakuasi hanya menambah bahaya.'}]},
+ {title:'TANAH LONGSOR!',text:'Terdengar gemuruh dari lereng bukit di belakang rumah Nenek. Tanah bergetar, pohon-pohon miring!',tout:2,cam:[520,.85,470],opts:[
+  {t:'Menjauh dari lereng ke arah tegak lurus jalur longsor, ke tanah tinggi yang terbuka.',safety:15,fb:'Benar! Menjauh menyamping dari jalur longsoran, bukan berlari ke bawah searah material yang jatuh.'},
+  {t:'Berlindung di bawah pohon besar di kaki lereng.',safety:-15,fam:{ayah:'terluka'},fb:'Pohon di lereng bisa ikut tumbang. Ayah tertimpa dahan saat melindungi kalian.'},
+  {t:'Berbalik kembali ke rumah Nenek mengambil barang.',safety:-12,fam:{nenek:'cemas'},fb:'Rumah Nenek tertimbun sebagian. Jangan pernah kembali ke zona longsor.'}]},
+ {title:'Di posko pengungsian',text:'Kalian tiba di posko di tanah tinggi. Dari sini terlihat air terus meninggi hampir menyentuh atap rumah. Petugas BPBD membuka meja pendataan.',tout:2,cam:[1900,.6,430],opts:[
+  {t:'Lapor data keluarga ke petugas, minta pemeriksaan kesehatan untuk Nenek dan Dito.',safety:10,fb:'Pendataan membantu petugas menyalurkan bantuan dan memastikan tidak ada yang hilang.'},
+  {t:'Langsung pulang mengecek rumah.',safety:-10,fb:'Air belum surut, listrik bisa tersambung lagi tiba-tiba, dan longsor susulan mungkin terjadi. Tunggu pernyataan aman.'},
+  {t:'Duduk diam di pojok, tidak lapor.',safety:-2,fb:'Kalian aman tapi tidak tercatat — bantuan makanan dan obat jadi terlambat sampai.'}]}
+];
+const P3 = [
+ {id:'rumah',name:'Rumah · Bersih-bersih',hx:880,hy:584,cam:[850,1.5,550],prompt:'Air surut menyisakan lumpur setebal 20 cm di rumah. Ayah mulai menyapu.',opts:[
+  {t:'Pakai sepatu bot, sarung tangan, dan masker; buang sampah basah, keringkan dan jemur barang.',h:2,prep:12,safety:8,fb:'Lumpur banjir membawa kuman leptospirosis dan tetanus. Alat pelindung diri itu wajib.'},
+  {t:'Langsung bersihkan tanpa alas kaki, biar cepat.',h:1,prep:6,safety:-8,fb:'Kaki lecet terkena lumpur banjir bisa berujung leptospirosis. Pakai pelindung!'},
+  {t:'Lewati.',h:0,prep:0,fb:'Rumah yang lembap berhari-hari memicu jamur dan penyakit pernapasan.'}]},
+ {id:'air',name:'Sumur & Air Bersih',hx:670,hy:596,cam:[690,1.65,590],prompt:'Sumur keluarga terendam banjir. Dito haus dan ingin minum air keran.',opts:[
+  {t:'Gunakan air bersih dari posko atau rebus air sampai mendidih sebelum diminum.',h:1,prep:8,safety:12,fb:'Sumur yang terendam tercemar. Diare adalah penyakit paling umum pasca banjir — air matang menyelamatkan.'},
+  {t:'Biarkan Dito minum air sumur, kelihatannya bening.',h:0,prep:0,safety:-12,fam:{adik:'cemas'},fb:'Air yang tampak bening bisa penuh bakteri. Dito sakit perut malamnya.'},
+  {t:'Lewati.',h:0,prep:0,fb:'Air bersih adalah kebutuhan nomor satu setelah bencana.'}]},
+ {id:'posko',name:'Posko Kesehatan',hx:1660,hy:470,cam:[1660,1.35,500],prompt:'Posko kesehatan dibuka di balai warga. Antrean cukup panjang.',opts:[
+  {t:'Antar Nenek dan Dito periksa; tanya gejala yang harus diwaspadai: demam, diare, sesak.',h:1,prep:6,safety:12,fb:'Pemeriksaan dini mencegah penyakit pasca banjir menjadi berat. Nenek mendapat obat rutinnya lagi.'},
+  {t:'Ambil vitamin saja tanpa diperiksa.',h:1,prep:2,safety:3,fb:'Vitamin membantu, tapi pemeriksaan lebih penting untuk lansia dan anak-anak.'},
+  {t:'Lewati, semua terlihat sehat.',h:0,prep:0,fb:'Gejala penyakit pasca banjir sering muncul 3–7 hari kemudian.'}]},
+ {id:'rapat',name:'Rapat Keluarga',hx:770,hy:466,cam:[880,1.6,520],prompt:'Malam harinya keluarga berkumpul dengan lilin. Ibu mengusulkan membicarakan apa yang bisa diperbaiki.',opts:[
+  {t:'Buat rencana keluarga: titik kumpul, nomor darurat (112, BPBD), tugas tiap orang, isi ulang tas siaga.',h:1,prep:18,fb:'Rencana keluarga tertulis membuat semua orang tahu tugasnya. Bencana berikutnya, kalian lebih siap.'},
+  {t:'Cerita seru saja, tidak perlu rencana.',h:1,prep:4,fb:'Berbagi cerita menyembuhkan trauma, tapi rencana konkret melindungi masa depan.'},
+  {t:'Lewati, sudah lelah.',h:0,prep:0,fb:'Pemulihan bukan hanya fisik — merencanakan ulang adalah bagian dari mitigasi.'}]},
+ {id:'lereng',name:'Lereng & Sungai',hx:330,hy:400,cam:[380,1.3,420],prompt:'Pak RT mengajak kerja bakti: sungai penuh sampah dan lereng bukit gundul setelah longsor.',opts:[
+  {t:'Ikut kerja bakti: bersihkan sungai, tanam vetiver dan pohon di lereng, pasang papan tanda rawan longsor.',h:3,prep:18,fb:'Akar tanaman mengikat tanah dan sungai bersih mengurangi luapan. Ini mitigasi jangka panjang yang nyata.'},
+  {t:'Ikut sebentar, lalu pulang.',h:1,prep:6,fb:'Setiap tenaga membantu, tapi mitigasi butuh komitmen bersama.'},
+  {t:'Lewati.',h:0,prep:0,fb:'Tanpa perbaikan lingkungan, banjir dan longsor akan kembali setiap musim hujan.'}]},
+ {id:'darto',name:'Rumah Pak Darto',hx:1265,hy:520,cam:[1250,1.5,530],prompt:'Rumah Pak Darto paling parah terendam. Beliau duduk termenung di teras.',opts:[
+  {t:'Bantu membersihkan rumahnya dan ajak bicara — ajak ikut rapat siaga RT berikutnya.',h:2,prep:10,safety:6,fam:{tetangga:'aman'},fb:'Gotong royong mempercepat pemulihan dan mengubah sikap Pak Darto tentang peringatan dini.'},
+  {t:'Sapa sebentar dari jalan.',h:0,prep:2,fb:'Sapaan menghangatkan, tapi tangan yang membantu lebih berarti.'},
+  {t:'Lewati.',h:0,prep:0,fb:'Komunitas yang saling bantu pulih lebih cepat daripada yang bergerak sendiri-sendiri.'}]}
+];
+const FAM0 = {ibu:'aman',ayah:'aman',adik:'aman',nenek:'aman',oyen:'aman',tetangga:'aman'};
+const FAMNAME = {ibu:'Ibu',ayah:'Ayah',adik:'Dito',nenek:'Nenek',oyen:'Oyen',tetangga:'Pak Darto'};
+const SKYA = ['var(--color-accent-200)','var(--color-neutral-300)','var(--color-neutral-600)','var(--color-neutral-900)'];
+const SKYB = ['var(--color-accent-300)','var(--color-neutral-500)','var(--color-neutral-800)','var(--color-accent-900)'];
+const CLOUD = ['var(--color-neutral-100)','var(--color-neutral-200)','var(--color-neutral-700)','var(--color-neutral-800)'];
+const G = 620;
+const FLOOD = [0,8,28,54,78,100,124,152];
+const RIVERFILL = [.52,.74,.9,1,1,1,1,1];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+class Snd {
+  constructor(){this.mute=false;this.ok=false}
+  init(){
+    if(this.ok)return;
+    const C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+    this.ctx=new C();this.master=this.ctx.createGain();this.master.gain.value=this.mute?0:.85;this.master.connect(this.ctx.destination);
+    const sr=this.ctx.sampleRate,b=this.ctx.createBuffer(1,sr*2,sr),d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+    this.noise=b;
+    const s=this.ctx.createBufferSource();s.buffer=b;s.loop=true;
+    this.rainF=this.ctx.createBiquadFilter();this.rainF.type='bandpass';this.rainF.frequency.value=2100;this.rainF.Q.value=.5;
+    this.rainG=this.ctx.createGain();this.rainG.gain.value=0;
+    s.connect(this.rainF);this.rainF.connect(this.rainG);this.rainG.connect(this.master);s.start();
+    this.ok=true;
+  }
+  setMute(m){this.mute=m;if(this.ok)this.master.gain.setTargetAtTime(m?0:.85,this.ctx.currentTime,.15)}
+  rain(v){if(!this.ok)return;this.rainG.gain.setTargetAtTime(v*.2,this.ctx.currentTime,.9)}
+  hit(f,dur,vol,type){
+    if(!this.ok)return;const t=this.ctx.currentTime,o=this.ctx.createOscillator(),g=this.ctx.createGain();
+    o.type=type||'triangle';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*.55,t+dur);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+.05);
+  }
+  kentong(n){if(!this.ok)return;for(let i=0;i<(n||5);i++)setTimeout(()=>{this.hit(420,.16,.3,'square');this.hit(880,.07,.12,'triangle')},i*210)}
+  thunder(){
+    if(!this.ok)return;const t=this.ctx.currentTime,s=this.ctx.createBufferSource();s.buffer=this.noise;
+    const f=this.ctx.createBiquadFilter();f.type='lowpass';f.frequency.setValueAtTime(340,t);f.frequency.exponentialRampToValueAtTime(70,t+1.8);
+    const g=this.ctx.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.5,t+.12);g.gain.exponentialRampToValueAtTime(.0001,t+2.1);
+    s.connect(f);f.connect(g);g.connect(this.master);s.start(t);s.stop(t+2.2);
+  }
+  rumble(){
+    if(!this.ok)return;const t=this.ctx.currentTime,s=this.ctx.createBufferSource();s.buffer=this.noise;s.loop=true;
+    const f=this.ctx.createBiquadFilter();f.type='lowpass';f.frequency.setValueAtTime(120,t);f.frequency.linearRampToValueAtTime(48,t+2.6);
+    const g=this.ctx.createGain();g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.55,t+.5);g.gain.setValueAtTime(.55,t+1.6);g.gain.exponentialRampToValueAtTime(.0001,t+3);
+    s.connect(f);f.connect(g);g.connect(this.master);s.start(t);s.stop(t+3.1);
+  }
+  splash(){if(!this.ok)return;const t=this.ctx.currentTime,s=this.ctx.createBufferSource();s.buffer=this.noise;
+    const f=this.ctx.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(900,t);f.frequency.exponentialRampToValueAtTime(260,t+.5);
+    const g=this.ctx.createGain();g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.0001,t+.55);
+    s.connect(f);f.connect(g);g.connect(this.master);s.start(t);s.stop(t+.6)}
+  siren(){if(!this.ok)return;for(let i=0;i<3;i++)setTimeout(()=>this.hit(700+i*40,.5,.1,'sine'),i*520)}
+}
+
+class Component extends DCLogic {
+  state = {screen:'intro',hours:10,prep:0,safety:50,waktu:0,done:{},open:null,cardIdx:0,timeLeft:15000,fb:null,log2:[],timeBonus:0,family:{...FAM0},recap:[],recapIdx:0,shaking:false,slide:false,scale:1,pop:{},mute:false,overCause:'',overFrom:2};
+  snd=new Snd();
+  secs(){return (this.props.decisionSeconds ?? 15)*1000}
+  maxH(){return this.props.prepHours ?? 10}
+  dramatic(){return this.props.dramatic ?? true}
+  componentDidMount(){
+    this.onResize=()=>this.setState({scale:Math.min(window.innerWidth/1280,window.innerHeight/800)});
+    this.onResize();window.addEventListener('resize',this.onResize);
+    this._lastScreen=this.state.screen;this._lastCard=this.state.cardIdx;
+  }
+  componentWillUnmount(){window.removeEventListener('resize',this.onResize);clearInterval(this.iv)}
+  componentDidUpdate(){
+    const s=this.state,ls=this._lastScreen,lc=this._lastCard;
+    if(s.screen===ls&&s.cardIdx===lc)return;
+    this._lastScreen=s.screen;this._lastCard=s.cardIdx;
+    this.snd.rain(this.rainLevel());
+    if(s.screen==='p2'&&ls!=='p2')this.snd.kentong(6);
+    if(s.screen==='p2'&&s.cardIdx!==lc){
+      if(s.cardIdx===1||s.cardIdx===3)this.snd.splash();
+      else if(s.cardIdx===6)this.snd.rumble();
+      else if(s.cardIdx===7)this.snd.siren();
+      else if(s.cardIdx>=2&&this.dramatic())this.snd.thunder();
+    }
+  }
+  rainLevel(){const s=this.state,sc=s.screen;
+    if(sc==='intro')return .08;
+    if(sc==='p1')return .18+(this.maxH()-s.hours)/this.maxH()*.35;
+    if(sc==='recap1')return .7;
+    if(sc==='p2')return .55+Math.min(s.cardIdx,5)*.09;
+    if(sc==='recap2')return .5;
+    if(sc==='over')return .95;
+    return .12}
+  toggleMute=()=>{const m=!this.state.mute;this.snd.setMute(m);this.setState({mute:m})}
+  bump(k){this.setState(s=>({pop:{...s.pop,[k]:true}}));setTimeout(()=>this.setState(s=>({pop:{...s.pop,[k]:false}})),460)}
+  start=()=>{this.snd.init();this.snd.setMute(this.state.mute);this.snd.rain(.2);
+    this.setState({screen:'p1',hours:this.maxH(),prep:0,safety:50,waktu:0,done:{},open:null,family:{...FAM0},log2:[],timeBonus:0,slide:false})}
+  restart=()=>{clearInterval(this.iv);this.setState({screen:'intro',slide:false,done:{},open:null,fb:null,safety:50,prep:0,waktu:0,hours:this.maxH(),cardIdx:0,log2:[],timeBonus:0,family:{...FAM0},recap:[],recapIdx:0})}
+  spotsFor(){return this.state.screen==='p3'?P3:P1}
+  openSpot(id){this.setState({open:id})}
+  closeSpot=()=>this.setState({open:null})
+  chooseMap(i){const sp=this.spotsFor().find(s=>s.id===this.state.open);const o=sp.opts[i];
+    const ns=clamp(this.state.safety+(o.safety||0),0,100),ph=this.state.screen==='p3'?3:1;
+    this.setState(s=>({hours:Math.max(0,s.hours-o.h),prep:s.prep+o.prep,safety:ns,done:{...s.done,[sp.id]:i},open:null,family:{...s.family,...(o.fam||{})}}));
+    if(o.prep)this.bump('prep');if(o.safety)this.bump('safety');this.snd.hit(560,.12,.14,'sine');
+    if(ns<=0)setTimeout(()=>this.gameOver('Di “'+sp.name+'”, kamu memilih: '+o.t,ph),900)}
+
+  gameOver(cause,from){clearInterval(this.iv);
+    const fam={};Object.keys(FAM0).forEach(k=>fam[k]=this.state.family[k]==='aman'?'cemas':this.state.family[k]);
+    this.snd.rain(.95);if(this.dramatic())this.snd.thunder();this.snd.siren();
+    this.setState({screen:'over',fb:null,open:null,overCause:cause,overFrom:from,family:fam,shaking:this.dramatic()});
+    setTimeout(()=>this.setState({shaking:false}),1400)}
+
+  retryPhase=()=>{clearInterval(this.iv);const p=this.state.overFrom;
+    if(p===2){this.setState({screen:'p2',safety:50,cardIdx:0,timeLeft:this.secs(),fb:null,log2:[],timeBonus:0,family:{...FAM0},slide:false,open:null});
+      this._lastScreen='over';this._lastCard=-1;this.iv=setInterval(()=>this.tick(),100);this.bump('safety');return}
+    this.setState({screen:p===3?'p3':'p1',safety:50,hours:this.maxH(),done:{},open:null,family:{...FAM0},slide:p===3});this.bump('safety')}
+  finishMap=()=>{const isP1=this.state.screen==='p1';const list=this.spotsFor();const {done,hours}=this.state;
+    const lines=[];
+    if(isP1){lines.push('Hujan mulai deras, Nak. Sebelum malam tiba, Ibu mau bicara sedikit tentang yang kita lakukan hari ini.')}
+    else{lines.push('Duduk sini, Cu. Nenek sudah tua, tapi belum pernah melihat kampung ini pulih secepat ini.')}
+    list.forEach(s=>{if(done[s.id]!=null)lines.push(s.opts[done[s.id]].fb);else lines.push('Kita tidak sempat ke '+s.name+'. Lain kali, itu juga perlu diperhatikan.')});
+    if(isP1)lines.push('Sisa waktu '+hours+' jam kita gunakan untuk istirahat. Ingat: kesiapsiagaan adalah 80% dari keselamatan. Sekarang, siapkan senter — malam ini akan panjang.');
+    else lines.push('Bencana hidrometeorologi — banjir, longsor, angin kencang — datang bersama musim. Kita tak bisa menghentikan hujan, tapi kita bisa mengurangi risikonya. Itu namanya mitigasi.');
+    const bonus=isP1?hours*3:hours*2;
+    this.setState({screen:isP1?'recap1':'recap3',recap:lines,recapIdx:0,waktu:this.state.waktu+bonus});this.bump('waktu')}
+  recapNext=()=>{const s=this.state;if(s.recapIdx<s.recap.length-1){this.setState({recapIdx:s.recapIdx+1});return}
+    if(s.screen==='recap1')this.startP2();else if(s.screen==='recap2')this.setState({screen:'p3',hours:this.maxH(),done:{},open:null,slide:false});else this.setState({screen:'end'})}
+  startP2(){clearInterval(this.iv);this.setState({screen:'p2',cardIdx:0,timeLeft:this.secs(),fb:null,log2:[],timeBonus:0});this.iv=setInterval(()=>this.tick(),100)}
+  tick(){const s=this.state;if(s.screen!=='p2'||s.fb)return;const t=s.timeLeft-100;if(t<=0)this.choose2(P2[s.cardIdx].tout,true);else this.setState({timeLeft:t})}
+  choose2(i,timeout){const s=this.state;const card=P2[s.cardIdx];const o=card.opts[i];
+    const ns=clamp(s.safety+o.safety,0,100);
+    this.setState({safety:ns,family:{...s.family,...(o.fam||{})},timeBonus:s.timeBonus+(timeout?0:s.timeLeft/1000),log2:[...s.log2,{i,timeout}],
+      fb:{text:(timeout?'Kamu terlalu lama ragu — keadaan memutuskan untukmu. ':'')+o.fb,delta:o.safety,fatal:ns<=0,
+        cause:'Saat “'+card.title+'”, kamu memilih: '+o.t}});
+    this.bump('safety');this.snd.hit(o.safety>0?620:220,.2,.16,o.safety>0?'sine':'sawtooth')}
+  nextCard=()=>{const f=this.state.fb;if(f&&f.fatal){this.gameOver(f.cause,2);return}
+    const idx=this.state.cardIdx+1;if(idx>=P2.length){this.finishP2();return}
+    this.setState({cardIdx:idx,timeLeft:this.secs(),fb:null});
+    if(idx===6){this.setState({slide:true,shaking:this.dramatic()});setTimeout(()=>this.setState({shaking:false}),1500)}}
+  finishP2(){clearInterval(this.iv);const s=this.state;const bonus=Math.round(s.timeBonus/(this.secs()/1000*P2.length)*40);
+    const lines=['Kita selamat sampai posko. Ayah bangga — tapi mari kita ingat lagi malam itu, supaya lain kali lebih baik.'];
+    s.log2.forEach((l,k)=>lines.push((l.timeout?'Saat '+P2[k].title.toLowerCase()+', kamu ragu terlalu lama. ':'')+P2[k].opts[l.i].fb));
+    lines.push('Saat bencana, tiga hal penting: tenang, ikuti informasi resmi, dan jangan tinggalkan yang rentan. Sekarang air mulai surut — saatnya pemulihan.');
+    this.setState({screen:'recap2',recap:lines,recapIdx:0,waktu:s.waktu+bonus});this.bump('waktu')}
+
+  cam(){const s=this.state,sc=s.screen;
+    if(sc==='over')return [900,.95,494];
+    if(sc==='p2')return P2[s.cardIdx]?P2[s.cardIdx].cam:[1240,.9,520];
+    if((sc==='p1'||sc==='p3')&&s.open){const sp=this.spotsFor().find(x=>x.id===s.open);if(sp)return sp.cam}
+    if(sc==='p1'||sc==='p3')return [1290,.56,440];
+    if(sc==='end')return [1290,.56,440];
+    return [1290,.55,440]}
+
+  actorsFor(){const s=this.state,sc=s.screen,i=s.cardIdx,f=s.family;
+    const CAST={
+      p:{s:1.12,tipe:'remaja',shirt:'var(--color-process-yellow)',hair:'var(--color-neutral-900)',pants:'var(--color-accent-800)',rambut:'pendek'},
+      ibu:{s:1.2,tipe:'wanita',shirt:'var(--color-accent-2-600)',hair:'var(--color-neutral-900)',rambut:'sanggul',rok:1,skirtCol:'var(--color-accent-2-800)'},
+      ayah:{s:1.34,tipe:'pria',shirt:'var(--color-accent-700)',hair:'var(--color-neutral-900)',pants:'var(--color-neutral-800)',rambut:'pendek'},
+      adik:{s:.84,tipe:'anak',shirt:'var(--color-accent-400)',hair:'var(--color-neutral-900)',pants:'var(--color-accent-800)',rambut:'pendek'},
+      nenek:{s:.98,tipe:'nenek',shirt:'var(--color-neutral-500)',hair:'var(--color-neutral-300)',rambut:'sanggul',rok:1,skirtCol:'var(--color-neutral-700)',kacamata:1,kerut:1},
+      darto:{s:1.28,tipe:'pria',shirt:'var(--color-neutral-700)',hair:'var(--color-neutral-400)',pants:'var(--color-neutral-800)',rambut:'pendek',kumis:1},
+      rt:{s:1.3,tipe:'pria',shirt:'var(--color-neutral-800)',hair:'var(--color-neutral-900)',pants:'var(--color-neutral-900)',rambut:'peci',kumis:1},
+      warga:{s:1.18,tipe:'wanita',shirt:'var(--color-neutral-500)',hair:'var(--color-neutral-900)',rambut:'panjang',rok:1,skirtCol:'var(--color-neutral-700)'}};
+    const PROP={pria:{hw:19,tw:27,th:27,legH:20},wanita:{hw:18,tw:24,th:26,legH:22},remaja:{hw:19,tw:24,th:25,legH:22},anak:{hw:22,tw:22,th:22,legH:22},nenek:{hw:18,tw:23,th:25,legH:23}};
+    const A=(id,name,x,y,o)=>{const c=CAST[id]||{},pr=PROP[c.tipe]||PROP.pria;
+      const hw=pr.hw,tw=pr.tw,th=pr.th,legH=pr.legH,ty=hw-1,legTop=ty+th;
+      const legW=Math.round(tw*.3),armW=Math.max(6,Math.round(tw*.26)),tx=(30-tw)/2;
+      const anim=o.anim||'bob 2.6s ease-in-out infinite';
+      const st=f[id==='darto'?'tetangga':id];
+      const m=st==='terluka'?'luka':(st==='cemas'||st==='terlambat'||anim.indexOf('panik')>=0)?'cemas':'tenang';
+      return{id,name,x,y,s:c.s||o.s||1.25,o:o.o==null?1:o.o,z:o.z||6,lo:o.lo||0,
+      shirt:c.shirt||o.shirt||'var(--color-accent-600)',hair:c.hair||o.hair||'var(--color-neutral-900)',
+      pants:c.pants||(c.rok?'var(--color-neutral-200)':'var(--color-neutral-800)'),skin:'var(--color-neutral-200)',
+      hw,hx:(30-hw)/2,tw,tx,ty,th,legTop,legH,legW,legLx:14-legW,legRx:16,
+      armW,armH:th-3,armTop:ty+3,armLx:tx+tw-2,armRx:tx-armW+2,
+      skirt:!!c.rok,skirtCol:c.skirtCol||c.shirt,skirtX:tx-3,skirtTop:legTop-2,skirtW:tw+6,skirtH:legH-4,
+      rPendek:c.rambut==='pendek',rSanggul:c.rambut==='sanggul',rPanjang:c.rambut==='panjang',rPeci:c.rambut==='peci',
+      kumis:!!c.kumis,kacamata:!!c.kacamata,kerut:!!c.kerut,
+      mTenang:m==='tenang',mCemas:m==='cemas',mLuka:m==='luka',
+      anim,arm:o.arm||'none',drown:!!o.drown,calm:!o.drown};};
+    const hurt=k=>f[k]==='terluka',worry=k=>f[k]==='cemas';
+    const pose=k=>hurt(k)?'panik .8s ease-in-out infinite':worry(k)?'panik 1.1s ease-in-out infinite':'bob 2.6s ease-in-out infinite';
+    if(sc==='intro')return [
+      A('p','Kamu',880,G,{shirt:'var(--color-process-yellow)',lo:1,arm:'wave 1.1s ease-in-out infinite'}),
+      A('ibu','Ibu',960,G,{shirt:'var(--color-accent-2-600)',anim:'bob 3.1s ease-in-out infinite -1s'}),
+      A('ayah','Ayah',700,G,{shirt:'var(--color-accent-700)',anim:'bob 2.9s ease-in-out infinite -.5s'}),
+      A('adik','Dito',1010,G,{s:.95,shirt:'var(--color-accent-400)',anim:'bob 2.2s ease-in-out infinite'}),
+      A('nenek','Nenek',520,G,{s:1.1,shirt:'var(--color-neutral-600)',hair:'var(--color-neutral-300)',anim:'lambat 3.4s ease-in-out infinite'}),
+      A('darto','Pak Darto',1290,G,{s:1.2,shirt:'var(--color-neutral-700)',anim:'bob 3.6s ease-in-out infinite -2s'})];
+    if(sc==='p1'){const o=s.open;
+      const px=o==='nenek'?470:o==='sungai'?2060:o==='balai'?1640:o==='atap'?700:o==='dapur'?900:o==='radio'?820:880;
+      const py=o==='nenek'?600:o==='sungai'?540:G;
+      return [
+        A('p','Kamu',px,py,{shirt:'var(--color-process-yellow)',lo:1,z:8,arm:o?'gestur 2.4s ease-in-out infinite':'wave 1.4s ease-in-out infinite'}),
+        A('ayah','Ayah',660,G,{shirt:'var(--color-accent-700)',lo:o==='atap'?1:0,arm:o==='atap'?'gestur 2s ease-in-out infinite':'none'}),
+        A('ibu','Ibu',960,G,{shirt:'var(--color-accent-2-600)',lo:o==='dapur'?1:0,anim:'bob 3.1s ease-in-out infinite -1s'}),
+        A('adik','Dito',1040,G,{s:.95,shirt:'var(--color-accent-400)',anim:'bob 2.2s ease-in-out infinite'}),
+        A('nenek','Nenek',536,G,{s:1.1,shirt:'var(--color-neutral-600)',hair:'var(--color-neutral-300)',lo:o==='nenek'?1:0,anim:'lambat 3.4s ease-in-out infinite'}),
+        A('rt','Pak RT',1700,G,{s:1.2,shirt:'var(--color-neutral-800)',lo:o==='balai'?1:0,arm:'gestur 3s ease-in-out infinite'}),
+        A('darto','Pak Darto',1290,G,{s:1.2,shirt:'var(--color-neutral-700)',anim:'bob 3.6s ease-in-out infinite -2s'})];
+    }
+    if(sc==='p2'){
+      const loft=i>=2&&i<=4,roof=i>=5&&i<=6,posko=i>=7;
+      const wl=G-FLOOD[i],sp=roof?.5:1,vis=loft?0:1;
+      const drownDarto=i>=5&&!posko;
+      const bx=posko?2596:roof?845:860,by=posko?452:roof?440:G;
+      return [
+        A('p','Kamu',bx-30*sp,by,{o:vis,shirt:'var(--color-process-yellow)',lo:vis,z:9,anim:i===3?'panik 1s ease-in-out infinite':'bob 2.2s ease-in-out infinite',arm:i===3?'wave .7s ease-in-out infinite':'none'}),
+        A('ibu','Ibu',bx+34*sp,by,{o:vis,shirt:'var(--color-accent-2-600)',lo:i<=1?1:0,anim:pose('ibu')}),
+        A('ayah','Ayah',bx-72*sp,by,{o:vis,shirt:'var(--color-accent-700)',lo:i===6?1:0,anim:hurt('ayah')?'panik .8s ease-in-out infinite':'bob 2.8s ease-in-out infinite -.7s',arm:i===6?'gestur 1.6s ease-in-out infinite':'none'}),
+        A('adik','Dito',bx+68*sp,by,{o:vis,s:.95,shirt:'var(--color-accent-400)',anim:worry('adik')?'panik .9s ease-in-out infinite':'bob 2.1s ease-in-out infinite'}),
+        A('nenek','Nenek',bx-112*sp,by,{o:vis,s:1.1,shirt:'var(--color-neutral-600)',hair:'var(--color-neutral-300)',anim:hurt('nenek')?'panik 1s ease-in-out infinite':'lambat 3.2s ease-in-out infinite'}),
+        A('darto','Pak Darto',1252,drownDarto?wl+5:G,{s:1.2,shirt:'var(--color-neutral-700)',lo:i>=4?1:0,o:posko?0:1,drown:drownDarto,anim:'panik 1.4s ease-in-out infinite',arm:i===4?'gestur 1.8s ease-in-out infinite':'none'}),
+        A('rt','Tim RT',roof?1052:posko?2470:1700,roof?wl+8:posko?452:G,{s:1.2,shirt:'var(--color-neutral-800)',lo:i===5?1:0,o:i>=5?1:0,arm:'gestur 2.2s ease-in-out infinite'}),
+        A('warga','',posko?2500:1740,posko?452:G,{s:1.15,shirt:'var(--color-neutral-500)',o:posko?.9:0,anim:'bob 3.3s ease-in-out infinite -1.4s'})];
+    }
+    if(sc==='over'){const wl=G-176;
+      return [
+        A('p','Kamu',884,wl+22,{shirt:'var(--color-process-yellow)',lo:1,z:9,drown:true}),
+        A('ibu','Ibu',1012,wl+12,{shirt:'var(--color-accent-2-600)',lo:0,z:8,drown:true}),
+        A('adik','Dito',1088,wl+26,{s:.95,shirt:'var(--color-accent-400)',lo:1,z:7,drown:true}),
+        A('nenek','Nenek',756,wl+14,{s:1.1,shirt:'var(--color-neutral-600)',hair:'var(--color-neutral-300)',lo:1,z:7,drown:true}),
+        A('ayah','Ayah',630,wl+28,{shirt:'var(--color-accent-700)',lo:0,z:6,drown:true}),
+        A('darto','Pak Darto',1178,wl+16,{s:1.2,shirt:'var(--color-neutral-700)',lo:0,z:6,drown:true})];
+    }
+    if(sc==='p3'){const o=s.open;
+      const px=o==='lereng'?330:o==='posko'?1640:o==='darto'?1250:o==='air'?680:o==='rapat'?900:850;
+      return [
+        A('p','Kamu',px,o==='lereng'?430:G,{shirt:'var(--color-process-yellow)',lo:1,z:8,arm:'gestur 2.6s ease-in-out infinite'}),
+        A('ayah','Ayah',790,G,{shirt:'var(--color-accent-700)',lo:o==='rumah'?1:0,arm:'gestur 2.2s ease-in-out infinite'}),
+        A('ibu','Ibu',940,G,{shirt:'var(--color-accent-2-600)',anim:'bob 3.1s ease-in-out infinite -1s'}),
+        A('adik','Dito',700,G,{s:.95,shirt:'var(--color-accent-400)',lo:o==='air'?1:0,anim:'bob 2.2s ease-in-out infinite'}),
+        A('nenek','Nenek',560,600,{s:1.1,shirt:'var(--color-neutral-600)',hair:'var(--color-neutral-300)',anim:'lambat 3.4s ease-in-out infinite'}),
+        A('darto','Pak Darto',1300,G,{s:1.2,shirt:'var(--color-neutral-700)',lo:o==='darto'?1:0,anim:'bob 3.6s ease-in-out infinite -2s'}),
+        A('rt','Pak RT',1700,G,{s:1.2,shirt:'var(--color-neutral-800)',lo:o==='posko'?1:0,o:o==='posko'||o==='lereng'?1:.8,arm:'gestur 3s ease-in-out infinite'})];
+    }
+    if(sc==='end')return [
+      A('p','Kamu',880,G,{shirt:'var(--color-process-yellow)',lo:1,arm:'wave 1.6s ease-in-out infinite'}),
+      A('ibu','Ibu',950,G,{shirt:'var(--color-accent-2-600)',anim:'bob 3.1s ease-in-out infinite -1s'}),
+      A('ayah','Ayah',740,G,{shirt:'var(--color-accent-700)'}),
+      A('adik','Dito',1000,G,{s:.95,shirt:'var(--color-accent-400)'}),
+      A('nenek','Nenek',560,600,{s:1.1,shirt:'var(--color-neutral-600)',hair:'var(--color-neutral-300)',anim:'lambat 3.4s ease-in-out infinite'}),
+      A('darto','Pak Darto',1290,G,{s:1.2,shirt:'var(--color-neutral-700)'}),
+      A('rt','Pak RT',1690,G,{s:1.2,shirt:'var(--color-neutral-800)',arm:'gestur 3s ease-in-out infinite'})];
+    return []}
+
+  renderVals(){
+    const s=this.state,sc=s.screen;
+    const isMap=sc==='p1'||sc==='p3',isRecap=sc.startsWith('recap');
+    const used=this.maxH()-s.hours;
+    const lvl={intro:0,p1:used>=this.maxH()/2?2:1,recap1:3,p2:3,recap2:2,p3:1,recap3:1,end:0,over:3}[sc];
+    const dr=this.dramatic();
+    const sceneH=isRecap?556:436;
+    const [cx,cz,cy]=this.cam();
+    const T=(par,z)=>'translate('+(640-cx*par*z)+'px,'+(sceneH/2-cy*z)+'px) scale('+z+')';
+    const fill=sc==='p1'?.34+used/this.maxH()*.28:sc==='p2'?RIVERFILL[s.cardIdx]:sc==='over'?1:(sc==='recap1'?.55:sc==='recap2'?.8:sc==='recap3'||sc==='p3'?.3:.28);
+    const waterY=Math.round(690-fill*196);
+    const floodH=sc==='p2'?FLOOD[s.cardIdx]:sc==='over'?176:sc==='recap2'?46:0;
+    const spilling=fill>=.9;
+    const list=isMap?this.spotsFor():[];
+    const openSp=isMap&&s.open?list.find(x=>x.id===s.open):null;
+    const spots=list.map((sp,k)=>{const d=s.done[sp.id]!=null;const dis=d||(s.hours<=0);
+      return{...sp,iz:1/cz,mark:d?'✓':String(k+1),bg:d?'var(--color-neutral-600)':'var(--color-accent)',
+        anim:d||dis?'none':'pulse 2s ease-out infinite',opacity:s.open?(s.open===sp.id?1:.2):(dis&&!d?.4:1),disabled:dis,pick:()=>this.openSpot(sp.id)}});
+    let options=[];
+    if(openSp)options=openSp.opts.map((o,i)=>{const dis=o.h>s.hours;return{t:o.t,meta:o.h?o.h+' jam':'tanpa waktu',disabled:dis,opacity:dis?.4:1,pick:()=>this.chooseMap(i)}});
+    if(sc==='p2'&&!s.fb)options=P2[s.cardIdx].opts.map((o,i)=>({t:o.t,letter:'ABC'[i],pick:()=>this.choose2(i,false)}));
+    const doneCount=Object.keys(s.done).length;
+    const famList=Object.keys(FAM0).map(k=>{const st=s.family[k];
+      return{name:FAMNAME[k],tail:st==='aman'?'':'· '+st,dot:st==='aman'?'var(--color-accent)':st==='cemas'?'var(--color-process-yellow)':st==='terlambat'?'var(--color-neutral-600)':'var(--color-accent-2)'}});
+    const total=s.safety+s.prep+s.waktu,pct=total/260;
+    const endTitle=pct>=.7?'Pahlawan Siaga Kampung Tepi Sungai':pct>=.45?'Keluarga Tangguh Menghadapi Musim Hujan':'Kampung Berduka, Pelajaran Berharga';
+    const endText=pct>=.7?'Keputusan cepat dan tepatmu menyelamatkan keluarga dan tetangga. Warga kini menjadikan rencana siagamu contoh untuk seluruh kampung.':pct>=.45?'Keluargamu melewati banjir dan longsor dengan selamat, meski beberapa keputusan bisa lebih baik. Musim hujan berikutnya, kalian lebih siap.':'Bencana ini meninggalkan luka. Tapi setiap kesalahan adalah pelajaran — coba lagi dan lihat betapa berbedanya hasilnya dengan persiapan yang lebih baik.';
+    const tp=s.timeLeft/this.secs(),fb=s.fb;
+    const phases=[['Fase 1 · Kesiapsiagaan',['p1','recap1']],['Fase 2 · Respons',['p2','recap2']],['Fase 3 · Pemulihan',['p3','recap3']]].map(([label,ids])=>{const on=ids.includes(sc==='over'?({1:'p1',2:'p2',3:'p3'}[s.overFrom]||'p2'):sc);
+      return{label,color:on?'var(--color-text)':'var(--color-neutral-500)',line:on?'var(--color-accent)':'transparent',weight:on?600:400}});
+    const p1done=k=>s.done[k],p3done=k=>sc==='p3'||sc==='recap3'||sc==='end'?s.done[k]:undefined;
+    const wind=lvl>=3?3:lvl===2?2:1;
+    const oyenState=sc==='over'?'pohon':sc==='p2'?(s.cardIdx===3?'pagar':s.cardIdx>=4?(s.family.oyen==='cemas'?'pohon':'gendong'):'rumah'):'rumah';
+    const dateline={intro:'Senin, 03.00 WIB · Peringatan Dini · Status Waspada',p1:'Senin · Siang menjelang malam · Status Waspada',recap1:'Senin · 21.00 WIB · Hujan sangat lebat',p2:'Selasa · 01.00–05.00 WIB · Status Awas',recap2:'Selasa · 06.00 WIB · Di posko pengungsian',p3:'Kamis · Air surut · Masa pemulihan',recap3:'Kamis · Malam · Di posko pengungsian',end:'Edisi Minggu · Laporan khusus',over:'Selasa · 04.00 WIB · Status Awas · Air terus meninggi'}[sc];
+    const ovf=s.overFrom||2;
+    const overTitle={1:'Malam Datang, Kampung Belum Siap',2:'Air Datang Lebih Cepat dari Keputusanmu',3:'Pemulihan yang Menelan Korban'}[ovf];
+    const overText={
+      1:'Sebelum hujan puncak pun keselamatan keluargamu sudah habis terkuras. Bertaruh di tepi sungai yang meluap dan menunda hal-hal kecil ternyata mahal harganya — malam itu tak ada yang siap.',
+      2:'Keselamatan keluargamu habis di tengah puncak banjir. Arus membawa apa yang tak sempat diselamatkan, dan tim SAR baru bisa merapat saat pagi. Di simulasi kamu bisa mengulang; di kehidupan nyata, tidak.',
+      3:'Banjir sudah surut, tapi bahaya belum. Lumpur, air tercemar, dan lereng yang rapuh menghabiskan keselamatan keluargamu justru pada masa pemulihan.'}[ovf];
+    return{
+      scale:s.scale,phases,safety:s.safety,prep:s.prep,waktu:s.waktu,dateline,
+      popSafety:s.pop.safety?'pop .46s ease':'none',popPrep:s.pop.prep?'pop .46s ease':'none',popWaktu:s.pop.waktu?'pop .46s ease':'none',
+      muteLabel:s.mute?'Suara mati':'Suara hidup',toggleMute:this.toggleMute,
+      sceneH,skyA:SKYA[lvl],skyB:SKYB[lvl],skyBOn:lvl>=2?.9:.45,cloudColor:CLOUD[lvl],
+      sunOpacity:lvl===0?1:0,moonOpacity:lvl===3?.8:0,
+      farT:T(.32,cz),fgT:T(1,cz),cloudX:-cx*.12*cz+300,
+      rain1:lvl>=1?1:0,rain2:lvl>=2?.62:0,rain3:lvl>=3&&dr?.34:0,
+      lightningAnim:lvl===3&&dr?'flash 5.5s linear infinite':'none',
+      shakeAnim:s.shaking?'shake .6s ease-in-out 2':'none',
+      vignette:lvl>=2?.8:.25,
+      windowColor:lvl>=3?'var(--color-neutral-800)':'var(--color-process-yellow)',
+      treeAnim1:'sway'+wind+' '+(wind===3?'1.1s':wind===2?'2.4s':'4.4s')+' ease-in-out infinite',
+      treeAnim2:'sway'+wind+' '+(wind===3?'.9s':wind===2?'2.8s':'5.2s')+' ease-in-out infinite -1s',
+      flagAnim:'sway'+wind+' '+(wind===3?'.7s':wind===2?'1.6s':'3s')+' ease-in-out infinite',
+      kentongAnim:sc==='p2'&&s.cardIdx===0?'panik .22s ease-in-out infinite':'none',
+      ringAnim1:sc==='p2'&&s.cardIdx===0?'ring 1.8s ease-out infinite':'none',
+      ringAnim2:sc==='p2'&&s.cardIdx===0?'ring 1.8s ease-out infinite -.9s':'none',
+      waterTop:waterY-510,floodTop:G-floodH,floodOpacity:floodH>0?.94:0,
+      spillOpacity:spilling&&(104-floodH)>8?1:0,spillH:Math.max(8,104-floodH),
+      slideTransform:s.slide?'translate(96px,132px) rotate(9deg)':'none',slideOpacity:s.slide?1:0,
+      slopeTree:s.slide?'rotate(26deg) translateY(10px)':(sc==='p2'&&s.cardIdx>=4?'rotate(7deg)':'none'),
+      crackOpacity:sc==='p2'&&s.cardIdx>=4?1:s.slide?0:(sc==='p3'||sc==='recap3'?.6:0),
+      boatX:sc==='p2'&&s.cardIdx>=5?960:1400,boatY:sc==='p2'&&s.cardIdx>=5?G-FLOOD[s.cardIdx]-14:520,
+      boatOpacity:sc==='p2'&&s.cardIdx>=5?1:0,
+      oyenX:oyenState==='pagar'?1044:oyenState==='pohon'?1078:oyenState==='gendong'?880:462,
+      oyenY:oyenState==='pagar'?550:oyenState==='pohon'?430:oyenState==='gendong'?470:596,
+      oyenOpacity:s.family.oyen==='terluka'?.4:1,
+      oyenAnim:oyenState==='pagar'?'catshiver .4s ease-in-out infinite':'bob 2.4s ease-in-out infinite',
+      markBag:p1done('dapur')===0,markElec:p1done('atap')===0,ditchFill:p1done('atap')===0?'var(--color-accent-300)':'var(--color-neutral-500)',
+      markSandbag:p1done('sungai')===0,markMap:p1done('balai')===0,markKandang:p1done('nenek')===0,
+      markPlant:p3done('lereng')===0,markWell:p3done('air')===0,markLaundry:p3done('rumah')===0,markDarto:p3done('darto')===0,
+      actors:this.actorsFor(),spots,loftFolk:sc==='p2'&&s.cardIdx>=2&&s.cardIdx<=4,
+      famOpacity:sc==='intro'?.35:1,famList,
+      isP2:sc==='p2',timerPct:tp*100,timerColor:tp>.4?'var(--color-accent)':'var(--color-accent-2)',timerSec:Math.ceil(s.timeLeft/1000),timerAnim:tp<=.3?'tick .5s ease-in-out infinite alternate':'none',
+      isIntro:sc==='intro',start:this.start,
+      isMap,noSpotOpen:!openSp,spotOpen:!!openSp,openName:openSp?openSp.name:'',openPrompt:openSp?openSp.prompt:'',closeSpot:this.closeSpot,options,
+      mapKicker:sc==='p1'?'Fase 1 · Kesiapsiagaan':'Fase 3 · Pemulihan',
+      mapTitle:sc==='p1'?(s.hours>0?'Hujan lebat diperkirakan malam ini':'Waktu habis — hujan mulai deras!'):(s.hours>0?'Air surut, kampung berbenah':'Hari sudah gelap — waktunya istirahat'),
+      mapNote:sc==='p1'?'Klik titik-titik di peta untuk bersiap. Kamera akan mendekat ke lokasinya. Setiap tindakan memakan waktu, dan kamu tidak bisa melakukan semuanya — pilih yang paling penting.':'Klik titik-titik di peta untuk membantu pemulihan. Jaga kesehatan keluarga dan perbaiki kampung agar lebih siap menghadapi musim hujan berikutnya.',
+      hoursLabel:s.hours+' jam',hoursColor:s.hours<=3?'var(--color-accent-2-700)':'var(--color-text)',doneLabel:doneCount+' dari '+list.length+' lokasi dikunjungi',
+      finishMap:this.finishMap,finishLabel:sc==='p1'?(doneCount===list.length||s.hours<=0?'Malam tiba →':'Lanjut ke malam hari →'):(doneCount===list.length||s.hours<=0?'Lihat hasilnya →':'Selesai berbenah →'),
+      cardNo:s.cardIdx+1,cardTitle:P2[s.cardIdx]?P2[s.cardIdx].title:'',cardText:P2[s.cardIdx]?P2[s.cardIdx].text:'',
+      isOver:sc==='over',overTitle,overText,overCause:s.overCause,overKicker:'Fase '+ovf+' gagal · Keselamatan 0',
+      overLesson:'Tiga kunci saat bencana: tetap tenang, ikuti hanya informasi resmi (BMKG, BPBD, 112), dan jangan pernah meninggalkan yang paling rentan.',
+      retryPhase:this.retryPhase,retryLabel:'Ulangi Fase '+ovf,
+      nextLabel:fb&&fb.fatal?'Lihat akibatnya →':'Lanjut',nextBg:fb&&fb.fatal?'var(--color-accent-2-700)':'var(--color-accent)',
+      noFb:!fb,hasFb:!!fb,fbText:fb?fb.text:'',fbDelta:fb?(fb.delta>0?'+'+fb.delta:String(fb.delta)):'',fbBg:fb&&fb.delta>0?'var(--color-accent)':'var(--color-accent-2)',nextCard:this.nextCard,
+      isRecap,atPosko:sc==='recap2'||sc==='recap3',atHome:sc==='recap1',
+      recapBg:sc==='recap1'?'var(--color-neutral-900)':'var(--color-accent-900)',
+      recapFloor:sc==='recap1'?'var(--color-neutral-500)':'var(--color-neutral-400)',
+      lanternX:sc==='recap1'?300:1000,
+      speaker:sc==='recap1'?'Ibu':sc==='recap2'?'Ayah':'Nenek',
+      spIbu:sc==='recap1',spAyah:sc==='recap2',spNenek:sc==='recap3',
+      spSkirt:sc!=='recap2',
+      spTransform:sc==='recap3'?'scale(.88) rotate(-3deg)':sc==='recap1'?'scale(.97)':'scale(1.04)',
+      spPants:sc==='recap2'?'var(--color-neutral-800)':'var(--color-neutral-200)',
+      spSkirtCol:sc==='recap1'?'var(--color-accent-2-800)':'var(--color-neutral-700)',
+      speakerShirt:sc==='recap1'?'var(--color-accent-2-600)':sc==='recap2'?'var(--color-accent-600)':'var(--color-neutral-500)',
+      speakerHair:sc==='recap3'?'var(--color-neutral-300)':'var(--color-neutral-900)',
+      recapKicker:sc==='recap1'?'Refleksi Fase 1':sc==='recap2'?'Refleksi Fase 2':'Refleksi Fase 3',
+      recapText:s.recap[s.recapIdx]||'',recapCount:(s.recapIdx+1)+' / '+s.recap.length,
+      recapBtn:s.recapIdx<s.recap.length-1?'Lanjut':(sc==='recap1'?'Mulai Fase 2 →':sc==='recap2'?'Mulai Fase 3 →':'Lihat Hasil Akhir →'),recapNext:this.recapNext,
+      isEnd:sc==='end',endTitle,endText,total,safeCount:Object.values(s.family).filter(v=>v==='aman').length,onTime:s.log2.filter(l=>!l.timeout).length,restart:this.restart};
+  }
+}
+</script>
+</body>
+</html>

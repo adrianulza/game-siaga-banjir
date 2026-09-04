@@ -1,0 +1,378 @@
+/* Scene animations, extracted verbatim from the original <helmet> style block.
+   Referenced by name from inline animation shorthands throughout src/components/scene. */
+
+@keyframes drift {
+  from {
+    transform: translateX(-400px);
+  }
+  to {
+    transform: translateX(2700px);
+  }
+}
+@keyframes rainfall {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: -70px 280px;
+  }
+}
+@keyframes flash {
+  0%,
+  86%,
+  100% {
+    opacity: 0;
+  }
+  87% {
+    opacity: 0.9;
+  }
+  89% {
+    opacity: 0.05;
+  }
+  91% {
+    opacity: 0.7;
+  }
+  94% {
+    opacity: 0;
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-11px, 5px);
+  }
+  22% {
+    transform: translate(10px, -6px);
+  }
+  34% {
+    transform: translate(-9px, 4px);
+  }
+  46% {
+    transform: translate(8px, -4px);
+  }
+  58% {
+    transform: translate(-6px, 3px);
+  }
+  70% {
+    transform: translate(5px, -2px);
+  }
+  85% {
+    transform: translate(-3px, 1px);
+  }
+}
+@keyframes waveslide {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 48px 0;
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes bobbig {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(1deg);
+  }
+}
+@keyframes panik {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+  25% {
+    transform: translate(-2px, -2px) rotate(2deg);
+  }
+  50% {
+    transform: translate(2px, 0) rotate(-1deg);
+  }
+  75% {
+    transform: translate(-1px, -1px) rotate(2deg);
+  }
+}
+@keyframes lambat {
+  0%,
+  100% {
+    transform: rotate(-7deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-5deg) translateY(-2px);
+  }
+}
+@keyframes gestur {
+  0%,
+  100% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-48deg);
+  }
+  70% {
+    transform: rotate(-22deg);
+  }
+}
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(-24deg);
+  }
+  50% {
+    transform: rotate(34deg);
+  }
+}
+@keyframes sway1 {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+@keyframes sway2 {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+@keyframes sway3 {
+  0%,
+  100% {
+    transform: rotate(-13deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 15px transparent;
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.38);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes tick {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.4;
+    transform: scale(0.92);
+  }
+}
+@keyframes spill {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 90px;
+  }
+}
+@keyframes ring {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+@keyframes lantern {
+  0%,
+  100% {
+    opacity: 0.85;
+  }
+  45% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.7;
+  }
+}
+@keyframes debris {
+  0% {
+    transform: translate(0, 0) rotate(0);
+  }
+  100% {
+    transform: translate(-260px, 6px) rotate(-24deg);
+  }
+}
+@keyframes catshiver {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(1px, -2px);
+  }
+}
+@keyframes boat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1.5deg);
+  }
+}
+@keyframes smoke {
+  0% {
+    transform: translate(0, 0) scale(0.6);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-26px, -52px) scale(1.7);
+    opacity: 0;
+  }
+}
+@keyframes grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes tenggelam {
+  0%,
+  100% {
+    transform: translateY(3px);
+  }
+  22% {
+    transform: translateY(-5px);
+  }
+  48% {
+    transform: translateY(6px);
+  }
+  72% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes meronta {
+  0%,
+  100% {
+    transform: rotate(-30deg) translateY(1px);
+  }
+  22% {
+    transform: rotate(10deg) translateY(-5px);
+  }
+  48% {
+    transform: rotate(-16deg) translateY(0);
+  }
+  74% {
+    transform: rotate(22deg) translateY(-6px);
+  }
+}
+@keyframes meronta2 {
+  0%,
+  100% {
+    transform: rotate(28deg) translateY(-4px);
+  }
+  26% {
+    transform: rotate(-14deg) translateY(1px);
+  }
+  54% {
+    transform: rotate(34deg) translateY(-7px);
+  }
+  78% {
+    transform: rotate(4deg) translateY(-2px);
+  }
+}
+@keyframes ripple2 {
+  0% {
+    transform: scale(0.45);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+@keyframes kedip {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.12);
+  }
+}
+@keyframes bicara {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1.05);
+  }
+}
+@keyframes napas {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes splash {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-6px, -18px) scale(0.35);
+    opacity: 0;
+  }
+}

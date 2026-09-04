@@ -1,0 +1,22 @@
+/* Global base, extracted from the original <helmet> style block. */
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  overflow: hidden;
+}
+a {
+  color: var(--color-accent-700);
+}
+a:hover {
+  color: var(--color-accent-600);
+}
+button {
+  font-family: var(--font-body);
+}
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

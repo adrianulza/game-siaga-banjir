@@ -1,0 +1,3 @@
+/* Hover and interaction states that replace the original template's `style-hover`
+   attributes. The dc-runtime generated these into a live stylesheet at render time;
+   here they are ordinary classes. */

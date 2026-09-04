@@ -1,0 +1,6 @@
+# Normalize to LF in the repo so Prettier's `endOfLine: lf` check passes on Linux CI
+# regardless of the checkout platform.
+* text=auto eol=lf
+
+# Preserved verbatim as the port's reference oracle — never normalize.
+docs/original/** -text

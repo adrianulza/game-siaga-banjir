@@ -1,0 +1,10 @@
+dist/
+node_modules/
+uploads/
+package-lock.json
+
+# Preserved verbatim as the reference oracle for the port — must not be reformatted.
+docs/original/
+
+# Vendored design-system stylesheet; kept byte-faithful to its source.
+src/styles/broadsheet.css
