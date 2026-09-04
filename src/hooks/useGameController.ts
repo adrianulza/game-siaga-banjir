@@ -1,14 +1,24 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 
 import { Sound } from '@/audio/Sound'
+import { COMPETENCY_IDS, type CompetencyId } from '@/data/types'
 import type { GameAction } from '@/engine/actions'
 import { DEFAULT_CONFIG, decisionMs, type GameConfig } from '@/engine/config'
 import { createReducer } from '@/engine/reducer'
-import { createInitialState, type GameState } from '@/engine/state'
+import { createInitialState, isMapScreen, type GameState } from '@/engine/state'
 import { rainLevel } from '@/scene/weather'
 
 /** Score readouts that flash when they change. */
-export type ScoreKey = 'safety' | 'prep' | 'time'
+/** Every figure that can flash when it changes: the gauge and the four bars. */
+export type ScoreKey = 'safety' | CompetencyId
+
+const NO_POPS: Record<ScoreKey, boolean> = {
+  safety: false,
+  informasi: false,
+  logistik: false,
+  rentan: false,
+  mitigasi: false,
+}
 
 export interface GameController {
   state: GameState
@@ -39,25 +49,16 @@ export const useGameController = (config: GameConfig = DEFAULT_CONFIG): GameCont
 
   const [muted, setMuted] = useState(false)
   const [shaking, setShaking] = useState(false)
-  const [pops, setPops] = useState<Record<ScoreKey, boolean>>({
-    safety: false,
-    prep: false,
-    time: false,
-  })
+  const [pops, setPops] = useState<Record<ScoreKey, boolean>>(NO_POPS)
 
   // ---- score flashes -------------------------------------------------------
-  const previousScores = useRef({ safety: state.safety, prep: 0, time: 0 })
+  const previousScores = useRef({ safety: state.safety, ...state.competency })
   useEffect(() => {
     const prev = previousScores.current
     const changed: ScoreKey[] = []
     if (state.safety !== prev.safety) changed.push('safety')
-    if (state.preparedness !== prev.prep) changed.push('prep')
-    if (state.timePoints !== prev.time) changed.push('time')
-    previousScores.current = {
-      safety: state.safety,
-      prep: state.preparedness,
-      time: state.timePoints,
-    }
+    for (const id of COMPETENCY_IDS) if (state.competency[id] !== prev[id]) changed.push(id)
+    previousScores.current = { safety: state.safety, ...state.competency }
     if (changed.length === 0) return
 
     setPops((p) => ({ ...p, ...Object.fromEntries(changed.map((k) => [k, true])) }))
@@ -65,15 +66,17 @@ export const useGameController = (config: GameConfig = DEFAULT_CONFIG): GameCont
       setPops((p) => ({ ...p, ...Object.fromEntries(changed.map((k) => [k, false])) }))
     }, POP_MS)
     return () => clearTimeout(timer)
-  }, [state.safety, state.preparedness, state.timePoints])
+  }, [state.safety, state.competency])
 
-  // ---- phase 2 countdown ---------------------------------------------------
-  const running = state.screen === 'p2' && state.feedback === null
+  // ---- decision countdowns: a crisis card, or an open map spot -------------
+  const running =
+    (state.screen === 'p2' && state.feedback === null) ||
+    (isMapScreen(state.screen) && state.openSpotId !== null)
   useEffect(() => {
     if (!running) return
     const id = setInterval(() => dispatch({ type: 'TICK', deltaMs: TICK_MS }), TICK_MS)
     return () => clearInterval(id)
-  }, [running])
+  }, [running, state.openSpotId])
 
   // ---- the deferred game over the reducer parked in state ------------------
   useEffect(() => {

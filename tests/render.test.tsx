@@ -12,6 +12,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { App } from '@/App'
 import { PHASE2_CARDS } from '@/data/phase2-darurat'
+import { COMPETENCY_IDS, COMPETENCY_LABELS } from '@/data/types'
 
 // jsdom has no Web Audio; the sound engine already bails out on its own, but stub
 // the constructor so the intent is explicit.
@@ -52,9 +53,10 @@ describe('the game mounts and plays', () => {
     expect(screen.getByRole('button', { name: 'Mulai Bermain' })).toBeDefined()
   })
 
-  it('shows the masthead scores and the whole household', () => {
+  it('shows the safety gauge, the four competency bars, and the whole household', () => {
     render(<App />)
-    for (const label of ['Keselamatan', 'Persiapan', 'Waktu']) {
+    const labels = ['Keselamatan', ...COMPETENCY_IDS.map((id) => COMPETENCY_LABELS[id])]
+    for (const label of labels) {
       expect(screen.getByText(label)).toBeDefined()
     }
     for (const name of ['Ibu', 'Ayah', 'Dito', 'Nenek', 'Oyen', 'Pak Darto']) {
@@ -146,7 +148,9 @@ describe('a full run reaches the ending', () => {
     await finishMapAndRecap(/Selesai berbenah|Lihat hasilnya/, /Lihat Hasil Akhir/)
 
     expect(screen.getByText('Edisi Khusus · Setelah Bencana')).toBeDefined()
-    expect(screen.getByText('Total skor')).toBeDefined()
+    // The four bars are the score; one of them is flagged as the weakest.
+    expect(screen.getAllByText(/perlu dilatih/).length).toBe(1)
+    expect(screen.getByText(/Keputusan tepat saat krisis/)).toBeDefined()
     expect(screen.getByRole('button', { name: 'Main Lagi' })).toBeDefined()
   }, 60_000)
 })

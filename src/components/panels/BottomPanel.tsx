@@ -1,7 +1,7 @@
 import { PHASE2_CARDS } from '@/data/phase2-darurat'
-import { spotsForScreen } from '@/engine/reducer'
+import { optionsOnCard, spotsForScreen } from '@/engine/reducer'
 import { endingCopy, gameOverCopy, mapCopy, RECAP_SCENES, recapProgress } from '@/engine/selectors'
-import { onTimeDecisions, safeFamilyCount } from '@/engine/scoring'
+import { correctDecisions, safeFamilyCount } from '@/engine/scoring'
 import { isRecapScreen } from '@/engine/state'
 import { useGame } from '@/hooks/useGame'
 
@@ -258,6 +258,9 @@ const CrisisCardPanel = () => {
   const card = PHASE2_CARDS[state.cardIndex]
   if (!card) return null
 
+  // Anything past the base three is an option this run's preparation opened up.
+  const options = optionsOnCard(card, state.prepTags)
+
   return (
     <div
       style={{
@@ -278,40 +281,57 @@ const CrisisCardPanel = () => {
         <p style={BODY}>{card.text}</p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 9, paddingTop: 2 }}>
-        {card.options.map((option, i) => (
-          <button
-            key={option.text}
-            type="button"
-            className="option-row"
-            onClick={() =>
-              dispatch({ type: 'CHOOSE_CRISIS_OPTION', optionIndex: i, timedOut: false })
-            }
-            style={{
-              textAlign: 'left',
-              background: 'var(--color-neutral-100)',
-              border: 0,
-              borderRadius: 'var(--radius-md)',
-              padding: '11px 15px',
-              cursor: 'pointer',
-              fontSize: 14.5,
-              lineHeight: 1.35,
-              boxShadow: 'var(--shadow-sm)',
-              display: 'flex',
-              gap: 12,
-              alignItems: 'center',
-            }}
-          >
-            <span
+        {options.map((option, i) => {
+          const unlocked = i >= card.options.length
+          return (
+            <button
+              key={option.text}
+              type="button"
+              className="option-row"
+              onClick={() =>
+                dispatch({ type: 'CHOOSE_CRISIS_OPTION', optionIndex: i, timedOut: false })
+              }
               style={{
-                font: '600 16px var(--font-heading)',
-                color: 'var(--color-accent-2-700)',
+                textAlign: 'left',
+                background: unlocked ? 'var(--color-accent-100)' : 'var(--color-neutral-100)',
+                border: unlocked ? '1px solid var(--color-accent-700)' : 0,
+                borderRadius: 'var(--radius-md)',
+                padding: '11px 15px',
+                cursor: 'pointer',
+                fontSize: 14.5,
+                lineHeight: 1.35,
+                boxShadow: 'var(--shadow-sm)',
+                display: 'flex',
+                gap: 12,
+                alignItems: 'center',
               }}
             >
-              {'ABC'[i]}
-            </span>
-            <span>{option.text}</span>
-          </button>
-        ))}
+              <span
+                style={{
+                  font: '600 16px var(--font-heading)',
+                  color: unlocked ? 'var(--color-accent-700)' : 'var(--color-accent-2-700)',
+                }}
+              >
+                {'ABCD'[i]}
+              </span>
+              <span>
+                {unlocked ? (
+                  <span
+                    style={{
+                      ...KICKER,
+                      display: 'block',
+                      marginBottom: 2,
+                      color: 'var(--color-accent-700)',
+                    }}
+                  >
+                    Berkat persiapanmu
+                  </span>
+                ) : null}
+                {option.text}
+              </span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )
@@ -435,8 +455,9 @@ const RecapPanel = ({ screen }: { screen: 'recap1' | 'recap2' | 'recap3' }) => {
 // ------------------------------------------------------------------- end ----
 
 const EndPanel = () => {
-  const { state, dispatch } = useGame()
-  const ending = endingCopy(state)
+  const { state, config, dispatch } = useGame()
+  const ending = endingCopy(state, config)
+  const correctIndexes = PHASE2_CARDS.map((c) => c.correctOptionIndex)
 
   return (
     <div
@@ -462,36 +483,66 @@ const EndPanel = () => {
           {ending.title}
         </h1>
         <p style={{ ...BODY, maxWidth: 640 }}>{ending.text}</p>
+        <p
+          style={{
+            ...BODY,
+            maxWidth: 640,
+            marginTop: 10,
+            paddingLeft: 12,
+            borderLeft: '3px solid var(--color-accent-2-700)',
+          }}
+        >
+          {ending.weakSpot}
+        </p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 12 }}>
-        <div style={{ display: 'flex', gap: 28 }}>
-          <div>
-            <div
-              style={{
-                fontSize: 10,
-                letterSpacing: '.08em',
-                textTransform: 'uppercase',
-                color: 'var(--color-neutral-700)',
-              }}
-            >
-              Total skor
+        <div style={{ display: 'grid', gap: 9 }}>
+          {ending.bars.map((bar) => (
+            <div key={bar.id}>
+              <div
+                style={{
+                  fontSize: 10,
+                  letterSpacing: '.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-neutral-700)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  gap: 10,
+                }}
+              >
+                <span>
+                  {bar.label}
+                  {bar.weakest ? ' · perlu dilatih' : null}
+                </span>
+                <span style={{ color: 'var(--color-text)', fontWeight: 600 }}>{bar.value}</span>
+              </div>
+              <div style={{ height: 8, background: 'var(--color-neutral-300)', marginTop: 3 }}>
+                <div
+                  style={{
+                    height: '100%',
+                    width: `${bar.value}%`,
+                    background: bar.weakest
+                      ? 'var(--color-accent-2-700)'
+                      : 'var(--color-accent-700)',
+                  }}
+                />
+              </div>
             </div>
-            <div className="cmyk-num" style={{ font: '600 46px/1 var(--font-heading)' }}>
-              {ending.total}
-            </div>
-          </div>
-          <div
-            style={{
-              fontSize: 13.5,
-              lineHeight: 1.5,
-              color: 'var(--color-neutral-800)',
-              alignSelf: 'center',
-            }}
-          >
-            Keluarga &amp; tetangga selamat tanpa cedera: <b>{safeFamilyCount(state.family)}/6</b>
-            <br />
-            Keputusan tepat waktu: <b>{onTimeDecisions(state.crisisLog)}/8</b>
-          </div>
+          ))}
+        </div>
+        <div
+          style={{
+            fontSize: 13.5,
+            lineHeight: 1.5,
+            color: 'var(--color-neutral-800)',
+          }}
+        >
+          Keluarga &amp; tetangga selamat tanpa cedera: <b>{safeFamilyCount(state.family)}/6</b>
+          <br />
+          Keputusan tepat saat krisis:{' '}
+          <b>
+            {correctDecisions(state.crisisLog, correctIndexes)}/{PHASE2_CARDS.length}
+          </b>
         </div>
         <button
           type="button"

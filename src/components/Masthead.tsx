@@ -1,4 +1,11 @@
-import { datelineFor, familyChips, familyStripOpacity, phaseTabs } from '@/engine/selectors'
+import { MAX_STRIKES } from '@/engine/state'
+import {
+  competencyReport,
+  datelineFor,
+  familyChips,
+  familyStripOpacity,
+  phaseTabs,
+} from '@/engine/selectors'
 import { useGame } from '@/hooks/useGame'
 
 const LABEL: React.CSSProperties = {
@@ -29,9 +36,57 @@ const Score = ({
   </div>
 )
 
+/**
+ * One competency, as a rule and a filled length. These are the score now, so they
+ * are on screen the whole run rather than saved for the end.
+ */
+const Bar = ({ label, value, popping }: { label: string; value: number; popping: boolean }) => (
+  <div style={{ display: 'grid', gap: 2, animation: popping ? 'pop .46s ease' : 'none' }}>
+    <div style={{ ...LABEL, display: 'flex', justifyContent: 'space-between', gap: 10 }}>
+      <span>{label}</span>
+      <span style={{ color: 'var(--color-text)', fontWeight: 600 }}>{value}</span>
+    </div>
+    <div style={{ height: 4, background: 'var(--color-neutral-300)' }}>
+      <div
+        style={{
+          height: '100%',
+          width: `${value}%`,
+          background: 'var(--color-accent-700)',
+          transition: 'width .35s ease',
+        }}
+      />
+    </div>
+  </div>
+)
+
+/** Three wrong answers in fase 2 end the run; the pips say how much rope is left. */
+const Strikes = ({ used }: { used: number }) => (
+  <div style={{ textAlign: 'right' }}>
+    <div style={LABEL}>Kesalahan</div>
+    <div style={{ display: 'flex', gap: 4, justifyContent: 'flex-end', marginTop: 5 }}>
+      {Array.from({ length: MAX_STRIKES }, (_, i) => (
+        <span
+          key={i}
+          aria-hidden
+          style={{
+            width: 11,
+            height: 11,
+            borderRadius: '50%',
+            border: '1.5px solid var(--color-accent-2-700)',
+            background: i < used ? 'var(--color-accent-2-700)' : 'transparent',
+          }}
+        />
+      ))}
+    </div>
+    <span style={{ position: 'absolute', left: -9999 }}>
+      {used} dari {MAX_STRIKES} kesalahan
+    </span>
+  </div>
+)
+
 /** The newspaper masthead: title, phase rail, the three scores, and the family strip. */
 export const Masthead = () => {
-  const { state, pops, muted, toggleMute } = useGame()
+  const { state, config, pops, muted, toggleMute } = useGame()
 
   return (
     <div
@@ -92,13 +147,12 @@ export const Masthead = () => {
             color="var(--color-accent-2-700)"
             popping={pops.safety}
           />
-          <Score
-            label="Persiapan"
-            value={state.preparedness}
-            color="var(--color-accent-700)"
-            popping={pops.prep}
-          />
-          <Score label="Waktu" value={state.timePoints} popping={pops.time} />
+          {state.screen === 'p2' && <Strikes used={state.strikes} />}
+          <div style={{ display: 'grid', gap: 5, minWidth: 168 }}>
+            {competencyReport(state, config).map((bar) => (
+              <Bar key={bar.id} label={bar.label} value={bar.value} popping={pops[bar.id]} />
+            ))}
+          </div>
           <button
             type="button"
             onClick={toggleMute}

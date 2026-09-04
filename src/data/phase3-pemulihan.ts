@@ -1,5 +1,7 @@
 // GENERATED from docs/original/Siaga Banjir.dc.html by scripts/extract-data.mjs.
 // Content is the original game's; only the key names were expanded.
+// Competency awards, prep tags and phase-2 couplings are not from the original —
+// they live in scripts/scoring-table.mjs. Edit them there, not here.
 
 import type { MapSpot } from './types'
 
@@ -26,6 +28,10 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         safetyDelta: 8,
         feedback:
           'Lumpur banjir membawa kuman leptospirosis dan tetanus. Alat pelindung diri itu wajib.',
+        award: {
+          logistik: 8,
+          rentan: 6,
+        },
       },
       {
         text: 'Langsung bersihkan tanpa alas kaki, biar cepat.',
@@ -33,6 +39,9 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         prepPoints: 6,
         safetyDelta: -8,
         feedback: 'Kaki lecet terkena lumpur banjir bisa berujung leptospirosis. Pakai pelindung!',
+        award: {
+          logistik: 3,
+        },
       },
       {
         text: 'Lewati.',
@@ -63,6 +72,10 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         safetyDelta: 12,
         feedback:
           'Sumur yang terendam tercemar. Diare adalah penyakit paling umum pasca banjir — air matang menyelamatkan.',
+        award: {
+          logistik: 10,
+          rentan: 4,
+        },
       },
       {
         text: 'Biarkan Dito minum air sumur, kelihatannya bening.',
@@ -103,6 +116,9 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         safetyDelta: 12,
         feedback:
           'Pemeriksaan dini mencegah penyakit pasca banjir menjadi berat. Nenek mendapat obat rutinnya lagi.',
+        award: {
+          rentan: 12,
+        },
       },
       {
         text: 'Ambil vitamin saja tanpa diperiksa.',
@@ -110,6 +126,9 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         prepPoints: 2,
         safetyDelta: 3,
         feedback: 'Vitamin membantu, tapi pemeriksaan lebih penting untuk lansia dan anak-anak.',
+        award: {
+          rentan: 3,
+        },
       },
       {
         text: 'Lewati, semua terlihat sehat.',
@@ -140,12 +159,19 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         prepPoints: 18,
         feedback:
           'Rencana keluarga tertulis membuat semua orang tahu tugasnya. Bencana berikutnya, kalian lebih siap.',
+        award: {
+          mitigasi: 12,
+          informasi: 6,
+        },
       },
       {
         text: 'Cerita seru saja, tidak perlu rencana.',
         hourCost: 1,
         prepPoints: 4,
         feedback: 'Berbagi cerita menyembuhkan trauma, tapi rencana konkret melindungi masa depan.',
+        award: {
+          rentan: 3,
+        },
       },
       {
         text: 'Lewati, sudah lelah.',
@@ -176,12 +202,18 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         prepPoints: 18,
         feedback:
           'Akar tanaman mengikat tanah dan sungai bersih mengurangi luapan. Ini mitigasi jangka panjang yang nyata.',
+        award: {
+          mitigasi: 18,
+        },
       },
       {
         text: 'Ikut sebentar, lalu pulang.',
         hourCost: 1,
         prepPoints: 6,
         feedback: 'Setiap tenaga membantu, tapi mitigasi butuh komitmen bersama.',
+        award: {
+          mitigasi: 5,
+        },
       },
       {
         text: 'Lewati.',
@@ -215,12 +247,19 @@ export const PHASE3_SPOTS: readonly MapSpot[] = [
         },
         feedback:
           'Gotong royong mempercepat pemulihan dan mengubah sikap Pak Darto tentang peringatan dini.',
+        award: {
+          rentan: 8,
+          mitigasi: 4,
+        },
       },
       {
         text: 'Sapa sebentar dari jalan.',
         hourCost: 0,
         prepPoints: 2,
         feedback: 'Sapaan menghangatkan, tapi tangan yang membantu lebih berarti.',
+        award: {
+          rentan: 2,
+        },
       },
       {
         text: 'Lewati.',

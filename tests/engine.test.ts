@@ -4,18 +4,20 @@ import { PHASE1_SPOTS } from '@/data/phase1-siaga'
 import { PHASE2_CARDS } from '@/data/phase2-darurat'
 import { PHASE3_SPOTS } from '@/data/phase3-pemulihan'
 import type { GameAction } from '@/engine/actions'
-import { DEFAULT_CONFIG, decisionMs } from '@/engine/config'
-import { createReducer, spotsForScreen } from '@/engine/reducer'
+import { NO_COMPETENCY } from '@/data/types'
+import { DEFAULT_CONFIG, decisionMs, mapDecisionMs } from '@/engine/config'
+import { cardDecisionMs, createReducer, optionsOnCard, spotsForScreen } from '@/engine/reducer'
 import {
+  addAward,
   clampSafety,
-  crisisTimeBonus,
+  competencyBars,
+  correctDecisions,
   endingTier,
-  mapFinishBonus,
   onTimeDecisions,
   safeFamilyCount,
-  totalScore,
+  weakestCompetency,
 } from '@/engine/scoring'
-import { createInitialState, type GameState } from '@/engine/state'
+import { createInitialState, MAX_STRIKES, type GameState } from '@/engine/state'
 
 const config = DEFAULT_CONFIG
 const reduce = createReducer(config)
@@ -34,8 +36,9 @@ describe('initial state', () => {
     expect(initial.screen).toBe('intro')
     expect(initial.hoursLeft).toBe(config.prepHours)
     expect(initial.safety).toBe(50)
-    expect(initial.preparedness).toBe(0)
-    expect(initial.timePoints).toBe(0)
+    expect(initial.competency).toEqual(NO_COMPETENCY)
+    expect(initial.prepTags).toEqual([])
+    expect(initial.strikes).toBe(0)
     expect(initial.timeLeftMs).toBe(decisionMs(config))
     expect(Object.values(initial.family).every((s) => s === 'aman')).toBe(true)
   })
@@ -60,11 +63,12 @@ describe('START and RESTART', () => {
         optionIndex: 0,
       },
     )
-    expect(played.preparedness).toBeGreaterThan(0)
+    expect(played.competency.logistik).toBeGreaterThan(0)
 
     const s = run(played, { type: 'RESTART' })
     expect(s.screen).toBe('intro')
-    expect(s.preparedness).toBe(0)
+    expect(s.competency).toEqual(NO_COMPETENCY)
+    expect(s.prepTags).toEqual([])
     expect(s.mapChoices).toEqual({})
   })
 })
@@ -72,7 +76,7 @@ describe('START and RESTART', () => {
 describe('map phase choices', () => {
   const openPhase1 = () => run(initial, { type: 'START' })
 
-  it('spends hours, earns preparedness, and records the choice', () => {
+  it('spends hours, earns competency, and records the choice', () => {
     const spot = PHASE1_SPOTS.find((s) => s.id === 'dapur')!
     const option = spot.options[0]!
 
@@ -83,9 +87,30 @@ describe('map phase choices', () => {
     )
 
     expect(s.hoursLeft).toBe(config.prepHours - option.hourCost)
-    expect(s.preparedness).toBe(option.prepPoints)
+    expect(s.competency).toEqual(addAward(NO_COMPETENCY, option.award))
     expect(s.mapChoices).toEqual({ dapur: 0 })
     expect(s.openSpotId).toBeNull()
+  })
+
+  it('banks the prep tag the best option leaves behind, and only that option', () => {
+    const best = run(
+      openPhase1(),
+      { type: 'OPEN_SPOT', spotId: 'dapur' },
+      { type: 'CHOOSE_MAP_OPTION', optionIndex: 0 },
+    )
+    expect(best.prepTags).toEqual(['tas-siaga'])
+
+    const halfMeasure = run(
+      openPhase1(),
+      { type: 'OPEN_SPOT', spotId: 'dapur' },
+      { type: 'CHOOSE_MAP_OPTION', optionIndex: 1 },
+    )
+    expect(halfMeasure.prepTags).toEqual([])
+  })
+
+  it('starts the 30 second spot clock when a spot opens', () => {
+    const s = run(openPhase1(), { type: 'OPEN_SPOT', spotId: 'dapur' })
+    expect(s.timeLeftMs).toBe(mapDecisionMs(config))
   })
 
   it('never lets the hour budget go negative', () => {
@@ -128,6 +153,7 @@ describe('map phase choices', () => {
     expect(s.pendingGameOver).toEqual({
       cause: `Di “${spot.name}”, kamu memilih: ${risky.text}`,
       fromPhase: 1,
+      reason: 'safety',
     })
   })
 
@@ -180,13 +206,13 @@ describe('map recap', () => {
     expect(s.recapLines[1]).toBe(spot.options[0]!.feedback)
   })
 
-  it('converts leftover hours to time points at 3/hour in phase 1 and 2/hour in phase 3', () => {
-    const p1 = run({ ...initial, screen: 'p1', hoursLeft: 4 }, { type: 'FINISH_MAP' })
-    expect(p1.timePoints).toBe(12)
+  it('gives leftover hours no score of their own — rushing the map buys nothing', () => {
+    const rushed = run({ ...initial, screen: 'p1', hoursLeft: 10 }, { type: 'FINISH_MAP' })
+    expect(rushed.competency).toEqual(NO_COMPETENCY)
 
     const p3 = run({ ...initial, screen: 'p3', hoursLeft: 4 }, { type: 'FINISH_MAP' })
     expect(p3.screen).toBe('recap3')
-    expect(p3.timePoints).toBe(8)
+    expect(p3.competency).toEqual(NO_COMPETENCY)
   })
 })
 
@@ -248,20 +274,20 @@ describe('crisis phase', () => {
     expect(s.feedback?.cause).toBe(`Saat “${card.title}”, kamu memilih: ${option.text}`)
   })
 
-  it('banks unused seconds only when the player chose in time', () => {
-    const decided = run(inPhase2({ timeLeftMs: 9000 }), {
+  it('pays a correct answer in competency, not in saved seconds', () => {
+    const card = PHASE2_CARDS[0]!
+    const quick = run(inPhase2({ timeLeftMs: 19000 }), {
       type: 'CHOOSE_CRISIS_OPTION',
       optionIndex: 0,
       timedOut: false,
     })
-    expect(decided.timeBonusSeconds).toBe(9)
-
-    const expired = run(inPhase2({ timeLeftMs: 9000 }), {
+    const slow = run(inPhase2({ timeLeftMs: 500 }), {
       type: 'CHOOSE_CRISIS_OPTION',
       optionIndex: 0,
-      timedOut: true,
+      timedOut: false,
     })
-    expect(expired.timeBonusSeconds).toBe(0)
+    expect(quick.competency).toEqual(addAward(NO_COMPETENCY, card.options[0]!.award))
+    expect(slow.competency).toEqual(quick.competency)
   })
 
   it('prefixes the feedback when the clock decided', () => {
@@ -307,12 +333,12 @@ describe('countdown', () => {
 
   it('does nothing while feedback is on screen', () => {
     const paused = inPhase2({
-      feedback: { text: 'x', delta: 0, fatal: false, cause: 'x' },
+      feedback: { text: 'x', delta: 0, fatal: false, fatalReason: 'safety', cause: 'x' },
     })
     expect(run(paused, { type: 'TICK', deltaMs: 100 })).toEqual(paused)
   })
 
-  it('does nothing outside phase 2', () => {
+  it('does nothing on a map screen with no spot open', () => {
     const elsewhere = { ...initial, screen: 'p1' as const }
     expect(run(elsewhere, { type: 'TICK', deltaMs: 100 })).toEqual(elsewhere)
   })
@@ -321,7 +347,24 @@ describe('countdown', () => {
     const card = PHASE2_CARDS[0]!
     const s = run(inPhase2({ timeLeftMs: 100 }), { type: 'TICK', deltaMs: 100 })
     expect(s.crisisLog).toEqual([{ optionIndex: card.timeoutOptionIndex, timedOut: true }])
-    expect(s.timeBonusSeconds).toBe(0)
+  })
+
+  it('drains the spot clock while a map spot is open', () => {
+    const open = run(initial, { type: 'START' }, { type: 'OPEN_SPOT', spotId: 'dapur' })
+    const s = run(open, { type: 'TICK', deltaMs: 100 })
+    expect(s.timeLeftMs).toBe(mapDecisionMs(config) - 100)
+  })
+
+  it('a spot clock running out just closes the dialog — no hours, no points, no strike', () => {
+    const open = run(initial, { type: 'START' }, { type: 'OPEN_SPOT', spotId: 'dapur' })
+    const s = run({ ...open, timeLeftMs: 100 }, { type: 'TICK', deltaMs: 100 })
+
+    expect(s.openSpotId).toBeNull()
+    expect(s.hoursLeft).toBe(config.prepHours)
+    expect(s.competency).toEqual(NO_COMPETENCY)
+    expect(s.strikes).toBe(0)
+    // Nothing was decided, so the spot is still there to come back to.
+    expect(s.mapChoices).toEqual({})
   })
 })
 
@@ -330,7 +373,7 @@ describe('card progression', () => {
     ...initial,
     screen: 'p2',
     cardIndex,
-    feedback: { text: 'x', delta: 1, fatal: false, cause: 'x' },
+    feedback: { text: 'x', delta: 1, fatal: false, fatalReason: 'safety', cause: 'x' },
   })
 
   it('moves to the next card and resets the clock', () => {
@@ -338,6 +381,12 @@ describe('card progression', () => {
     expect(s.cardIndex).toBe(1)
     expect(s.timeLeftMs).toBe(decisionMs(config))
     expect(s.feedback).toBeNull()
+  })
+
+  it('gives the next card the seconds the run had prepared for', () => {
+    const prepared = run({ ...answered(0), prepTags: ['rumah-aman'] }, { type: 'NEXT_CARD' })
+    // Card 2 pays 5 extra seconds to a player who secured the house.
+    expect(prepared.timeLeftMs).toBe(decisionMs(config) + 5000)
   })
 
   it('drops the hillside on card index 6 and keeps it down', () => {
@@ -353,23 +402,6 @@ describe('card progression', () => {
     const s = run(answered(PHASE2_CARDS.length - 1), { type: 'NEXT_CARD' })
     expect(s.screen).toBe('recap2')
     expect(s.recapIndex).toBe(0)
-  })
-
-  it('awards the full speed bonus for instant decisions and none for a full stall', () => {
-    const perfect = run(
-      {
-        ...answered(PHASE2_CARDS.length - 1),
-        timeBonusSeconds: config.decisionSeconds * PHASE2_CARDS.length,
-      },
-      { type: 'NEXT_CARD' },
-    )
-    expect(perfect.timePoints).toBe(40)
-
-    const stalled = run(
-      { ...answered(PHASE2_CARDS.length - 1), timeBonusSeconds: 0 },
-      { type: 'NEXT_CARD' },
-    )
-    expect(stalled.timePoints).toBe(0)
   })
 })
 
@@ -393,11 +425,12 @@ describe('retrying a phase', () => {
   })
 
   it('restores phase 2 with a fresh clock and re-arms the sound director', () => {
-    const s = run(dead(2), { type: 'RETRY_PHASE' })
+    const s = run({ ...dead(2), strikes: 2 }, { type: 'RETRY_PHASE' })
     expect(s.screen).toBe('p2')
     expect(s.cardIndex).toBe(0)
     expect(s.timeLeftMs).toBe(decisionMs(config))
     expect(s.crisisLog).toEqual([])
+    expect(s.strikes).toBe(0)
     // Without this the kentongan would not sound again on a phase-2 retry.
     expect(s.soundEpoch).toBeGreaterThan(dead(2).soundEpoch)
   })
@@ -416,28 +449,51 @@ describe('scoring helpers', () => {
     expect(clampSafety(37)).toBe(37)
   })
 
-  it('sums the three tracked numbers', () => {
-    expect(totalScore({ safety: 50, preparedness: 80, timePoints: 30 })).toBe(160)
+  it('adds awards without touching the competencies an option does not teach', () => {
+    const s = addAward({ informasi: 5, logistik: 0, rentan: 0, mitigasi: 0 }, { informasi: 3 })
+    expect(s).toEqual({ informasi: 8, logistik: 0, rentan: 0, mitigasi: 0 })
+    expect(addAward(s, undefined)).toBe(s)
   })
 
-  it('grades the ending at the 70% and 45% marks', () => {
-    expect(endingTier(260)).toBe('pahlawan')
-    expect(endingTier(182)).toBe('pahlawan') // exactly 70%
-    expect(endingTier(181)).toBe('tangguh')
-    expect(endingTier(117)).toBe('tangguh') // exactly 45%
-    expect(endingTier(116)).toBe('duka')
-    expect(endingTier(0)).toBe('duka')
+  it('normalises raw points against each competency own ceiling', () => {
+    const bars = competencyBars(
+      { informasi: 40, logistik: 27, rentan: 0, mitigasi: 82 },
+      { informasi: 80, logistik: 54, rentan: 93, mitigasi: 82 },
+    )
+    expect(bars).toEqual({ informasi: 50, logistik: 50, rentan: 0, mitigasi: 100 })
   })
 
-  it('converts leftover hours per phase', () => {
-    expect(mapFinishBonus(5, 1)).toBe(15)
-    expect(mapFinishBonus(5, 3)).toBe(10)
+  it('never lets a bar exceed 100, even if content out-runs the ceiling', () => {
+    const bars = competencyBars(
+      { informasi: 200, logistik: 0, rentan: 0, mitigasi: 0 },
+      { informasi: 80, logistik: 54, rentan: 93, mitigasi: 82 },
+    )
+    expect(bars.informasi).toBe(100)
   })
 
-  it('scales the crisis time bonus to 40 points', () => {
-    expect(crisisTimeBonus(120, 8, config)).toBe(40)
-    expect(crisisTimeBonus(60, 8, config)).toBe(20)
-    expect(crisisTimeBonus(0, 8, config)).toBe(0)
+  it('grades on the weakest bar, so one abandoned skill cannot be averaged away', () => {
+    const strongExceptOne = { informasi: 100, logistik: 100, rentan: 20, mitigasi: 100 }
+    expect(weakestCompetency(strongExceptOne)).toBe('rentan')
+    expect(endingTier(strongExceptOne)).toBe('duka')
+
+    expect(endingTier({ informasi: 70, logistik: 70, rentan: 70, mitigasi: 70 })).toBe('pahlawan')
+    expect(endingTier({ informasi: 70, logistik: 70, rentan: 69, mitigasi: 70 })).toBe('tangguh')
+    expect(endingTier({ informasi: 45, logistik: 99, rentan: 99, mitigasi: 99 })).toBe('tangguh')
+    expect(endingTier({ informasi: 44, logistik: 99, rentan: 99, mitigasi: 99 })).toBe('duka')
+  })
+
+  it('counts a prepared answer as a correct one', () => {
+    const correctIndexes = PHASE2_CARDS.map((c) => c.correctOptionIndex)
+    expect(
+      correctDecisions(
+        [
+          { optionIndex: 0, timedOut: false },
+          { optionIndex: 2, timedOut: false },
+          { optionIndex: 3, timedOut: false, unlocked: true },
+        ],
+        correctIndexes,
+      ),
+    ).toBe(2)
   })
 
   it('counts safe family members and on-time decisions', () => {
@@ -449,6 +505,124 @@ describe('scoring helpers', () => {
         { optionIndex: 1, timedOut: true },
       ]),
     ).toBe(1)
+  })
+})
+
+describe('preparation paying off in phase 2', () => {
+  const inPhase2 = (over = {}) => ({
+    ...initial,
+    screen: 'p2' as const,
+    timeLeftMs: decisionMs(config),
+    ...over,
+  })
+
+  it('hides the unlocked option from a run that did not prepare', () => {
+    const card = PHASE2_CARDS[2]!
+    expect(optionsOnCard(card, [])).toHaveLength(3)
+    expect(optionsOnCard(card, ['rencana-rentan'])).toHaveLength(4)
+  })
+
+  it('lets the prepared player take the fourth option, and counts it as correct', () => {
+    const card = PHASE2_CARDS[2]!
+    const unlocked = optionsOnCard(card, ['rencana-rentan'])[3]!
+
+    const s = run(inPhase2({ cardIndex: 2, prepTags: ['rencana-rentan'] }), {
+      type: 'CHOOSE_CRISIS_OPTION',
+      optionIndex: 3,
+      timedOut: false,
+    })
+
+    expect(s.strikes).toBe(0)
+    expect(s.safety).toBe(50 + unlocked.safetyDelta)
+    expect(s.competency).toEqual(addAward(NO_COMPETENCY, unlocked.award))
+    expect(s.crisisLog).toEqual([{ optionIndex: 3, timedOut: false, unlocked: true }])
+  })
+
+  it('softens a wrong answer for a prepared player, but still strikes them', () => {
+    const card = PHASE2_CARDS[1]!
+    const raw = card.options[1]!.safetyDelta
+
+    const unprepared = run(inPhase2({ cardIndex: 1 }), {
+      type: 'CHOOSE_CRISIS_OPTION',
+      optionIndex: 1,
+      timedOut: false,
+    })
+    const shielded = run(inPhase2({ cardIndex: 1, prepTags: ['tas-siaga'] }), {
+      type: 'CHOOSE_CRISIS_OPTION',
+      optionIndex: 1,
+      timedOut: false,
+    })
+
+    expect(unprepared.safety).toBe(50 + raw)
+    expect(shielded.safety).toBe(50 + Math.round(raw * 0.5))
+    expect(shielded.safety).toBeGreaterThan(unprepared.safety)
+    // Softened is not forgiven.
+    expect(shielded.strikes).toBe(1)
+  })
+
+  it('adds the prep seconds to the clock a card is worth', () => {
+    expect(cardDecisionMs(PHASE2_CARDS[0], [], config)).toBe(decisionMs(config))
+    expect(cardDecisionMs(PHASE2_CARDS[0], ['info-resmi'], config)).toBe(decisionMs(config) + 5000)
+  })
+})
+
+describe('three strikes', () => {
+  const inPhase2 = (over = {}) => ({
+    ...initial,
+    screen: 'p2' as const,
+    timeLeftMs: decisionMs(config),
+    ...over,
+  })
+
+  const wrongAnswer = (state: GameState) =>
+    run(state, { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 1, timedOut: false })
+
+  it('leaves the count alone when the answer is right', () => {
+    const s = run(inPhase2(), { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 0, timedOut: false })
+    expect(s.strikes).toBe(0)
+  })
+
+  it('counts every option that is not the right one', () => {
+    const b = run(inPhase2(), { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 1, timedOut: false })
+    const c = run(inPhase2(), { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 2, timedOut: false })
+    expect(b.strikes).toBe(1)
+    expect(c.strikes).toBe(1)
+  })
+
+  it('counts a timeout, since the clock never picks the right answer', () => {
+    const s = run(inPhase2({ timeLeftMs: 100 }), { type: 'TICK', deltaMs: 100 })
+    expect(s.strikes).toBe(1)
+  })
+
+  it('ends the run on the third one, with safety to spare', () => {
+    let s = wrongAnswer(inPhase2({ safety: 100 }))
+    expect(s.feedback?.fatal).toBe(false)
+
+    s = wrongAnswer({ ...s, cardIndex: 1, feedback: null })
+    expect(s.strikes).toBe(2)
+    expect(s.feedback?.fatal).toBe(false)
+
+    s = wrongAnswer({ ...s, cardIndex: 2, feedback: null })
+    expect(s.strikes).toBe(MAX_STRIKES)
+    expect(s.feedback?.fatal).toBe(true)
+    expect(s.feedback?.fatalReason).toBe('strikes')
+    expect(s.safety).toBeGreaterThan(0)
+
+    const over = run(s, { type: 'NEXT_CARD' })
+    expect(over.screen).toBe('over')
+    expect(over.overReason).toBe('strikes')
+    expect(over.overFromPhase).toBe(2)
+  })
+
+  it('blames safety, not strikes, when the meter empties first', () => {
+    const s = run(inPhase2({ safety: 5 }), {
+      type: 'CHOOSE_CRISIS_OPTION',
+      optionIndex: 2,
+      timedOut: false,
+    })
+    expect(s.feedback?.fatal).toBe(true)
+    expect(s.feedback?.fatalReason).toBe('safety')
+    expect(run(s, { type: 'NEXT_CARD' }).overReason).toBe('safety')
   })
 })
 

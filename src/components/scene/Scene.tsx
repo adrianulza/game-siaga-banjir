@@ -1,5 +1,6 @@
-import { decisionMs } from '@/engine/config'
-import { spotsForScreen } from '@/engine/reducer'
+import { PHASE2_CARDS } from '@/data/phase2-darurat'
+import { mapDecisionMs } from '@/engine/config'
+import { cardDecisionMs, spotsForScreen } from '@/engine/reducer'
 import { timerDisplay } from '@/engine/selectors'
 import { isMapScreen, isRecapScreen } from '@/engine/state'
 import { useGame } from '@/hooks/useGame'
@@ -324,7 +325,16 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
   const treeAnim2 = `sway${wind} ${swayDuration[1]} ease-in-out infinite -1s`
   const flagAnim = `sway${wind} ${swayDuration[2]} ease-in-out infinite`
 
-  const timer = timerDisplay(state, decisionMs(config))
+  // Both phases are on a clock now: 20s (plus any the run's preparation bought)
+  // on a crisis card, 30s once a map spot is open.
+  const onCrisisCard = state.screen === 'p2'
+  const onOpenSpot = isMapScreen(state.screen) && state.openSpotId !== null
+  const timer = timerDisplay(
+    state,
+    onOpenSpot
+      ? mapDecisionMs(config)
+      : cardDecisionMs(PHASE2_CARDS[state.cardIndex], state.prepTags, config),
+  )
 
   return (
     <div
@@ -445,7 +455,7 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
 
       <WeatherOverlay level={level} dramatic={config.dramatic} />
 
-      {state.screen === 'p2' && (
+      {onCrisisCard || onOpenSpot ? (
         <>
           <div
             style={{
@@ -480,7 +490,7 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
             {timer.seconds}
           </div>
         </>
-      )}
+      ) : null}
 
       {state.screen === 'over' && <GameOverPlate />}
       {isRecapScreen(state.screen) && <ReflectionScene screen={state.screen} />}

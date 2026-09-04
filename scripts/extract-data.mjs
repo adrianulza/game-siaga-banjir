@@ -12,6 +12,14 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import vm from 'node:vm'
 
+import {
+  CORRECT_OPTION_INDEX,
+  PHASE1_AWARDS,
+  PHASE1_TAGS,
+  PHASE2_SCORING,
+  PHASE3_AWARDS,
+} from './scoring-table.mjs'
+
 const SRC = 'docs/original/Siaga Banjir.dc.html'
 const html = readFileSync(SRC, 'utf8')
 
@@ -44,40 +52,64 @@ writeFileSync('tests/fixtures/original-data.json', JSON.stringify(d, null, 2) + 
 // ---- renames ----------------------------------------------------------------
 const camera = ([x, zoom, y]) => ({ x, zoom, y })
 
+/** Drop empty award objects rather than emitting `award: {}` sixty times over. */
+const withAward = (award) => (award && Object.keys(award).length ? { award } : {})
+
 /** Options on map spots (phases 1 & 3): hourCost/prepPoints always present. */
-const mapOption = (o) => ({
+const mapOption = (awards, tag) => (o, i) => ({
   text: o.t,
   hourCost: o.h,
   prepPoints: o.prep,
   ...(o.safety === undefined ? {} : { safetyDelta: o.safety }),
   ...(o.fam === undefined ? {} : { family: o.fam }),
   feedback: o.fb,
+  ...withAward(awards?.[i]),
+  // Only the best option leaves something behind for phase 2 to read.
+  ...(i === 0 && tag ? { grantsTags: [tag] } : {}),
 })
 
 /** Options on crisis cards (phase 2): safetyDelta always present, no time cost. */
-const crisisOption = (o) => ({
+const crisisOption = (awards) => (o, i) => ({
   text: o.t,
   safetyDelta: o.safety,
   ...(o.fam === undefined ? {} : { family: o.fam }),
   feedback: o.fb,
+  ...withAward(awards?.[i]),
 })
 
-const mapSpot = (s) => ({
+const mapSpot = (awardTable, tagTable) => (s) => ({
   id: s.id,
   name: s.name,
   hotspot: { x: s.hx, y: s.hy },
   camera: camera(s.cam),
   prompt: s.prompt,
-  options: s.opts.map(mapOption),
+  options: s.opts.map(mapOption(awardTable[s.id], tagTable?.[s.id])),
 })
 
-const crisisCard = (c) => ({
-  title: c.title,
-  text: c.text,
-  timeoutOptionIndex: c.tout,
-  camera: camera(c.cam),
-  options: c.opts.map(crisisOption),
+/** A locked option is a full CrisisOption plus the tag that reveals it. */
+const lockedOption = (l) => ({
+  requiresTag: l.requiresTag,
+  text: l.text,
+  safetyDelta: l.safetyDelta,
+  ...(l.family === undefined ? {} : { family: l.family }),
+  feedback: l.feedback,
+  ...withAward(l.award),
 })
+
+const crisisCard = (c, i) => {
+  const scoring = PHASE2_SCORING[i]
+  return {
+    title: c.title,
+    text: c.text,
+    timeoutOptionIndex: c.tout,
+    correctOptionIndex: CORRECT_OPTION_INDEX,
+    camera: camera(c.cam),
+    options: c.opts.map(crisisOption(scoring.awards)),
+    ...(scoring.locked ? { lockedOptions: scoring.locked.map(lockedOption) } : {}),
+    ...(scoring.shields ? { shields: scoring.shields } : {}),
+    ...(scoring.extraSeconds ? { extraSeconds: scoring.extraSeconds } : {}),
+  }
+}
 
 const castEntry = (c) => ({
   scale: c.s,
@@ -100,19 +132,25 @@ const mapValues = (o, f) => Object.fromEntries(Object.entries(o).map(([k, v]) =>
 const lit = (v) => JSON.stringify(v, null, 2)
 const header = `// GENERATED from ${SRC} by scripts/extract-data.mjs.\n// Content is the original game's; only the key names were expanded.\n`
 
+/** The scenario files carry a scoring layer the original never had. */
+const scored =
+  header +
+  '// Competency awards, prep tags and phase-2 couplings are not from the original —\n' +
+  '// they live in scripts/scoring-table.mjs. Edit them there, not here.\n'
+
 writeFileSync(
   'src/data/phase1-siaga.ts',
-  `${header}
+  `${scored}
 import type { MapSpot } from './types'
 
 /** Fase 1 — Siaga: enam titik persiapan sebelum banjir datang. */
-export const PHASE1_SPOTS: readonly MapSpot[] = ${lit(d.P1.map(mapSpot))}
+export const PHASE1_SPOTS: readonly MapSpot[] = ${lit(d.P1.map(mapSpot(PHASE1_AWARDS, PHASE1_TAGS)))}
 `,
 )
 
 writeFileSync(
   'src/data/phase2-darurat.ts',
-  `${header}
+  `${scored}
 import type { CrisisCard } from './types'
 
 /** Fase 2 — Tanggap Darurat: delapan keputusan krisis berbatas waktu. */
@@ -122,11 +160,11 @@ export const PHASE2_CARDS: readonly CrisisCard[] = ${lit(d.P2.map(crisisCard))}
 
 writeFileSync(
   'src/data/phase3-pemulihan.ts',
-  `${header}
+  `${scored}
 import type { MapSpot } from './types'
 
 /** Fase 3 — Pemulihan: enam titik pemulihan dan mitigasi setelah air surut. */
-export const PHASE3_SPOTS: readonly MapSpot[] = ${lit(d.P3.map(mapSpot))}
+export const PHASE3_SPOTS: readonly MapSpot[] = ${lit(d.P3.map(mapSpot(PHASE3_AWARDS)))}
 `,
 )
 

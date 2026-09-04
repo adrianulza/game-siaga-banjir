@@ -1,8 +1,16 @@
 import { FAMILY_NAMES } from '@/data/cast'
-import { FAMILY_IDS, type FamilyStatus } from '@/data/types'
+import {
+  COMPETENCY_IDS,
+  COMPETENCY_LABELS,
+  FAMILY_IDS,
+  type CompetencyId,
+  type FamilyStatus,
+} from '@/data/types'
 
-import { endingTier, totalScore } from './scoring'
-import type { GameState, PhaseNumber, ScreenId } from './state'
+import { ceilingsFor } from './ceilings'
+import type { GameConfig } from './config'
+import { competencyBars, endingTier, weakestCompetency } from './scoring'
+import { MAX_STRIKES, type GameState, type PhaseNumber, type ScreenId } from './state'
 
 /**
  * Derived copy and display values. Everything here is a pure function of state, and
@@ -154,12 +162,21 @@ const OVER_TEXTS: Record<PhaseNumber, string> = {
   3: 'Banjir sudah surut, tapi bahaya belum. Lumpur, air tercemar, dan lereng yang rapuh menghabiskan keselamatan keluargamu justru pada masa pemulihan.',
 }
 
+/** Running out of safety and running out of second chances read differently. */
+const STRIKES_TITLE = 'Tiga Keputusan yang Tak Bisa Ditarik Kembali'
+
+const STRIKES_TEXT =
+  'Malam itu kamu tiga kali memilih jalan yang keliru, dan bencana tidak memberi kesempatan keempat. Setiap keputusan di tengah banjir menutup atau membuka pilihan berikutnya — itulah sebabnya latihan dan rencana dibuat jauh sebelum air datang.'
+
 export const gameOverCopy = (state: GameState) => {
   const phase = state.overFromPhase
+  const byStrikes = state.overReason === 'strikes'
   return {
-    kicker: `Fase ${phase} gagal · Keselamatan 0`,
-    title: OVER_TITLES[phase],
-    text: OVER_TEXTS[phase],
+    kicker: byStrikes
+      ? `Fase ${phase} gagal · ${MAX_STRIKES} keputusan keliru`
+      : `Fase ${phase} gagal · Keselamatan 0`,
+    title: byStrikes ? STRIKES_TITLE : OVER_TITLES[phase],
+    text: byStrikes ? STRIKES_TEXT : OVER_TEXTS[phase],
     retryLabel: `Ulangi Fase ${phase}`,
     lesson:
       'Tiga kunci saat bencana: tetap tenang, ikuti hanya informasi resmi (BMKG, BPBD, 112), dan jangan pernah meninggalkan yang paling rentan.',
@@ -183,9 +200,51 @@ const ENDINGS = {
   },
 } as const
 
-export const endingCopy = (state: GameState) => {
-  const total = totalScore(state)
-  return { total, ...ENDINGS[endingTier(total)] }
+/**
+ * What the weakest bar means, in the reader's own terms. The ending grades on the
+ * weakest competency, so it owes the player a sentence about which one it was.
+ */
+const WEAK_SPOT: Record<CompetencyId, string> = {
+  informasi:
+    'Yang paling perlu kamu latih: mencari informasi resmi. BMKG untuk cuaca, BPBD dan 112 untuk bencana — bukan pesan berantai.',
+  logistik:
+    'Yang paling perlu kamu latih: menyiapkan perbekalan. Tas siaga berisi air, makanan, obat, senter, dan dokumen dalam plastik, disiapkan jauh sebelum air datang.',
+  rentan:
+    'Yang paling perlu kamu latih: melindungi yang paling rentan. Lansia, anak kecil, dan hewan peliharaan butuh rencana tersendiri, dan tidak boleh ditinggal.',
+  mitigasi:
+    'Yang paling perlu kamu latih: memulihkan dan mencegah. Selokan, lereng, dan rencana keluarga menentukan seberapa berat musim hujan berikutnya.',
+}
+
+export interface CompetencyBar {
+  id: CompetencyId
+  label: string
+  /** 0..100. */
+  value: number
+  weakest: boolean
+}
+
+/** The four bars, in a fixed order, ready to render. */
+export const competencyReport = (state: GameState, config: GameConfig): CompetencyBar[] => {
+  const bars = competencyBars(state.competency, ceilingsFor(config).ceilings)
+  const weakest = weakestCompetency(bars)
+  return COMPETENCY_IDS.map((id) => ({
+    id,
+    label: COMPETENCY_LABELS[id],
+    value: bars[id],
+    weakest: id === weakest,
+  }))
+}
+
+export const endingCopy = (state: GameState, config: GameConfig) => {
+  const bars = competencyBars(state.competency, ceilingsFor(config).ceilings)
+  const weakest = weakestCompetency(bars)
+  return {
+    bars: competencyReport(state, config),
+    weakest,
+    weakSpot: WEAK_SPOT[weakest],
+    lowest: bars[weakest],
+    ...ENDINGS[endingTier(bars)],
+  }
 }
 
 // --------------------------------------------------------------- recap ----

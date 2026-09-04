@@ -1,5 +1,7 @@
 // GENERATED from docs/original/Siaga Banjir.dc.html by scripts/extract-data.mjs.
 // Content is the original game's; only the key names were expanded.
+// Competency awards, prep tags and phase-2 couplings are not from the original —
+// they live in scripts/scoring-table.mjs. Edit them there, not here.
 
 import type { MapSpot } from './types'
 
@@ -26,6 +28,10 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 15,
         feedback:
           'Tepat! Peringatan dini resmi datang dari BMKG untuk cuaca dan BNPB/BPBD untuk bencana. Info dari sumber resmi mencegah panik karena hoaks.',
+        award: {
+          informasi: 16,
+        },
+        grantsTags: ['info-resmi'],
       },
       {
         text: 'Percaya pesan berantai di grup WA yang bilang “bendungan jebol malam ini”.',
@@ -33,6 +39,9 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 3,
         feedback:
           'Pesan berantai sering tidak benar. Selalu cek ulang ke sumber resmi sebelum percaya, apalagi menyebarkan.',
+        award: {
+          informasi: 4,
+        },
       },
       {
         text: 'Abaikan, lanjut main game.',
@@ -64,6 +73,10 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 20,
         feedback:
           'Itulah isi Tas Siaga Bencana yang ideal — cukup untuk 3 hari dan diletakkan di tempat yang mudah dijangkau.',
+        award: {
+          logistik: 20,
+        },
+        grantsTags: ['tas-siaga'],
       },
       {
         text: 'Masukkan camilan, mainan, dan charger saja.',
@@ -71,6 +84,9 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 6,
         feedback:
           'Camilan boleh, tapi air minum, obat, senter, dan dokumen jauh lebih penting saat mengungsi.',
+        award: {
+          logistik: 6,
+        },
       },
       {
         text: 'Nanti saja kalau air sudah mulai naik.',
@@ -102,6 +118,11 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 15,
         feedback:
           'Selokan yang lancar mengurangi genangan, dan barang di tempat tinggi aman dari air. Kerja tim!',
+        award: {
+          mitigasi: 12,
+          logistik: 6,
+        },
+        grantsTags: ['rumah-aman'],
       },
       {
         text: 'Lihat sebentar dari bawah, lalu masuk lagi.',
@@ -109,6 +130,9 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 4,
         feedback:
           'Melihat saja tidak mengubah apa pun. Selokan tersumbat memperparah banjir di depan rumah.',
+        award: {
+          mitigasi: 3,
+        },
       },
       {
         text: 'Biar Ayah saja yang mengerjakan.',
@@ -139,6 +163,11 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 18,
         feedback:
           'Memantau ketinggian air dan memperkuat tanggul adalah langkah nyata mengurangi risiko banjir.',
+        award: {
+          mitigasi: 14,
+          informasi: 6,
+        },
+        grantsTags: ['jaringan-warga'],
       },
       {
         text: 'Berfoto di tepi sungai untuk story.',
@@ -176,6 +205,11 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 18,
         feedback:
           'Mengetahui jalur dan titik kumpul menghemat waktu berharga saat evakuasi. Kentongan bertalu-talu artinya bahaya!',
+        award: {
+          informasi: 12,
+          rentan: 6,
+        },
+        grantsTags: ['peta-evakuasi'],
       },
       {
         text: 'Tanya Pak RT sebentar di pintu, lalu pulang.',
@@ -183,6 +217,9 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 8,
         feedback:
           'Lumayan, tapi detail penting seperti tanda bahaya dan titik kumpul bisa terlewat.',
+        award: {
+          informasi: 5,
+        },
       },
       {
         text: 'Lewati, rapat itu urusan orang dewasa.',
@@ -213,12 +250,19 @@ export const PHASE1_SPOTS: readonly MapSpot[] = [
         prepPoints: 16,
         feedback:
           'Lansia, anak kecil, dan hewan peliharaan butuh persiapan khusus — kamu sudah memikirkannya!',
+        award: {
+          rentan: 20,
+        },
+        grantsTags: ['rencana-rentan'],
       },
       {
         text: 'Pindahkan TV Nenek ke atas lemari saja.',
         hourCost: 1,
         prepPoints: 5,
         feedback: 'Obat Nenek lebih penting daripada TV. Prioritaskan yang menyelamatkan nyawa.',
+        award: {
+          rentan: 5,
+        },
       },
       {
         text: 'Lewati, Nenek pasti sudah tahu.',
