@@ -1,3 +1,69 @@
-/* Hover and interaction states that replace the original template's `style-hover`
-   attributes. The dc-runtime generated these into a live stylesheet at render time;
-   here they are ordinary classes. */
+/* Interaction states.
+   The original template carried these as `style-hover` attributes, but the
+   dc-runtime never implemented that attribute (grep `hover` in support.js returns
+   nothing), so none of them actually did anything. They are real here. */
+
+.btn-primary {
+  transition: background 0.18s ease;
+}
+.btn-primary:hover {
+  background: var(--color-accent-600);
+}
+
+/* The feedback button's base colour is set inline and changes when the choice was
+   fatal, so it darkens relatively rather than to a fixed colour. */
+.btn-shift {
+  transition: filter 0.18s ease;
+}
+.btn-shift:hover {
+  filter: brightness(0.92);
+}
+
+.link-quiet {
+  transition: color 0.18s ease;
+}
+.link-quiet:hover {
+  color: var(--color-accent-600);
+}
+
+.link-mute {
+  transition: color 0.18s ease;
+}
+.link-mute:hover {
+  color: var(--color-accent-700);
+}
+
+.option-card {
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+.option-card:hover:not(:disabled) {
+  background: var(--color-accent-100);
+}
+
+.option-row {
+  transition: background 0.18s ease;
+}
+.option-row:hover {
+  background: var(--color-accent-2-100);
+}
+
+.spot-pin {
+  transition:
+    background 0.3s ease,
+    opacity 0.4s ease;
+}
+.spot-pin:hover:not(:disabled) {
+  background: var(--color-accent-600);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
