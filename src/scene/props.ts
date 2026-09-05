@@ -165,7 +165,7 @@ export const spotPins = (
       y: spot.hotspot.y,
       inverseZoom: 1 / zoom,
       mark: visited ? '✓' : String(i + 1),
-      background: visited ? 'var(--color-neutral-600)' : 'var(--color-accent)',
+      background: visited ? 'var(--color-neutral-600)' : 'var(--color-pin)',
       animation: disabled ? 'none' : 'pulse 2s ease-out infinite',
       opacity: state.openSpotId
         ? state.openSpotId === spot.id

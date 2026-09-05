@@ -11,8 +11,11 @@ import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { App } from '@/App'
+import { PHASE1_SPOTS } from '@/data/phase1-siaga'
 import { PHASE2_CARDS } from '@/data/phase2-darurat'
+import { PHASE3_SPOTS } from '@/data/phase3-pemulihan'
 import { COMPETENCY_IDS, COMPETENCY_LABELS } from '@/data/types'
+import type { MapSpot } from '@/data/types'
 
 // jsdom has no Web Audio; the sound engine already bails out on its own, but stub
 // the constructor so the intent is explicit.
@@ -32,8 +35,27 @@ const startGame = async () => {
   await user().click(screen.getByRole('button', { name: 'Mulai Bermain' }))
 }
 
-/** Skip the map and click through the whole reflection that follows it. */
-const finishMapAndRecap = async (finish: RegExp, next: RegExp) => {
+const escapeRegExp = (text: string) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+/**
+ * Click through every spot on the current map, always taking its cheapest option —
+ * the hour budget doesn't cover the best choice everywhere, but every spot must
+ * still get visited since the map can no longer be left half-done.
+ */
+const visitAllSpots = async (spots: readonly MapSpot[]) => {
+  const u = user()
+  for (const spot of spots) {
+    await u.click(screen.getByRole('button', { name: new RegExp(escapeRegExp(spot.name)) }))
+    const cheapest = [...spot.options].sort((a, b) => a.hourCost - b.hourCost)[0]!
+    await u.click(
+      screen.getByRole('button', { name: new RegExp(escapeRegExp(cheapest.text.slice(0, 25))) }),
+    )
+  }
+}
+
+/** Visit every spot on the map, finish it, and click through the reflection that follows. */
+const finishMapAndRecap = async (spots: readonly MapSpot[], finish: RegExp, next: RegExp) => {
+  await visitAllSpots(spots)
   const u = user()
   await u.click(screen.getByRole('button', { name: finish }))
   // Reflections run until the button changes from "Lanjut" to the phase link.
@@ -48,13 +70,13 @@ const finishMapAndRecap = async (finish: RegExp, next: RegExp) => {
 describe('the game mounts and plays', () => {
   it('opens on the intro edition', () => {
     render(<App />)
-    expect(screen.getByText('Warta Siaga')).toBeDefined()
+    expect(screen.getByText('Desa Siaga Banjir')).toBeDefined()
     expect(screen.getByText('Hujan Tak Kunjung Reda di Kampung Tepi Sungai')).toBeDefined()
     expect(screen.getByRole('button', { name: 'Mulai Bermain' })).toBeDefined()
   })
 
-  it('shows the safety gauge, the four competency bars, and the whole household', () => {
-    render(<App />)
+  it('shows the safety gauge, the four competency bars, and the whole household', async () => {
+    await startGame()
     const labels = ['Keselamatan', ...COMPETENCY_IDS.map((id) => COMPETENCY_LABELS[id])]
     for (const label of labels) {
       expect(screen.getByText(label)).toBeDefined()
@@ -103,7 +125,7 @@ describe('the game mounts and plays', () => {
 
   it('walks from phase 1 through its reflection into phase 2', async () => {
     await startGame()
-    await finishMapAndRecap(/Lanjut ke malam hari/, /Mulai Fase 2/)
+    await finishMapAndRecap(PHASE1_SPOTS, /Malam tiba/, /Mulai Fase 2/)
 
     expect(screen.getByText(/Fase 2 · Respons · Situasi 1/)).toBeDefined()
     expect(screen.getByText(PHASE2_CARDS[0]!.title)).toBeDefined()
@@ -112,7 +134,7 @@ describe('the game mounts and plays', () => {
   it('shows feedback after a crisis choice', async () => {
     const u = user()
     await startGame()
-    await finishMapAndRecap(/Lanjut ke malam hari/, /Mulai Fase 2/)
+    await finishMapAndRecap(PHASE1_SPOTS, /Malam tiba/, /Mulai Fase 2/)
 
     const first = PHASE2_CARDS[0]!.options[0]!
     await u.click(screen.getByRole('button', { name: new RegExp(first.text.slice(0, 30)) }))
@@ -127,7 +149,7 @@ describe('a full run reaches the ending', () => {
     const u = user()
     await startGame()
 
-    await finishMapAndRecap(/Lanjut ke malam hari/, /Mulai Fase 2/)
+    await finishMapAndRecap(PHASE1_SPOTS, /Malam tiba/, /Mulai Fase 2/)
 
     // Take the safe option on every crisis card.
     for (const card of PHASE2_CARDS) {
@@ -145,7 +167,7 @@ describe('a full run reaches the ending', () => {
     await u.click(screen.getByRole('button', { name: /Mulai Fase 3/ }))
 
     expect(screen.getByText('0 dari 6 lokasi dikunjungi')).toBeDefined()
-    await finishMapAndRecap(/Selesai berbenah|Lihat hasilnya/, /Lihat Hasil Akhir/)
+    await finishMapAndRecap(PHASE3_SPOTS, /Lihat hasilnya/, /Lihat Hasil Akhir/)
 
     expect(screen.getByText('Edisi Khusus · Setelah Bencana')).toBeDefined()
     // The four bars are the score; one of them is flagged as the weakest.
@@ -159,7 +181,7 @@ describe('the game over edition', () => {
   it('appears once a run of bad choices exhausts safety', async () => {
     const u = user()
     await startGame()
-    await finishMapAndRecap(/Lanjut ke malam hari/, /Mulai Fase 2/)
+    await finishMapAndRecap(PHASE1_SPOTS, /Malam tiba/, /Mulai Fase 2/)
 
     // Option C is the worst on every card; six of them empty the safety meter.
     for (let i = 0; i < PHASE2_CARDS.length; i++) {

@@ -77,7 +77,7 @@ const ScoreBars = () => {
       <ScoreBar
         label="Keselamatan"
         value={state.safety}
-        fill="var(--color-accent-2-700)"
+        fill={state.safety <= 50 ? 'var(--color-danger)' : 'var(--color-accent-700)'}
         popping={pops.safety}
       />
       {competencyReport(state, config).map((bar) => (
@@ -340,18 +340,20 @@ const SpotPins = ({ zoom }: { zoom: number }) => {
         >
           <span
             className="spot-pin"
-            style={{
-              width: 38,
-              height: 38,
-              borderRadius: '50%',
-              background: pin.background,
-              color: 'var(--color-neutral-100)',
-              display: 'grid',
-              placeItems: 'center',
-              font: '600 17px var(--font-heading)',
-              boxShadow: 'var(--shadow-md)',
-              animation: pin.animation,
-            }}
+            style={
+              {
+                width: 38,
+                height: 38,
+                borderRadius: '50%',
+                '--pin-bg': pin.background,
+                color: 'var(--color-neutral-100)',
+                display: 'grid',
+                placeItems: 'center',
+                font: '600 17px var(--font-heading)',
+                boxShadow: 'var(--shadow-md)',
+                animation: pin.animation,
+              } as React.CSSProperties
+            }
           >
             {pin.mark}
           </span>
@@ -571,7 +573,7 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
       ) : null}
 
       {/* The game-over plate already owns this corner with its own zero motif. */}
-      {state.screen !== 'over' && <ScoreBars />}
+      {state.screen !== 'over' && state.screen !== 'intro' && <ScoreBars />}
 
       {state.screen === 'over' && <GameOverPlate />}
       {isRecapScreen(state.screen) && <ReflectionScene screen={state.screen} />}

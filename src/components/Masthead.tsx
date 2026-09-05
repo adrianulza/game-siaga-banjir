@@ -58,7 +58,7 @@ export const Masthead = () => {
       >
         <div>
           <div style={{ font: 'italic 600 29px/1 var(--font-heading)', letterSpacing: '-.01em' }}>
-            Warta Siaga
+            Desa Siaga Banjir
           </div>
           <div
             style={{
@@ -68,7 +68,7 @@ export const Masthead = () => {
               letterSpacing: '.02em',
             }}
           >
-            Kampung Tepi Sungai · Simulasi Mitigasi Bencana Hidrometeorologi
+            Game edukatif mitigasi bencana hidrometeorologi
           </div>
         </div>
 

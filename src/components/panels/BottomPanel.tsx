@@ -140,18 +140,20 @@ const MapOverview = () => {
           </div>
         </div>
         <div style={{ fontSize: 12.5, color: 'var(--color-neutral-700)' }}>{copy.doneLabel}</div>
-        <button
-          type="button"
-          className="btn-primary"
-          onClick={() => dispatch({ type: 'FINISH_MAP' })}
-          style={{
-            ...PRIMARY_BUTTON,
-            padding: '11px 24px',
-            font: '600 16.5px var(--font-heading)',
-          }}
-        >
-          {copy.finishLabel}
-        </button>
+        {copy.allDone ? (
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={() => dispatch({ type: 'FINISH_MAP' })}
+            style={{
+              ...PRIMARY_BUTTON,
+              padding: '11px 24px',
+              font: '600 16.5px var(--font-heading)',
+            }}
+          >
+            {copy.finishLabel}
+          </button>
+        ) : null}
       </div>
     </div>
   )

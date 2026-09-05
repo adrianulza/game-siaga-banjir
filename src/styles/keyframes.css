@@ -182,7 +182,7 @@
 @keyframes pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-pin) 60%, transparent);
   }
   70% {
     box-shadow: 0 0 0 15px transparent;

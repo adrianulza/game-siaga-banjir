@@ -96,6 +96,7 @@ export interface MapCopy {
   hoursColor: string
   doneLabel: string
   finishLabel: string
+  allDone: boolean
 }
 
 export const mapCopy = (state: GameState, spotCount: number): MapCopy => {
@@ -126,6 +127,7 @@ export const mapCopy = (state: GameState, spotCount: number): MapCopy => {
       : allDone
         ? 'Lihat hasilnya →'
         : 'Selesai berbenah →',
+    allDone,
   }
 }
 

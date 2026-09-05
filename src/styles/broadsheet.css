@@ -41,6 +41,14 @@
   --color-accent-2-800: #790e3d;
   --color-accent-2-900: #4b1528;
 
+  /* Map pins — a third hue so they read apart from the accent/accent-2 pair
+     used everywhere else in the chrome. */
+  --color-pin: #d75113;
+  --color-pin-600: #b00a0a;
+
+  /* Danger — the Keselamatan bar flips to this once safety runs low. */
+  --color-danger: #c81e1e;
+
   /* The third process ink — review round 3: the deck's print treatments
      (the CMYK separation and the misregistered plate numerals below) need
      the full four-color set. Cyan and magenta are the system's own accents;
