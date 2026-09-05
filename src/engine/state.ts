@@ -83,7 +83,7 @@ export interface GameState {
 export const createInitialState = (config: GameConfig): GameState => ({
   screen: 'intro',
   hoursLeft: config.prepHours,
-  safety: 50,
+  safety: 100,
   competency: { ...NO_COMPETENCY },
   prepTags: [],
   strikes: 0,

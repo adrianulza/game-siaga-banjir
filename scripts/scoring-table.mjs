@@ -11,6 +11,12 @@
  *
  * Awards are never negative. Wrong answers are punished by strikes and by safety,
  * not by taking competency back.
+ *
+ * Safety itself only moves in phase 2: the correct answer and any unlocked option
+ * cost or gain nothing, and a wrong answer always costs exactly one of two amounts —
+ * -50 for a major mistake, -25 for a moderate one. Each card's `safety` array below
+ * overrides the original's finer-grained deltas onto that scale, index-for-index
+ * with its three base options.
  */
 
 // --------------------------------------------------------------- phase 1 ----
@@ -63,12 +69,16 @@ export const PHASE3_AWARDS = {
 export const PHASE2_SCORING = [
   {
     // Kentongan bertalu-talu
+    // B "Keluar sendirian melihat sungai dalam gelap" (moderate) vs C "Lanjut
+    // tidur" (major — sleeping through the warning costs the whole family its
+    // lead time).
+    safety: [0, -25, -50],
     awards: [{ informasi: 10 }, {}, {}],
     locked: [
       {
         requiresTag: 'peta-evakuasi',
         text: 'Kamu hafal isyaratnya dari rapat RT: bertalu-talu berarti bahaya. Bangunkan semua, bagi tugas sesuai rencana, letakkan tas siaga di dekat pintu.',
-        safetyDelta: 20,
+        safetyDelta: 0,
         award: { informasi: 10, mitigasi: 4 },
         feedback:
           'Karena kamu ikut rapat siaga, tidak ada satu detik pun yang terbuang untuk bertanya-tanya. Keluarga bergerak seperti satu tim.',
@@ -78,12 +88,15 @@ export const PHASE2_SCORING = [
   },
   {
     // Air masuk rumah
+    // B "Selamatkan TV dan laptop dulu" (major — electronics in moving water
+    // can electrocute) vs C "Menerjang air keluar rumah" (moderate).
+    safety: [0, -50, -25],
     awards: [{ logistik: 8, informasi: 4 }, {}, {}],
     locked: [
       {
         requiresTag: 'rumah-aman',
         text: 'Turunkan MCB — letaknya sudah kamu hafal saat membereskan rumah kemarin — ambil tas siaga, lalu naik bersama keluarga lewat tangga yang sudah dikosongkan.',
-        safetyDelta: 20,
+        safetyDelta: 0,
         award: { logistik: 10, informasi: 4 },
         feedback:
           'Rumah yang sudah disiapkan menghemat menit-menit yang paling mahal. Listrik mati, tas terbawa, semua naik bersama.',
@@ -94,12 +107,15 @@ export const PHASE2_SCORING = [
   },
   {
     // Nenek sulit berjalan
+    // B "Tinggalkan Nenek dulu" (major — Nenek is left to fall) vs C "Gendong
+    // Dito dan lari duluan" (moderate — Nenek is only frightened, not hurt).
+    safety: [0, -50, -25],
     awards: [{ rentan: 12 }, {}, {}],
     locked: [
       {
         requiresTag: 'rencana-rentan',
         text: 'Sampirkan tas obat Nenek yang sudah disiapkan ke bahu Ayah, gandeng Nenek dari dua sisi, dan berikan Dito senter kecil supaya ia merasa bertugas.',
-        safetyDelta: 20,
+        safetyDelta: 0,
         award: { rentan: 14 },
         feedback:
           'Karena obat dan rencana Nenek sudah disiapkan sejak siang, tidak ada yang perlu dicari dalam gelap. Dito pun berhenti menangis karena merasa dilibatkan.',
@@ -109,12 +125,15 @@ export const PHASE2_SCORING = [
   },
   {
     // Oyen hilang!
+    // B "Terjun ke arus mengejar Oyen" (major — the player is swept and hurt)
+    // vs C "Biarkan saja" (moderate).
+    safety: [0, -50, -25],
     awards: [{ rentan: 8 }, {}, {}],
     locked: [
       {
         requiresTag: 'rencana-rentan',
         text: 'Turunkan kandang angkut Oyen dengan tali dari jendela loteng, panggil namanya — tanpa sekali pun turun ke arus.',
-        safetyDelta: 14,
+        safetyDelta: 0,
         award: { rentan: 10 },
         family: { oyen: 'aman' },
         feedback:
@@ -125,12 +144,15 @@ export const PHASE2_SCORING = [
   },
   {
     // Pak Darto menolak mengungsi
+    // B "Biarkan, urus keluarga sendiri" (moderate) vs C "Berdebat lama"
+    // (major — wastes the most time and leaves Pak Darto most exposed).
+    safety: [0, -25, -50],
     awards: [{ informasi: 6, rentan: 6 }, {}, {}],
     locked: [
       {
         requiresTag: 'info-resmi',
         text: 'Tunjukkan layar HP: status Awas dari BMKG dan jadwal jemputan tim RT, lalu tawarkan membawakan tas Pak Darto ke perahu.',
-        safetyDelta: 18,
+        safetyDelta: 0,
         award: { informasi: 8, rentan: 6 },
         family: { tetangga: 'aman' },
         feedback:
@@ -141,12 +163,15 @@ export const PHASE2_SCORING = [
   },
   {
     // Jalur evakuasi
+    // B "Memotong lereng bukit" (major — straight into the landslide zone) vs
+    // C "Tetap menunggu di loteng" (moderate).
+    safety: [0, -50, -25],
     awards: [{ informasi: 8, mitigasi: 4 }, {}, {}],
     locked: [
       {
         requiresTag: 'peta-evakuasi',
         text: 'Tunjukkan jalur resmi yang kamu catat di rapat RT, sebutkan nama titik kumpul dan jumlah anggota keluarga kepada petugas perahu.',
-        safetyDelta: 20,
+        safetyDelta: 0,
         award: { informasi: 10, mitigasi: 4 },
         feedback:
           'Petugas tidak perlu berpikir dua kali. Jalur atas tanggul memang memutar, tapi itu satu-satunya yang sudah dinyatakan aman.',
@@ -156,12 +181,15 @@ export const PHASE2_SCORING = [
   },
   {
     // TANAH LONGSOR!
+    // B "Berlindung di bawah pohon besar" (major — Ayah is hurt by a falling
+    // branch) vs C "Berbalik kembali ke rumah Nenek" (moderate).
+    safety: [0, -50, -25],
     awards: [{ mitigasi: 12 }, {}, {}],
     locked: [
       {
         requiresTag: 'jaringan-warga',
         text: 'Teriakkan peringatan ke warga lain sambil menjauh menyamping dari jalur longsoran, menuju tanah tinggi terbuka yang sudah ditandai papan rawan.',
-        safetyDelta: 20,
+        safetyDelta: 0,
         award: { mitigasi: 14 },
         feedback:
           'Menjauh tegak lurus dari jalur material, dan tidak sendirian. Papan tanda yang kalian pasang bersama kini menyelamatkan lebih dari satu keluarga.',
@@ -171,12 +199,15 @@ export const PHASE2_SCORING = [
   },
   {
     // Di posko pengungsian
+    // B "Langsung pulang mengecek rumah" (major — live wires and aftershocks)
+    // vs C "Duduk diam di pojok, tidak lapor" (moderate).
+    safety: [0, -50, -25],
     awards: [{ informasi: 6, rentan: 4 }, {}, {}],
     locked: [
       {
         requiresTag: 'tas-siaga',
         text: 'Serahkan fotokopi KK dan KTP dari tas siaga ke meja pendataan, minta pemeriksaan untuk Nenek dan Dito, lalu catat nomor kontak posko.',
-        safetyDelta: 14,
+        safetyDelta: 0,
         award: { informasi: 8, rentan: 4 },
         feedback:
           'Dokumen dalam plastik itu tetap kering. Pendataan selesai dalam dua menit dan bantuan untuk Nenek langsung tercatat.',

@@ -68,10 +68,14 @@ const mapOption = (awards, tag) => (o, i) => ({
   ...(i === 0 && tag ? { grantsTags: [tag] } : {}),
 })
 
-/** Options on crisis cards (phase 2): safetyDelta always present, no time cost. */
-const crisisOption = (awards) => (o, i) => ({
+/**
+ * Options on crisis cards (phase 2): safetyDelta always present, no time cost.
+ * The scoring table's `safety` array overrides the original's finer-grained
+ * deltas onto the major/moderate scale; it is always provided for phase 2.
+ */
+const crisisOption = (awards, safety) => (o, i) => ({
   text: o.t,
-  safetyDelta: o.safety,
+  safetyDelta: safety[i],
   ...(o.fam === undefined ? {} : { family: o.fam }),
   feedback: o.fb,
   ...withAward(awards?.[i]),
@@ -104,7 +108,7 @@ const crisisCard = (c, i) => {
     timeoutOptionIndex: c.tout,
     correctOptionIndex: CORRECT_OPTION_INDEX,
     camera: camera(c.cam),
-    options: c.opts.map(crisisOption(scoring.awards)),
+    options: c.opts.map(crisisOption(scoring.awards, scoring.safety)),
     ...(scoring.locked ? { lockedOptions: scoring.locked.map(lockedOption) } : {}),
     ...(scoring.shields ? { shields: scoring.shields } : {}),
     ...(scoring.extraSeconds ? { extraSeconds: scoring.extraSeconds } : {}),

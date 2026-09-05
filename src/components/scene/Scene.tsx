@@ -1,7 +1,7 @@
 import { PHASE2_CARDS } from '@/data/phase2-darurat'
 import { mapDecisionMs } from '@/engine/config'
 import { cardDecisionMs, spotsForScreen } from '@/engine/reducer'
-import { timerDisplay } from '@/engine/selectors'
+import { competencyReport, timerDisplay } from '@/engine/selectors'
 import { isMapScreen, isRecapScreen } from '@/engine/state'
 import { useGame } from '@/hooks/useGame'
 import { actorsFor } from '@/scene/actors'
@@ -16,6 +16,76 @@ import { River } from './River'
 import { Village } from './Village'
 
 const PAN = 'transform 1.15s cubic-bezier(.4,0,.2,1)'
+
+const SCORE_LABEL: React.CSSProperties = {
+  fontSize: 10,
+  letterSpacing: '.09em',
+  textTransform: 'uppercase',
+  color: 'var(--color-neutral-700)',
+}
+
+/**
+ * One score, as a rule and a filled length. These sit over the scene the whole
+ * run — Keselamatan uses the red fill, the four competencies the accent one.
+ */
+const ScoreBar = ({
+  label,
+  value,
+  fill,
+  popping,
+}: {
+  label: string
+  value: number
+  fill?: string
+  popping: boolean
+}) => (
+  <div style={{ display: 'grid', gap: 2, animation: popping ? 'pop .46s ease' : 'none' }}>
+    <div style={{ ...SCORE_LABEL, display: 'flex', justifyContent: 'space-between', gap: 10 }}>
+      <span>{label}</span>
+      <span style={{ color: 'var(--color-text)', fontWeight: 600 }}>{value}</span>
+    </div>
+    <div style={{ height: 4, background: 'var(--color-neutral-300)' }}>
+      <div
+        style={{
+          height: '100%',
+          width: `${value}%`,
+          background: fill ?? 'var(--color-accent-700)',
+          transition: 'width .35s ease',
+        }}
+      />
+    </div>
+  </div>
+)
+
+/** Keselamatan and the four competency bars, pinned over the scene's top-right corner. */
+const ScoreBars = () => {
+  const { state, config, pops } = useGame()
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        right: 16,
+        top: 16,
+        display: 'grid',
+        gap: 6,
+        minWidth: 168,
+        padding: '10px 14px',
+        background: 'color-mix(in srgb,var(--color-bg) 88%,transparent)',
+        boxShadow: 'var(--shadow-sm)',
+      }}
+    >
+      <ScoreBar
+        label="Keselamatan"
+        value={state.safety}
+        fill="var(--color-accent-2-700)"
+        popping={pops.safety}
+      />
+      {competencyReport(state, config).map((bar) => (
+        <ScoreBar key={bar.id} label={bar.label} value={bar.value} popping={pops[bar.id]} />
+      ))}
+    </div>
+  )
+}
 
 /** Three drifting cloud banks, on their own slower parallax than the ridge. */
 const Clouds = ({ x, color }: { x: number; color: string }) => (
@@ -362,7 +432,7 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
         w={78}
         h={78}
         style={{
-          right: 74,
+          left: 74,
           borderRadius: '50%',
           background: 'var(--color-process-yellow)',
           opacity: level === 0 ? 1 : 0,
@@ -374,7 +444,7 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
         w={44}
         h={44}
         style={{
-          right: 96,
+          left: 96,
           borderRadius: '50%',
           background: 'var(--color-neutral-200)',
           opacity: level === 3 ? 0.8 : 0,
@@ -479,18 +549,29 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
           <div
             style={{
               position: 'absolute',
-              right: 16,
+              left: '50%',
               top: 16,
-              font: '600 44px/1 var(--font-heading)',
-              color: 'var(--color-neutral-100)',
-              textShadow: '0 2px 8px rgba(0,0,0,.55)',
-              animation: timer.animation,
+              transform: 'translateX(-50%)',
             }}
           >
-            {timer.seconds}
+            {/* The tick animation scales this inner element; the wrapper above owns
+                the centering transform so the two never fight over it. */}
+            <div
+              style={{
+                font: '600 44px/1 var(--font-heading)',
+                color: 'var(--color-neutral-100)',
+                textShadow: '0 2px 8px rgba(0,0,0,.55)',
+                animation: timer.animation,
+              }}
+            >
+              {timer.seconds}
+            </div>
           </div>
         </>
       ) : null}
+
+      {/* The game-over plate already owns this corner with its own zero motif. */}
+      {state.screen !== 'over' && <ScoreBars />}
 
       {state.screen === 'over' && <GameOverPlate />}
       {isRecapScreen(state.screen) && <ReflectionScene screen={state.screen} />}

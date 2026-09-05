@@ -26,13 +26,6 @@
   color: var(--color-accent-600);
 }
 
-.link-mute {
-  transition: color 0.18s ease;
-}
-.link-mute:hover {
-  color: var(--color-accent-700);
-}
-
 .option-card {
   transition:
     background 0.18s ease,

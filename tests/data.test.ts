@@ -32,6 +32,11 @@ const toLegacyMapSpot = (s: MapSpot) => ({
   })),
 })
 
+/**
+ * safetyDelta is intentionally excluded here: the scoring table overrides it onto
+ * the major/moderate/0 scale, so it no longer round-trips to the original's finer
+ * -grained figure. Everything else still must.
+ */
 const toLegacyCrisisCard = (c: CrisisCard) => ({
   title: c.title,
   text: c.text,
@@ -39,7 +44,6 @@ const toLegacyCrisisCard = (c: CrisisCard) => ({
   cam: [c.camera.x, c.camera.zoom, c.camera.y],
   opts: c.options.map((o) => ({
     t: o.text,
-    safety: o.safetyDelta,
     ...(o.family === undefined ? {} : { fam: o.family }),
     fb: o.feedback,
   })),
@@ -48,13 +52,21 @@ const toLegacyCrisisCard = (c: CrisisCard) => ({
 /** Key order differs between the shapes; compare by value, not by layout. */
 const norm = (v: unknown) => JSON.parse(JSON.stringify(v)) as unknown
 
+/** Phase 2's original `safety` figures are the ones the scoring table overrides. */
+type LegacyCard = { opts: readonly Record<string, unknown>[] }
+const withoutSafety = (cards: readonly LegacyCard[]) =>
+  cards.map((c) => ({
+    ...c,
+    opts: c.opts.map((o) => Object.fromEntries(Object.entries(o).filter(([k]) => k !== 'safety'))),
+  }))
+
 describe('scenario data round-trips to the original', () => {
   it('phase 1 matches the source literals', () => {
     expect(norm(PHASE1_SPOTS.map(toLegacyMapSpot))).toEqual(norm(original.P1))
   })
 
   it('phase 2 matches the source literals', () => {
-    expect(norm(PHASE2_CARDS.map(toLegacyCrisisCard))).toEqual(norm(original.P2))
+    expect(norm(PHASE2_CARDS.map(toLegacyCrisisCard))).toEqual(norm(withoutSafety(original.P2)))
   })
 
   it('phase 3 matches the source literals', () => {

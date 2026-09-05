@@ -27,8 +27,6 @@ export interface GameController {
   /** Which score readouts are mid-flash. */
   pops: Record<ScoreKey, boolean>
   shaking: boolean
-  muted: boolean
-  toggleMute: () => void
   /** Starts audio; must be called from a user gesture. */
   beginAudio: () => void
 }
@@ -47,7 +45,6 @@ export const useGameController = (config: GameConfig = DEFAULT_CONFIG): GameCont
   if (soundRef.current === null) soundRef.current = new Sound()
   const sound = soundRef.current
 
-  const [muted, setMuted] = useState(false)
   const [shaking, setShaking] = useState(false)
   const [pops, setPops] = useState<Record<ScoreKey, boolean>>(NO_POPS)
 
@@ -159,20 +156,12 @@ export const useGameController = (config: GameConfig = DEFAULT_CONFIG): GameCont
 
   useEffect(() => () => sound.setMuted(true), [sound])
 
-  const toggleMute = useCallback(() => {
-    setMuted((m) => {
-      sound.setMuted(!m)
-      return !m
-    })
-  }, [sound])
-
   const beginAudio = useCallback(() => {
     sound.init()
-    sound.setMuted(muted)
     sound.rain(0.2)
-  }, [sound, muted])
+  }, [sound])
 
-  return { state, config, dispatch, pops, shaking, muted, toggleMute, beginAudio }
+  return { state, config, dispatch, pops, shaking, beginAudio }
 }
 
 export { decisionMs }

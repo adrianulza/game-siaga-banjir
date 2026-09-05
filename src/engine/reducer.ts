@@ -154,30 +154,18 @@ export const createReducer =
         const option = spot?.options[action.optionIndex]
         if (!spot || !option) return state
 
-        const safety = clampSafety(state.safety + (option.safetyDelta ?? 0))
-        const phase: PhaseNumber = state.screen === 'p3' ? 3 : 1
-
         const newTags = (option.grantsTags ?? []).filter((t) => !state.prepTags.includes(t))
 
         return {
           ...state,
           hoursLeft: Math.max(0, state.hoursLeft - option.hourCost),
-          safety,
           competency: addAward(state.competency, option.award),
           prepTags: newTags.length ? [...state.prepTags, ...newTags] : state.prepTags,
           mapChoices: { ...state.mapChoices, [spot.id]: action.optionIndex },
           openSpotId: null,
           family: { ...state.family, ...option.family },
-          // Deferred rather than immediate: the player watches the consequence land
-          // on the map before the edition goes to press.
-          pendingGameOver:
-            safety <= 0
-              ? {
-                  cause: 'Di “' + spot.name + '”, kamu memilih: ' + option.text,
-                  fromPhase: phase,
-                  reason: 'safety',
-                }
-              : null,
+          // Phases 1 and 3 never touch safety — only phase 2 does.
+          pendingGameOver: null,
         }
       }
 
@@ -280,7 +268,7 @@ export const createReducer =
       case 'RETRY_PHASE': {
         const phase = state.overFromPhase
         const common = {
-          safety: 50,
+          safety: 100,
           strikes: 0,
           openSpotId: null,
           family: { ...INITIAL_FAMILY },

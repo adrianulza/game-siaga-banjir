@@ -1,11 +1,5 @@
 import { MAX_STRIKES } from '@/engine/state'
-import {
-  competencyReport,
-  datelineFor,
-  familyChips,
-  familyStripOpacity,
-  phaseTabs,
-} from '@/engine/selectors'
+import { datelineFor, familyChips, familyStripOpacity, phaseTabs } from '@/engine/selectors'
 import { useGame } from '@/hooks/useGame'
 
 const LABEL: React.CSSProperties = {
@@ -14,50 +8,6 @@ const LABEL: React.CSSProperties = {
   textTransform: 'uppercase',
   color: 'var(--color-neutral-700)',
 }
-
-const FIGURE: React.CSSProperties = {
-  font: '600 25px/1.05 var(--font-heading)',
-}
-
-const Score = ({
-  label,
-  value,
-  color,
-  popping,
-}: {
-  label: string
-  value: number
-  color?: string
-  popping: boolean
-}) => (
-  <div style={{ textAlign: 'right' }}>
-    <div style={LABEL}>{label}</div>
-    <div style={{ ...FIGURE, color, animation: popping ? 'pop .46s ease' : 'none' }}>{value}</div>
-  </div>
-)
-
-/**
- * One competency, as a rule and a filled length. These are the score now, so they
- * are on screen the whole run rather than saved for the end.
- */
-const Bar = ({ label, value, popping }: { label: string; value: number; popping: boolean }) => (
-  <div style={{ display: 'grid', gap: 2, animation: popping ? 'pop .46s ease' : 'none' }}>
-    <div style={{ ...LABEL, display: 'flex', justifyContent: 'space-between', gap: 10 }}>
-      <span>{label}</span>
-      <span style={{ color: 'var(--color-text)', fontWeight: 600 }}>{value}</span>
-    </div>
-    <div style={{ height: 4, background: 'var(--color-neutral-300)' }}>
-      <div
-        style={{
-          height: '100%',
-          width: `${value}%`,
-          background: 'var(--color-accent-700)',
-          transition: 'width .35s ease',
-        }}
-      />
-    </div>
-  </div>
-)
 
 /** Three wrong answers in fase 2 end the run; the pips say how much rope is left. */
 const Strikes = ({ used }: { used: number }) => (
@@ -86,7 +36,7 @@ const Strikes = ({ used }: { used: number }) => (
 
 /** The newspaper masthead: title, phase rail, the three scores, and the family strip. */
 export const Masthead = () => {
-  const { state, config, pops, muted, toggleMute } = useGame()
+  const { state } = useGame()
 
   return (
     <div
@@ -141,36 +91,7 @@ export const Masthead = () => {
         </div>
 
         <div style={{ display: 'flex', gap: 22, alignItems: 'flex-end' }}>
-          <Score
-            label="Keselamatan"
-            value={state.safety}
-            color="var(--color-accent-2-700)"
-            popping={pops.safety}
-          />
           {state.screen === 'p2' && <Strikes used={state.strikes} />}
-          <div style={{ display: 'grid', gap: 5, minWidth: 168 }}>
-            {competencyReport(state, config).map((bar) => (
-              <Bar key={bar.id} label={bar.label} value={bar.value} popping={pops[bar.id]} />
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={toggleMute}
-            className="link-mute"
-            style={{
-              background: 'none',
-              border: 0,
-              padding: '4px 2px',
-              cursor: 'pointer',
-              color: 'var(--color-neutral-700)',
-              fontSize: 12,
-              letterSpacing: '.05em',
-              textTransform: 'uppercase',
-              alignSelf: 'flex-end',
-            }}
-          >
-            {muted ? 'Suara mati' : 'Suara hidup'}
-          </button>
         </div>
       </div>
 

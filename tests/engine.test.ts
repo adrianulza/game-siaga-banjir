@@ -35,7 +35,7 @@ describe('initial state', () => {
   it('starts on the intro with a full hour budget and neutral safety', () => {
     expect(initial.screen).toBe('intro')
     expect(initial.hoursLeft).toBe(config.prepHours)
-    expect(initial.safety).toBe(50)
+    expect(initial.safety).toBe(100)
     expect(initial.competency).toEqual(NO_COMPETENCY)
     expect(initial.prepTags).toEqual([])
     expect(initial.strikes).toBe(0)
@@ -49,7 +49,7 @@ describe('START and RESTART', () => {
     const s = run(initial, { type: 'START' })
     expect(s.screen).toBe('p1')
     expect(s.hoursLeft).toBe(config.prepHours)
-    expect(s.safety).toBe(50)
+    expect(s.safety).toBe(100)
     expect(s.soundEpoch).toBeGreaterThan(initial.soundEpoch)
   })
 
@@ -137,9 +137,10 @@ describe('map phase choices', () => {
     expect(s).toEqual(openPhase1())
   })
 
-  it('defers game over when safety hits zero, quoting the exact cause', () => {
+  it('never touches safety or arms a pending game over — only phase 2 does', () => {
     const spot = PHASE1_SPOTS.find((s) => s.id === 'sungai')!
     const risky = spot.options[1]!
+    // The data still carries the original figure; the engine just ignores it.
     expect(risky.safetyDelta).toBe(-5)
 
     const s = run(
@@ -148,21 +149,25 @@ describe('map phase choices', () => {
       { type: 'CHOOSE_MAP_OPTION', optionIndex: 1 },
     )
 
-    expect(s.safety).toBe(0)
-    expect(s.screen).toBe('p1') // not yet — the effect layer commits after 900ms
-    expect(s.pendingGameOver).toEqual({
-      cause: `Di “${spot.name}”, kamu memilih: ${risky.text}`,
-      fromPhase: 1,
-      reason: 'safety',
-    })
+    expect(s.safety).toBe(5)
+    expect(s.pendingGameOver).toBeNull()
+  })
+
+  it('phase 3 map choices leave safety untouched too', () => {
+    const s = run(
+      { ...initial, screen: 'p3', safety: 5 },
+      { type: 'OPEN_SPOT', spotId: 'air' },
+      { type: 'CHOOSE_MAP_OPTION', optionIndex: 1 },
+    )
+    expect(s.safety).toBe(5)
+    expect(s.pendingGameOver).toBeNull()
   })
 
   it('COMMIT_GAME_OVER moves to the over screen and worries everyone still safe', () => {
-    const pending = run(
-      { ...run(initial, { type: 'START' }), safety: 5 },
-      { type: 'OPEN_SPOT', spotId: 'sungai' },
-      { type: 'CHOOSE_MAP_OPTION', optionIndex: 1 },
-    )
+    const pending: GameState = {
+      ...run(initial, { type: 'START' }),
+      pendingGameOver: { cause: 'Di “Uji”, kamu memilih: sesuatu', fromPhase: 1, reason: 'safety' },
+    }
     const withHurt: GameState = { ...pending, family: { ...pending.family, nenek: 'terluka' } }
 
     const s = run(withHurt, { type: 'COMMIT_GAME_OVER' })
@@ -172,15 +177,6 @@ describe('map phase choices', () => {
     // An existing injury is not overwritten by the blanket worry.
     expect(s.family.nenek).toBe('terluka')
     expect(s.pendingGameOver).toBeNull()
-  })
-
-  it('phase 3 attributes its game over to phase 3', () => {
-    const s = run(
-      { ...initial, screen: 'p3', safety: 5 },
-      { type: 'OPEN_SPOT', spotId: 'air' },
-      { type: 'CHOOSE_MAP_OPTION', optionIndex: 1 },
-    )
-    expect(s.pendingGameOver?.fromPhase).toBe(3)
   })
 })
 
@@ -263,11 +259,11 @@ describe('crisis phase', () => {
 
   it('a choice moves safety, logs the pick, and shows feedback', () => {
     const card = PHASE2_CARDS[0]!
-    const option = card.options[0]!
+    const option = card.options[1]!
 
-    const s = run(inPhase2(), { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 0, timedOut: false })
-    expect(s.safety).toBe(clampSafety(50 + option.safetyDelta))
-    expect(s.crisisLog).toEqual([{ optionIndex: 0, timedOut: false }])
+    const s = run(inPhase2(), { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 1, timedOut: false })
+    expect(s.safety).toBe(clampSafety(100 + option.safetyDelta))
+    expect(s.crisisLog).toEqual([{ optionIndex: 1, timedOut: false }])
     expect(s.feedback?.text).toBe(option.feedback)
     expect(s.feedback?.delta).toBe(option.safetyDelta)
     expect(s.feedback?.fatal).toBe(false)
@@ -417,7 +413,7 @@ describe('retrying a phase', () => {
   it('restores phase 1 from the top', () => {
     const s = run(dead(1), { type: 'RETRY_PHASE' })
     expect(s.screen).toBe('p1')
-    expect(s.safety).toBe(50)
+    expect(s.safety).toBe(100)
     expect(s.hoursLeft).toBe(config.prepHours)
     expect(s.mapChoices).toEqual({})
     expect(s.family.nenek).toBe('aman')
@@ -533,7 +529,7 @@ describe('preparation paying off in phase 2', () => {
     })
 
     expect(s.strikes).toBe(0)
-    expect(s.safety).toBe(50 + unlocked.safetyDelta)
+    expect(s.safety).toBe(100 + unlocked.safetyDelta)
     expect(s.competency).toEqual(addAward(NO_COMPETENCY, unlocked.award))
     expect(s.crisisLog).toEqual([{ optionIndex: 3, timedOut: false, unlocked: true }])
   })
@@ -553,8 +549,8 @@ describe('preparation paying off in phase 2', () => {
       timedOut: false,
     })
 
-    expect(unprepared.safety).toBe(50 + raw)
-    expect(shielded.safety).toBe(50 + Math.round(raw * 0.5))
+    expect(unprepared.safety).toBe(100 + raw)
+    expect(shielded.safety).toBe(100 + Math.round(raw * 0.5))
     expect(shielded.safety).toBeGreaterThan(unprepared.safety)
     // Softened is not forgiven.
     expect(shielded.strikes).toBe(1)
@@ -574,8 +570,11 @@ describe('three strikes', () => {
     ...over,
   })
 
-  const wrongAnswer = (state: GameState) =>
-    run(state, { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 1, timedOut: false })
+  /** A wrong answer that is only a moderate mistake (-25), not a major one (-50). */
+  const moderateWrongOptionIndex = (cardIndex: number) => {
+    const card = PHASE2_CARDS[cardIndex]!
+    return card.options.findIndex((o, i) => i !== card.correctOptionIndex && o.safetyDelta === -25)
+  }
 
   it('leaves the count alone when the answer is right', () => {
     const s = run(inPhase2(), { type: 'CHOOSE_CRISIS_OPTION', optionIndex: 0, timedOut: false })
@@ -595,14 +594,34 @@ describe('three strikes', () => {
   })
 
   it('ends the run on the third one, with safety to spare', () => {
-    let s = wrongAnswer(inPhase2({ safety: 100 }))
+    // Three moderate mistakes (-25 each) from safety 100 leaves room; three strikes
+    // still ends the run before safety would.
+    let s = run(inPhase2({ safety: 100 }), {
+      type: 'CHOOSE_CRISIS_OPTION',
+      optionIndex: moderateWrongOptionIndex(0),
+      timedOut: false,
+    })
     expect(s.feedback?.fatal).toBe(false)
 
-    s = wrongAnswer({ ...s, cardIndex: 1, feedback: null })
+    s = run(
+      { ...s, cardIndex: 4, feedback: null },
+      {
+        type: 'CHOOSE_CRISIS_OPTION',
+        optionIndex: moderateWrongOptionIndex(4),
+        timedOut: false,
+      },
+    )
     expect(s.strikes).toBe(2)
     expect(s.feedback?.fatal).toBe(false)
 
-    s = wrongAnswer({ ...s, cardIndex: 2, feedback: null })
+    s = run(
+      { ...s, cardIndex: 7, feedback: null },
+      {
+        type: 'CHOOSE_CRISIS_OPTION',
+        optionIndex: moderateWrongOptionIndex(7),
+        timedOut: false,
+      },
+    )
     expect(s.strikes).toBe(MAX_STRIKES)
     expect(s.feedback?.fatal).toBe(true)
     expect(s.feedback?.fatalReason).toBe('strikes')

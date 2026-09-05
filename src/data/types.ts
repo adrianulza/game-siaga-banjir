@@ -103,7 +103,10 @@ export interface MapOption {
    * fixture pins it. Source of truth: `scripts/scoring-table.mjs`.
    */
   prepPoints: number
-  /** Only a few map options touch safety, so this is optional here. */
+  /**
+   * @deprecated The engine no longer applies this in phases 1 and 3 — safety only
+   * moves in phase 2. Kept because it is still extracted from the original source.
+   */
   safetyDelta?: number
   family?: FamilyEffect
   feedback: string
@@ -129,7 +132,10 @@ export interface MapSpot {
 
 export interface CrisisOption {
   text: string
-  /** Always present in phase 2 — every crisis choice moves safety. */
+  /**
+   * Always present in phase 2. 0 for the correct answer; -50 or -25 for a wrong
+   * one, depending on how major the mistake is.
+   */
   safetyDelta: number
   family?: FamilyEffect
   feedback: string

@@ -177,12 +177,3 @@ describe('the game over edition', () => {
     expect(screen.getByRole('button', { name: 'Mulai dari awal' })).toBeDefined()
   }, 60_000)
 })
-
-describe('sound control', () => {
-  it('toggles between on and off', async () => {
-    const u = user()
-    render(<App />)
-    await u.click(screen.getByRole('button', { name: 'Suara hidup' }))
-    expect(screen.getByRole('button', { name: 'Suara mati' })).toBeDefined()
-  })
-})
