@@ -637,7 +637,7 @@ export const ReflectionScene = ({ screen }: { screen: 'recap1' | 'recap2' | 'rec
         x={36}
         y={22}
         style={{
-          fontSize: 12,
+          fontSize: 'var(--fs-meta)',
           letterSpacing: '.1em',
           textTransform: 'uppercase',
           color: 'var(--color-neutral-100)',

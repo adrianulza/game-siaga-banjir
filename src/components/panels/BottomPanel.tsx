@@ -14,7 +14,7 @@ const PRIMARY_BUTTON: React.CSSProperties = {
 }
 
 const KICKER: React.CSSProperties = {
-  fontSize: 12,
+  fontSize: 'var(--fs-meta)',
   letterSpacing: '.1em',
   textTransform: 'uppercase',
   marginBottom: 5,
@@ -22,7 +22,7 @@ const KICKER: React.CSSProperties = {
 
 const BODY: React.CSSProperties = {
   margin: 0,
-  fontSize: 15.5,
+  fontSize: 'var(--fs-body)',
   lineHeight: 1.45,
   textWrap: 'pretty',
 }
@@ -42,26 +42,25 @@ const IntroPanel = () => {
       }}
     >
       <div>
-        <div style={{ ...KICKER, color: 'var(--color-accent-2-700)', marginBottom: 6 }}>
-          Edisi Musim Hujan · Peringatan Dini BMKG
-        </div>
         <h1
           style={{
-            font: '600 42px/1.05 var(--font-heading)',
+            font: '600 var(--fs-display)/1.05 var(--font-heading)',
             margin: '0 0 10px',
             textWrap: 'pretty',
           }}
         >
           Hujan Tak Kunjung Reda di Kampung Tepi Sungai
         </h1>
-        <p style={{ ...BODY, fontSize: 16.5, maxWidth: 640 }}>
+        <p style={{ ...BODY, maxWidth: 640 }}>
           Kamu remaja 14 tahun yang tinggal bersama Ibu, Ayah, Adik Dito, dan Nenek — plus kucing
           Oyen. BMKG memperkirakan hujan sangat lebat tiga hari ke depan. Keputusanmu menentukan
           keselamatan keluarga dan tetangga.
         </p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 12 }}>
-        <div style={{ fontSize: 14.5, lineHeight: 1.5, color: 'var(--color-neutral-800)' }}>
+        <div
+          style={{ fontSize: 'var(--fs-option)', lineHeight: 1.5, color: 'var(--color-neutral-800)' }}
+        >
           <b>Fase 1 · Kesiapsiagaan</b> — jelajahi peta, waktumu terbatas.
           <br />
           <b>Fase 2 · Respons</b> — putuskan cepat sebelum waktu habis.
@@ -110,7 +109,7 @@ const MapOverview = () => {
     >
       <div>
         <div style={{ ...KICKER, color: 'var(--color-accent-700)' }}>{copy.kicker}</div>
-        <h2 style={{ font: '600 29px/1.1 var(--font-heading)', margin: '0 0 8px' }}>
+        <h2 style={{ font: '600 var(--fs-headline)/1.1 var(--font-heading)', margin: '0 0 8px' }}>
           {copy.title}
         </h2>
         <p style={{ ...BODY, maxWidth: 700 }}>{copy.note}</p>
@@ -127,7 +126,7 @@ const MapOverview = () => {
         <div>
           <div
             style={{
-              fontSize: 10,
+              fontSize: 'var(--fs-kicker)',
               letterSpacing: '.08em',
               textTransform: 'uppercase',
               color: 'var(--color-neutral-700)',
@@ -139,7 +138,9 @@ const MapOverview = () => {
             {copy.hoursLabel}
           </div>
         </div>
-        <div style={{ fontSize: 12.5, color: 'var(--color-neutral-700)' }}>{copy.doneLabel}</div>
+        <div style={{ fontSize: 'var(--fs-meta)', color: 'var(--color-neutral-700)' }}>
+          {copy.doneLabel}
+        </div>
         {copy.allDone ? (
           <button
             type="button"
@@ -198,10 +199,11 @@ const SpotDetail = ({ spotId }: { spotId: string }) => {
             background: 'none',
             border: 0,
             color: 'var(--color-accent-700)',
-            fontSize: 14.5,
+            fontSize: 'var(--fs-option)',
             cursor: 'pointer',
             textDecoration: 'underline',
             whiteSpace: 'nowrap',
+            padding: 'var(--hit-link-pad)',
           }}
         >
           Kembali ke peta
@@ -232,13 +234,13 @@ const SpotDetail = ({ spotId }: { spotId: string }) => {
                 opacity: tooExpensive ? 0.4 : 1,
               }}
             >
-              <span style={{ fontSize: 14.5, lineHeight: 1.4, textWrap: 'pretty' }}>
+              <span style={{ fontSize: 'var(--fs-option)', lineHeight: 1.4, textWrap: 'pretty' }}>
                 {option.text}
               </span>
               <span
                 style={{
                   marginTop: 'auto',
-                  fontSize: 12,
+                  fontSize: 'var(--fs-meta)',
                   color: 'var(--color-accent-700)',
                   fontWeight: 600,
                 }}
@@ -277,7 +279,7 @@ const CrisisCardPanel = () => {
         <div style={{ ...KICKER, color: 'var(--color-accent-2-700)' }}>
           Fase 2 · Respons · Situasi {state.cardIndex + 1}
         </div>
-        <h2 style={{ font: '600 27px/1.1 var(--font-heading)', margin: '0 0 8px' }}>
+        <h2 style={{ font: '600 var(--fs-headline)/1.1 var(--font-heading)', margin: '0 0 8px' }}>
           {card.title}
         </h2>
         <p style={BODY}>{card.text}</p>
@@ -300,7 +302,7 @@ const CrisisCardPanel = () => {
                 borderRadius: 'var(--radius-md)',
                 padding: '11px 15px',
                 cursor: 'pointer',
-                fontSize: 14.5,
+                fontSize: 'var(--fs-option)',
                 lineHeight: 1.35,
                 boxShadow: 'var(--shadow-sm)',
                 display: 'flex',
@@ -433,7 +435,13 @@ const RecapPanel = ({ screen }: { screen: 'recap1' | 'recap2' | 'recap3' }) => {
         “{progress.line}”
       </p>
       <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: 16 }}>
-        <span style={{ fontSize: 12.5, color: 'var(--color-neutral-700)', whiteSpace: 'nowrap' }}>
+        <span
+          style={{
+            fontSize: 'var(--fs-meta)',
+            color: 'var(--color-neutral-700)',
+            whiteSpace: 'nowrap',
+          }}
+        >
           {progress.count}
         </span>
         <button
@@ -477,7 +485,7 @@ const EndPanel = () => {
         </div>
         <h1
           style={{
-            font: '600 38px/1.05 var(--font-heading)',
+            font: '600 var(--fs-display)/1.05 var(--font-heading)',
             margin: '0 0 8px',
             textWrap: 'pretty',
           }}
@@ -503,7 +511,7 @@ const EndPanel = () => {
             <div key={bar.id}>
               <div
                 style={{
-                  fontSize: 10,
+                  fontSize: 'var(--fs-kicker)',
                   letterSpacing: '.08em',
                   textTransform: 'uppercase',
                   color: 'var(--color-neutral-700)',
@@ -534,7 +542,7 @@ const EndPanel = () => {
         </div>
         <div
           style={{
-            fontSize: 13.5,
+            fontSize: 'var(--fs-meta)',
             lineHeight: 1.5,
             color: 'var(--color-neutral-800)',
           }}
@@ -587,7 +595,7 @@ const GameOverPanel = () => {
         </div>
         <h1
           style={{
-            font: 'italic 600 37px/1.04 var(--font-heading)',
+            font: 'italic 600 var(--fs-display)/1.04 var(--font-heading)',
             margin: '0 0 8px',
             textWrap: 'pretty',
           }}
@@ -649,10 +657,10 @@ const GameOverPanel = () => {
               background: 'none',
               border: 0,
               color: 'var(--color-accent-700)',
-              fontSize: 14.5,
+              fontSize: 'var(--fs-option)',
               cursor: 'pointer',
               textDecoration: 'underline',
-              padding: '6px 2px',
+              padding: 'calc(var(--hit-link-pad) + 4px) var(--hit-link-pad)',
             }}
           >
             Mulai dari awal

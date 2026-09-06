@@ -8,6 +8,8 @@ import { createReducer } from '@/engine/reducer'
 import { createInitialState, isMapScreen, type GameState } from '@/engine/state'
 import { rainLevel } from '@/scene/weather'
 
+import { useStageScale } from './useStageScale'
+
 /** Score readouts that flash when they change. */
 /** Every figure that can flash when it changes: the gauge and the four bars. */
 export type ScoreKey = 'safety' | CompetencyId
@@ -66,9 +68,13 @@ export const useGameController = (config: GameConfig = DEFAULT_CONFIG): GameCont
   }, [state.safety, state.competency])
 
   // ---- decision countdowns: a crisis card, or an open map spot -------------
+  // A portrait viewport is covered by the rotate prompt, so the player cannot see the
+  // card they are being timed on. Hold the clock until they turn the device.
+  const { portrait } = useStageScale()
   const running =
-    (state.screen === 'p2' && state.feedback === null) ||
-    (isMapScreen(state.screen) && state.openSpotId !== null)
+    !portrait &&
+    ((state.screen === 'p2' && state.feedback === null) ||
+      (isMapScreen(state.screen) && state.openSpotId !== null))
   useEffect(() => {
     if (!running) return
     const id = setInterval(() => dispatch({ type: 'TICK', deltaMs: TICK_MS }), TICK_MS)

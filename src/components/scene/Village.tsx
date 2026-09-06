@@ -1,5 +1,5 @@
 import { useGame } from '@/hooks/useGame'
-import { kentonganSignal, landslide, loftOccupied, marks } from '@/scene/props'
+import { floor2Occupied, kentonganSignal, landslide, marks } from '@/scene/props'
 import { weatherLevel } from '@/scene/weather'
 
 import { Box, Tree } from './Box'
@@ -266,10 +266,10 @@ const NenekHouse = () => {
 const PlayerHouse = () => {
   const { state } = useGame()
   const mark = marks(state)
-  const loft = loftOccupied(state)
+  const floor2 = floor2Occupied(state)
 
   return (
-    <Box x={740} y={440} w={210} h={180}>
+    <Box x={740} y={384} w={210} h={236}>
       <div
         style={{
           position: 'absolute',
@@ -277,23 +277,24 @@ const PlayerHouse = () => {
           top: 0,
           width: 254,
           height: 64,
-          clipPath: 'polygon(0 100%,50% 0,100% 100%)',
+          clipPath: 'polygon(0 100%,34% 0,66% 0,100% 100%)',
           background: ROOF_DARK,
         }}
       />
-      <Box x={88} y={22} w={34} h={42} style={{ background: 'var(--color-neutral-900)' }} />
-      <Window x={92} y={26} w={26} h={34} />
-      <Box x={0} y={64} w={210} h={116} style={{ background: 'var(--color-neutral-100)' }} />
       <Box x={0} y={64} w={210} h={3} style={{ background: 'var(--color-neutral-400)' }} />
-      <Box x={86} y={118} w={38} h={62} style={{ background: 'var(--color-accent-700)' }} />
-      <Window x={18} y={86} w={34} h={30} />
-      <Window x={158} y={86} w={34} h={30} />
+      <Box x={0} y={64} w={210} h={56} style={{ background: 'var(--color-neutral-100)' }} />
+      <Window x={62} y={76} w={86} h={32} />
+      <Box x={0} y={120} w={210} h={3} style={{ background: 'var(--color-neutral-400)' }} />
+      <Box x={0} y={120} w={210} h={116} style={{ background: 'var(--color-neutral-100)' }} />
+      <Box x={86} y={174} w={38} h={62} style={{ background: 'var(--color-accent-700)' }} />
+      <Window x={18} y={142} w={34} h={30} />
+      <Window x={158} y={142} w={34} h={30} />
 
       {/* the go-bag, packed and waiting by the door */}
       {mark.bag ? (
         <Box
           x={132}
-          y={126}
+          y={182}
           w={22}
           h={28}
           style={{
@@ -316,28 +317,28 @@ const PlayerHouse = () => {
         </Box>
       ) : null}
 
-      {/* the family sheltering in the loft, seen through the gable window */}
-      {loft ? (
-        <Box x={93} y={30} w={26} h={30} style={{ animation: 'fadeIn .7s ease' }}>
+      {/* the family sheltering on lantai 2, seen through the window */}
+      {floor2 ? (
+        <Box x={66} y={80} w={78} h={24} style={{ animation: 'fadeIn .7s ease' }}>
           <Box
             x={0}
-            y={9}
-            w={11}
-            h={11}
+            y={7}
+            w={13}
+            h={13}
             style={{ borderRadius: '50%', background: 'var(--color-neutral-900)' }}
           />
           <Box
-            x={9}
-            y={4}
+            x={30}
+            y={2}
+            w={14}
+            h={14}
+            style={{ borderRadius: '50%', background: 'var(--color-neutral-900)' }}
+          />
+          <Box
+            x={58}
+            y={9}
             w={12}
             h={12}
-            style={{ borderRadius: '50%', background: 'var(--color-neutral-900)' }}
-          />
-          <Box
-            x={17}
-            y={13}
-            w={9}
-            h={9}
             style={{
               borderRadius: '50%',
               background: 'var(--color-neutral-900)',
@@ -349,8 +350,8 @@ const PlayerHouse = () => {
 
       {mark.electronics ? (
         <Box
-          x={140}
-          y={30}
+          x={150}
+          y={88}
           w={44}
           h={18}
           style={{ background: 'var(--color-neutral-700)', animation: FADE_IN }}
@@ -359,7 +360,7 @@ const PlayerHouse = () => {
 
       {/* washing hung out to dry once the flood has passed */}
       {mark.laundry ? (
-        <Box x={216} y={96} w={130} h={40} style={{ animation: 'fadeIn .8s ease' }}>
+        <Box x={216} y={152} w={130} h={40} style={{ animation: 'fadeIn .8s ease' }}>
           <Box x={0} y={0} w={130} h={2} style={{ background: 'var(--color-neutral-600)' }} />
           {[
             {

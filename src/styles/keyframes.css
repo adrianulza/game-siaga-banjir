@@ -1,6 +1,21 @@
 /* Scene animations, extracted verbatim from the original <helmet> style block.
    Referenced by name from inline animation shorthands throughout src/components/scene. */
 
+/* The rotate prompt's phone glyph tipping over to landscape and back. */
+@keyframes rotate-hint {
+  0%,
+  30% {
+    transform: rotate(0deg);
+  }
+  55%,
+  85% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 @keyframes drift {
   from {
     transform: translateX(-400px);

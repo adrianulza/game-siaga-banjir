@@ -2,6 +2,12 @@
 // Content is the original game's; only the key names were expanded.
 // Competency awards, prep tags and phase-2 couplings are not from the original —
 // they live in scripts/scoring-table.mjs. Edit them there, not here.
+//
+// Exception: the player's house was redesigned with a second floor (lantai 2)
+// in place of the loft/roof the original used. The cardIndex 2, 3 and 5 texts
+// and the cardIndex 5 "wait" option intentionally diverge from the original's
+// "loteng"/"atap" wording to say "lantai 2" instead — do not re-run the
+// extractor over these lines, it would silently revert them.
 
 import type { CrisisCard } from './types'
 
@@ -118,7 +124,7 @@ export const PHASE2_CARDS: readonly CrisisCard[] = [
   },
   {
     "title": "Nenek sulit berjalan",
-    "text": "Kalian harus naik ke loteng. Nenek kesulitan berjalan di air, Adik Dito menangis ketakutan.",
+    "text": "Kalian harus naik ke lantai 2. Nenek kesulitan berjalan di air, Adik Dito menangis ketakutan.",
     "timeoutOptionIndex": 1,
     "correctOptionIndex": 0,
     "camera": {
@@ -172,7 +178,7 @@ export const PHASE2_CARDS: readonly CrisisCard[] = [
   },
   {
     "title": "Oyen hilang!",
-    "text": "Dari jendela loteng kamu melihat Oyen terjebak di pagar halaman, air deras mengalir di sekitarnya.",
+    "text": "Dari jendela lantai 2 kamu melihat Oyen terjebak di pagar halaman, air deras mengalir di sekitarnya.",
     "timeoutOptionIndex": 2,
     "correctOptionIndex": 0,
     "camera": {
@@ -210,7 +216,7 @@ export const PHASE2_CARDS: readonly CrisisCard[] = [
     "lockedOptions": [
       {
         "requiresTag": "rencana-rentan",
-        "text": "Turunkan kandang angkut Oyen dengan tali dari jendela loteng, panggil namanya — tanpa sekali pun turun ke arus.",
+        "text": "Turunkan kandang angkut Oyen dengan tali dari jendela lantai 2, panggil namanya — tanpa sekali pun turun ke arus.",
         "safetyDelta": 0,
         "family": {
           "oyen": "aman"
@@ -290,7 +296,7 @@ export const PHASE2_CARDS: readonly CrisisCard[] = [
   },
   {
     "title": "Jalur evakuasi",
-    "text": "Perahu karet tim RT merapat ke atap. Ada dua jalur ke titik kumpul: memutar lewat jalan atas tanggul di kanan, atau memotong lereng bukit di kiri yang tanahnya retak-retak.",
+    "text": "Perahu karet tim RT merapat ke lantai 2. Ada dua jalur ke titik kumpul: memutar lewat jalan atas tanggul di kanan, atau memotong lereng bukit di kiri yang tanahnya retak-retak.",
     "timeoutOptionIndex": 2,
     "correctOptionIndex": 0,
     "camera": {
@@ -317,7 +323,7 @@ export const PHASE2_CARDS: readonly CrisisCard[] = [
         "feedback": "Retakan tanah, pohon miring, dan air keruh dari lereng adalah tanda longsor. Kalian nyaris terjebak!"
       },
       {
-        "text": "Tetap menunggu di loteng rumah.",
+        "text": "Tetap menunggu di lantai 2 rumah.",
         "safetyDelta": -25,
         "feedback": "Air masih naik dan bantuan sudah datang — menunda evakuasi hanya menambah bahaya."
       }
@@ -398,7 +404,7 @@ export const PHASE2_CARDS: readonly CrisisCard[] = [
   },
   {
     "title": "Di posko pengungsian",
-    "text": "Kalian tiba di posko di tanah tinggi. Dari sini terlihat air terus meninggi hampir menyentuh atap rumah. Petugas BPBD membuka meja pendataan.",
+    "text": "Kalian tiba di posko di tanah tinggi. Dari sini terlihat air terus meninggi hampir menyentuh atap rumah warga lainnya. Petugas BPBD membuka meja pendataan.",
     "timeoutOptionIndex": 2,
     "correctOptionIndex": 0,
     "camera": {

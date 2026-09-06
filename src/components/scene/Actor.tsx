@@ -392,7 +392,8 @@ export const Actor = ({ a }: { a: ActorSprite }) => (
         bottom: 78,
         width: 80,
         textAlign: 'center',
-        fontSize: 12,
+        // World space, like the map pins — the villagers stand shoulder to shoulder.
+        fontSize: 'var(--fs-pin)',
         color: INK,
         background: 'var(--color-bg)',
         padding: '1px 0',

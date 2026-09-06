@@ -130,8 +130,9 @@ export const marks = (state: GameState) => {
   }
 }
 
-/** The family sheltering in the loft, seen through the wall. */
-export const loftOccupied = (state: GameState) =>
+/** The family sheltering inside lantai 2 (second floor), glimpsed through the
+ *  window while the flood rises below them. */
+export const floor2Occupied = (state: GameState) =>
   state.screen === 'p2' && state.cardIndex >= 2 && state.cardIndex <= 4
 
 // ------------------------------------------------------------- map spots ----

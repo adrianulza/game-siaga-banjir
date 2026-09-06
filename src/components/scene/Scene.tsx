@@ -18,7 +18,7 @@ import { Village } from './Village'
 const PAN = 'transform 1.15s cubic-bezier(.4,0,.2,1)'
 
 const SCORE_LABEL: React.CSSProperties = {
-  fontSize: 10,
+  fontSize: 'var(--fs-kicker)',
   letterSpacing: '.09em',
   textTransform: 'uppercase',
   color: 'var(--color-neutral-700)',
@@ -277,7 +277,7 @@ const GameOverPlate = () => (
       </div>
       <div
         style={{
-          fontSize: 12,
+          fontSize: 'var(--fs-meta)',
           letterSpacing: '.2em',
           textTransform: 'uppercase',
           color: 'var(--color-neutral-100)',
@@ -342,8 +342,8 @@ const SpotPins = ({ zoom }: { zoom: number }) => {
             className="spot-pin"
             style={
               {
-                width: 38,
-                height: 38,
+                width: 'var(--hit-pin)',
+                height: 'var(--hit-pin)',
                 borderRadius: '50%',
                 '--pin-bg': pin.background,
                 color: 'var(--color-neutral-100)',
@@ -361,7 +361,7 @@ const SpotPins = ({ zoom }: { zoom: number }) => {
             style={{
               background: 'var(--color-bg)',
               padding: '3px 10px',
-              fontSize: 13,
+              fontSize: 'var(--fs-pin)',
               boxShadow: 'var(--shadow-sm)',
               whiteSpace: 'nowrap',
             }}
@@ -379,13 +379,13 @@ const SpotPins = ({ zoom }: { zoom: number }) => {
  * village itself — all driven by one camera, so opening a map spot or turning a
  * crisis card pans and zooms the whole scene together.
  */
-export const Scene = ({ shaking }: { shaking: boolean }) => {
+export const Scene = ({ shaking, stageHeight }: { shaking: boolean; stageHeight?: number }) => {
   const { state, config } = useGame()
 
   const level = weatherLevel(state, config)
   const sky = skyPalette(level)
   const camera = cameraFor(state)
-  const height = sceneHeight(state)
+  const height = sceneHeight(state, stageHeight)
   const wind = windStrength(level)
 
   const swayDuration = {
@@ -413,6 +413,7 @@ export const Scene = ({ shaking }: { shaking: boolean }) => {
       style={{
         position: 'relative',
         height,
+        flex: '0 0 auto',
         margin: '10px 36px 0',
         overflow: 'hidden',
         background: sky.top,

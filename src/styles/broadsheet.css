@@ -400,3 +400,45 @@ textarea.input { min-height: 90px; resize: vertical; }
 .dialog-body { font-size: 14px; opacity: 0.85; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
 
+/* — stage type ramp —
+   The game's type is authored inline, in stage pixels, on a stage that gets
+   uniformly scaled to fit the viewport. On a phone that scale lands around 0.6, so
+   a 10px kicker renders at 6 device pixels. These tokens let the whole ramp step up
+   together when the stage is small, without touching the layout at desktop size.
+   `data-compact` is set on the stage root by App.tsx.
+
+   The compact step does not simply enlarge everything — that inverts the hierarchy
+   and overflows the panel. It *compresses* it: the small type grows, the big serif
+   headings come down, so the whole ramp converges toward a readable middle and the
+   panel gets shorter rather than taller. */
+:root {
+  --fs-kicker: 10px;
+  --fs-label: 11.5px;
+  --fs-meta: 12px;
+  --fs-option: 14.5px;
+  --fs-body: 15.5px;
+  --fs-headline: 29px;
+  --fs-display: 42px;
+
+  /* Tap targets, same idea: 38px scaled by 0.6 is under half the 44px guideline.
+     The pins and their labels sit in *world* space next to hand-placed buildings, so
+     they get a gentler step than the panel type — pushed as far as the panel ramp
+     they collide with each other and with the villagers. */
+  --hit-pin: 38px;
+  --hit-link-pad: 2px;
+  --fs-pin: 13px;
+}
+[data-compact] {
+  --fs-kicker: 13px;
+  --fs-label: 14px;
+  --fs-meta: 15px;
+  --fs-option: 17px;
+  --fs-body: 18px;
+  --fs-headline: 24px;
+  --fs-display: 32px;
+
+  --hit-pin: 46px;
+  --hit-link-pad: 12px;
+  --fs-pin: 14px;
+}
+

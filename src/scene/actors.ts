@@ -227,19 +227,20 @@ export const actorsFor = (state: GameState): ActorSprite[] => {
 
     case 'p2': {
       const i = state.cardIndex
-      // The family moves up as the water rises: ground floor, then the loft (hidden
-      // behind the wall), then the roof, then the posko on high ground.
-      const inLoft = i >= 2 && i <= 4
-      const onRoof = i >= 5 && i <= 6
+      // The family moves up as the water rises: ground floor, then inside lantai 2
+      // (hidden behind the wall), then at the lantai 2 window (visible, waiting for
+      // the rescue boat), then the posko on high ground.
+      const inFloor2 = i >= 2 && i <= 4
+      const atFloor2Window = i >= 5 && i <= 6
       const atPosko = i >= 7
 
       const waterLine = G - (FLOOD_HEIGHTS[i] ?? 0)
-      const spread = onRoof ? 0.5 : 1
-      const visible = inLoft ? 0 : 1
+      const spread = atFloor2Window ? 0.5 : 1
+      const visible = inFloor2 ? 0 : 1
       const dartoDrowning = i >= 5 && !atPosko
 
-      const bx = atPosko ? 2596 : onRoof ? 845 : 860
-      const by = atPosko ? 452 : onRoof ? 440 : G
+      const bx = atPosko ? 2596 : atFloor2Window ? 845 : 860
+      const by = atPosko ? 490 : atFloor2Window ? 492 : G
 
       return [
         A('p', 'Kamu', bx - 30 * spread, by, {
@@ -282,15 +283,15 @@ export const actorsFor = (state: GameState): ActorSprite[] => {
         A(
           'rt',
           'Tim RT',
-          onRoof ? 1052 : atPosko ? 2470 : 1700,
-          onRoof ? waterLine + 8 : atPosko ? 452 : G,
+          atFloor2Window ? 1052 : atPosko ? 2470 : 1700,
+          atFloor2Window ? waterLine + 8 : atPosko ? 490 : G,
           {
             lo: i === 5 ? 1 : 0,
             o: i >= 5 ? 1 : 0,
             arm: 'gestur 2.2s ease-in-out infinite',
           },
         ),
-        A('warga', '', atPosko ? 2500 : 1740, atPosko ? 452 : G, {
+        A('warga', '', atPosko ? 2500 : 1740, atPosko ? 490 : G, {
           o: atPosko ? 0.9 : 0,
           anim: 'bob 3.3s ease-in-out infinite -1.4s',
         }),

@@ -6,6 +6,11 @@ body {
   color: var(--color-text);
   font-family: var(--font-body);
   overflow: hidden;
+  /* Touch hygiene: no rubber-band scroll past the fixed stage, no grey tap flash,
+     and no 300ms double-tap-to-zoom delay on the game's buttons. */
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 a {
   color: var(--color-accent-700);

@@ -1,9 +1,9 @@
 import { MAX_STRIKES } from '@/engine/state'
-import { datelineFor, familyChips, familyStripOpacity, phaseTabs } from '@/engine/selectors'
+import { familyChips, familyStripOpacity, phaseTabs } from '@/engine/selectors'
 import { useGame } from '@/hooks/useGame'
 
 const LABEL: React.CSSProperties = {
-  fontSize: 10,
+  fontSize: 'var(--fs-kicker)',
   letterSpacing: '.09em',
   textTransform: 'uppercase',
   color: 'var(--color-neutral-700)',
@@ -45,12 +45,13 @@ export const Masthead = () => {
         borderTop: '4px solid var(--color-text)',
         display: 'flex',
         flexDirection: 'column',
+        flex: '0 0 auto',
       }}
     >
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'auto 1fr auto',
+          gridTemplateColumns: '1fr auto',
           alignItems: 'end',
           gap: 28,
           padding: '8px 0 7px',
@@ -62,7 +63,7 @@ export const Masthead = () => {
           </div>
           <div
             style={{
-              fontSize: 11.5,
+              fontSize: 'var(--fs-label)',
               color: 'var(--color-neutral-700)',
               marginTop: 3,
               letterSpacing: '.02em',
@@ -70,24 +71,6 @@ export const Masthead = () => {
           >
             Game edukatif mitigasi bencana hidrometeorologi
           </div>
-        </div>
-
-        <div style={{ display: 'flex', gap: 22, justifyContent: 'center', paddingBottom: 2 }}>
-          {phaseTabs(state).map((tab) => (
-            <div
-              key={tab.label}
-              style={{
-                fontSize: 13,
-                padding: '4px 0',
-                color: tab.active ? 'var(--color-text)' : 'var(--color-neutral-500)',
-                borderBottom: `2px solid ${tab.active ? 'var(--color-accent)' : 'transparent'}`,
-                fontWeight: tab.active ? 600 : 400,
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {tab.label}
-            </div>
-          ))}
         </div>
 
         <div style={{ display: 'flex', gap: 22, alignItems: 'flex-end' }}>
@@ -103,12 +86,25 @@ export const Masthead = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: '5px 0 6px',
-          fontSize: 11.5,
+          fontSize: 'var(--fs-label)',
           color: 'var(--color-neutral-700)',
         }}
       >
-        <div style={{ letterSpacing: '.06em', textTransform: 'uppercase' }}>
-          {datelineFor(state)}
+        <div style={{ display: 'flex', gap: 22, alignItems: 'center' }}>
+          {phaseTabs(state).map((tab) => (
+            <div
+              key={tab.label}
+              style={{
+                fontSize: 'var(--fs-meta)',
+                color: tab.active ? 'var(--color-text)' : 'var(--color-neutral-500)',
+                borderBottom: `2px solid ${tab.active ? 'var(--color-accent)' : 'transparent'}`,
+                fontWeight: tab.active ? 600 : 400,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {tab.label}
+            </div>
+          ))}
         </div>
         <div
           style={{

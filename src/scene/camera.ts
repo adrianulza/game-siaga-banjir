@@ -2,6 +2,10 @@ import { PHASE2_CARDS } from '@/data/phase2-darurat'
 import type { CameraShot } from '@/data/types'
 import { spotsForScreen } from '@/engine/reducer'
 import { isMapScreen, type GameState } from '@/engine/state'
+import { MAX_STAGE_HEIGHT } from '@/hooks/useStageScale'
+
+/** Below this the village reads as a letterbox slit rather than a place. */
+const MIN_SCENE_HEIGHT = 210
 
 /** Fallback framing: the whole village, seen wide. */
 const WIDE: CameraShot = { x: 1290, zoom: 0.56, y: 440 }
@@ -26,8 +30,21 @@ export const cameraFor = (state: GameState): CameraShot => {
   return { x: 1290, zoom: 0.55, y: 440 }
 }
 
-/** The recap screens use a taller viewport than the rest. */
-export const sceneHeight = (state: GameState) => (state.screen.startsWith('recap') ? 556 : 436)
+/**
+ * The recap screens use a taller viewport than the rest.
+ *
+ * When the stage is shortened for a wide, low viewport (a phone in landscape), the
+ * scene gives up the whole difference — the masthead and the decision panel keep
+ * their authored size, so the type stays legible and only the world gets cropped.
+ */
+export const sceneHeight = (state: GameState, stageHeight: number = MAX_STAGE_HEIGHT) => {
+  const base = state.screen.startsWith('recap') ? 556 : 436
+  // Only the stage's own shortfall comes out of the scene. Taxing it further for the
+  // compact type ramp was a mistake: the panel is `flex: 1` off a zero basis, so it
+  // swallows whatever it is handed whether it needs it or not — on the map screens
+  // that turned a shortened village into dead whitespace.
+  return Math.max(MIN_SCENE_HEIGHT, base - (MAX_STAGE_HEIGHT - stageHeight))
+}
 
 /**
  * CSS transform for one parallax layer.

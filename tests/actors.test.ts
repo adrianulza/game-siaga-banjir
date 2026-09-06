@@ -85,6 +85,38 @@ const cases = fixtures as unknown as Record<
   { state: FixtureState; actors: Record<string, unknown>[] }
 >
 
+/**
+ * Content fork: PlayerHouse gained a second floor (lantai 2). During "Jalur
+ * evakuasi" (cardIdx 5) and the landslide/late cards (cardIdx 6), the family
+ * now waits at the lantai-2 window instead of on the roof ridge, moving their
+ * y from 440 (old roof apex) to 492 (the new window's sill). Everything else
+ * in these fixtures — x, other actors, moods, animations — is unchanged and
+ * must still match the original exactly.
+ */
+const FLOOR2_Y_OVERRIDE: Record<string, readonly string[]> = {
+  'p2-card-5': ['p', 'ibu', 'ayah', 'adik', 'nenek'],
+  'p2-card-6': ['p', 'ibu', 'ayah', 'adik', 'nenek'],
+  'p2-late': ['p', 'ibu', 'ayah', 'adik', 'nenek'],
+}
+
+const withFloor2Override = (name: string, actors: Record<string, unknown>[]) => {
+  const ids = FLOOR2_Y_OVERRIDE[name]
+  if (!ids) return actors
+  return actors.map((a) => (ids.includes(a.id as string) ? { ...a, y: 492 } : a))
+}
+
+/**
+ * Unrelated to lantai 2: an earlier HUD pass moved everyone waiting at the posko
+ * (cardIndex 7) down from y=452 to y=490 to sit against the relaid-out backdrop,
+ * without updating this fixture. Only `p2-card-7` reaches `atPosko`.
+ */
+const POSKO_Y_OVERRIDE = ['p', 'ibu', 'ayah', 'adik', 'nenek', 'rt', 'warga']
+
+const withPoskoOverride = (name: string, actors: Record<string, unknown>[]) => {
+  if (name !== 'p2-card-7') return actors
+  return actors.map((a) => (POSKO_Y_OVERRIDE.includes(a.id as string) ? { ...a, y: 490 } : a))
+}
+
 describe('actor geometry matches the original', () => {
   const names = Object.keys(cases)
 
@@ -97,6 +129,6 @@ describe('actor geometry matches the original', () => {
   it.each(names)('%s', (name) => {
     const c = cases[name]!
     const ported = actorsFor(stateFrom(c.state)).map(toLegacy)
-    expect(ported).toEqual(c.actors)
+    expect(ported).toEqual(withPoskoOverride(name, withFloor2Override(name, c.actors)))
   })
 })

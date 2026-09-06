@@ -1,6 +1,6 @@
 {
   "name": "game-siaga-banjir",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "type": "module",
   "private": true,
   "description": "Siaga Bencana Banjir — game edukasi mitigasi bencana banjir dan longsor.",

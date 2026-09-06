@@ -6,24 +6,15 @@
 .btn-primary {
   transition: background 0.18s ease;
 }
-.btn-primary:hover {
-  background: var(--color-accent-600);
-}
 
 /* The feedback button's base colour is set inline and changes when the choice was
    fatal, so it darkens relatively rather than to a fixed colour. */
 .btn-shift {
   transition: filter 0.18s ease;
 }
-.btn-shift:hover {
-  filter: brightness(0.92);
-}
 
 .link-quiet {
   transition: color 0.18s ease;
-}
-.link-quiet:hover {
-  color: var(--color-accent-600);
 }
 
 .option-card {
@@ -31,15 +22,9 @@
     background 0.18s ease,
     transform 0.18s ease;
 }
-.option-card:hover:not(:disabled) {
-  background: var(--color-accent-100);
-}
 
 .option-row {
   transition: background 0.18s ease;
-}
-.option-row:hover {
-  background: var(--color-accent-2-100);
 }
 
 .spot-pin {
@@ -48,8 +33,28 @@
     background 0.3s ease,
     opacity 0.4s ease;
 }
-.spot-pin:hover:not(:disabled) {
-  background: var(--color-pin-600);
+
+/* Gated on a real pointer: on touch, :hover sticks to whatever was tapped last,
+   which reads as a stuck selection on the option cards and map pins. */
+@media (hover: hover) {
+  .btn-primary:hover {
+    background: var(--color-accent-600);
+  }
+  .btn-shift:hover {
+    filter: brightness(0.92);
+  }
+  .link-quiet:hover {
+    color: var(--color-accent-600);
+  }
+  .option-card:hover:not(:disabled) {
+    background: var(--color-accent-100);
+  }
+  .option-row:hover {
+    background: var(--color-accent-2-100);
+  }
+  .spot-pin:hover:not(:disabled) {
+    background: var(--color-pin-600);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

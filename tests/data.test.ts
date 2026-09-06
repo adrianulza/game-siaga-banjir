@@ -53,12 +53,48 @@ const toLegacyCrisisCard = (c: CrisisCard) => ({
 const norm = (v: unknown) => JSON.parse(JSON.stringify(v)) as unknown
 
 /** Phase 2's original `safety` figures are the ones the scoring table overrides. */
-type LegacyCard = { opts: readonly Record<string, unknown>[] }
+type LegacyCard = { text?: string; opts: readonly Record<string, unknown>[] }
 const withoutSafety = (cards: readonly LegacyCard[]) =>
   cards.map((c) => ({
     ...c,
     opts: c.opts.map((o) => Object.fromEntries(Object.entries(o).filter(([k]) => k !== 'safety'))),
   }))
+
+/**
+ * Content fork: the player's house was rebuilt with a second floor (lantai 2)
+ * in place of the loft/roof the original used, so the family now shelters at
+ * and is rescued from "lantai 2" rather than "loteng"/"atap", and the posko
+ * arrival line now measures the flood against neighbours' roofs instead of
+ * the player's own. These are the only passages in the original P2 data
+ * naming that structure — everything else (titles, camera, other options,
+ * feedback) must still match verbatim.
+ */
+const LANTAI2_TEXT: Record<number, { text?: string; optText?: Record<number, string> }> = {
+  2: { text: 'Kalian harus naik ke lantai 2. Nenek kesulitan berjalan di air, Adik Dito menangis ketakutan.' },
+  3: {
+    text: 'Dari jendela lantai 2 kamu melihat Oyen terjebak di pagar halaman, air deras mengalir di sekitarnya.',
+  },
+  5: {
+    text: 'Perahu karet tim RT merapat ke lantai 2. Ada dua jalur ke titik kumpul: memutar lewat jalan atas tanggul di kanan, atau memotong lereng bukit di kiri yang tanahnya retak-retak.',
+    optText: { 2: 'Tetap menunggu di lantai 2 rumah.' },
+  },
+  7: {
+    text: 'Kalian tiba di posko di tanah tinggi. Dari sini terlihat air terus meninggi hampir menyentuh atap rumah warga lainnya. Petugas BPBD membuka meja pendataan.',
+  },
+}
+
+const withLantai2Text = (cards: readonly LegacyCard[]) =>
+  cards.map((c, i) => {
+    const o = LANTAI2_TEXT[i]
+    if (!o) return c
+    return {
+      ...c,
+      ...(o.text !== undefined ? { text: o.text } : {}),
+      opts: o.optText
+        ? c.opts.map((opt, oi) => (o.optText![oi] !== undefined ? { ...opt, t: o.optText![oi] } : opt))
+        : c.opts,
+    }
+  })
 
 describe('scenario data round-trips to the original', () => {
   it('phase 1 matches the source literals', () => {
@@ -66,7 +102,9 @@ describe('scenario data round-trips to the original', () => {
   })
 
   it('phase 2 matches the source literals', () => {
-    expect(norm(PHASE2_CARDS.map(toLegacyCrisisCard))).toEqual(norm(withoutSafety(original.P2)))
+    expect(norm(PHASE2_CARDS.map(toLegacyCrisisCard))).toEqual(
+      norm(withLantai2Text(withoutSafety(original.P2))),
+    )
   })
 
   it('phase 3 matches the source literals', () => {
